@@ -1,0 +1,18 @@
+<resources>
+
+    // Overall
+    <string name="app_name">Themenschädel</string>
+    <string name="settings">Einstellungen</string>
+    <string name="search">Suche</string>
+
+    // Sort &amp; Filter
+    <string name="filter_date">Datum</string>
+    <string name="filter_title">Titel</string>
+    <string name="filter_user">User</string>
+    <string name="filter_state">Status</string>
+
+    // Content Description
+    <string name="contentDescription_split">feiner Strich</string>
+    <string name="contentDescription_display">Anzeigeart - groß, mittel oder klein</string>
+
+</resources>
