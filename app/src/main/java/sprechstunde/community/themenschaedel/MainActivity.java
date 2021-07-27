@@ -1,19 +1,39 @@
 package sprechstunde.community.themenschaedel;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 
 import sprechstunde.community.themenschaedel.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
-    ActivityMainBinding mBinding;
+    private ActivityMainBinding mBinding;
+    private DISPLAY mCurrentDisplay;
+    private NavController mNavController;
+    private AppBarConfiguration mAppBarConfiguration;
+    private enum DISPLAY {
+        CARDS,
+        CELLS,
+        ROWS
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +42,17 @@ public class MainActivity extends AppCompatActivity {
         View view = mBinding.getRoot();
         setContentView(view);
 
+        setUpNavigation();
         setUpToolbar();
+        setUpDrawer();
+
+        mCurrentDisplay = DISPLAY.CARDS;
+        mBinding.activityMainDisplay.setOnClickListener(this);
+    }
+
+    private void setUpNavigation() {
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        mNavController = Objects.requireNonNull(navHostFragment).getNavController();
     }
 
     private void setUpToolbar() {
@@ -32,9 +62,67 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        return NavigationUI.navigateUp(mNavController, mAppBarConfiguration);
+    }
+
+    private void setUpDrawer() {
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, mBinding.drawerLayout, R.string.open, R.string.close);
+        mBinding.drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+
+        NavigationUI.setupWithNavController(mBinding.navView, mNavController);
+        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.menu_podcast, R.id.menu_topic, R.id.menu_wiki, R.id.menu_login, R.id.podcastCardFragment, R.id.podcastCellFragment, R.id.podcastRowFragment).setOpenableLayout(mBinding.drawerLayout).build();
+        NavigationUI.setupActionBarWithNavController(this, mNavController, mAppBarConfiguration);
+        mBinding.navView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_search_settings, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return NavigationUI.onNavDestinationSelected(item, mNavController) || super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (mBinding.activityMainDisplay == v) {
+            Drawable card = AppCompatResources.getDrawable(this, R.drawable.ic_view_cards);
+            Drawable cell = AppCompatResources.getDrawable(this, R.drawable.ic_view_cells);
+            Drawable row = AppCompatResources.getDrawable(this, R.drawable.ic_view_rows);
+
+            if (mCurrentDisplay == DISPLAY.CARDS) {
+                mCurrentDisplay = DISPLAY.CELLS;
+                mBinding.activityMainDisplay.setBackground(cell);
+                mNavController.navigate(R.id.action_card_to_cell);
+            } else if (mCurrentDisplay == DISPLAY.CELLS) {
+                mCurrentDisplay = DISPLAY.ROWS;
+                mBinding.activityMainDisplay.setBackground(row);
+                mNavController.navigate(R.id.action_cell_to_row);
+            } else {
+                mCurrentDisplay = DISPLAY.CARDS;
+                mBinding.activityMainDisplay.setBackground(card);
+                mNavController.navigate(R.id.action_row_to_card);
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mBinding.drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

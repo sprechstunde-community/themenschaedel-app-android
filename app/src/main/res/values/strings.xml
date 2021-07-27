@@ -14,5 +14,28 @@
     // Content Description
     <string name="contentDescription_split">feiner Strich</string>
     <string name="contentDescription_display">Anzeigeart - groß, mittel oder klein</string>
+    <string name="contentDescription_card">Abgerundetes Rechteck mit leichtem Schatten</string>
+    <string name="contentDescription_podcast_image">Bild der Podcastfolge</string>
+
+    // Podcast Card, Cell, Row
+    <string name="podcast_number_dummy">Folge 220</string>
+    <string name="podcast_length_dummy">1h 5min</string>
+    <string name="podcast_date_dummy">9. Mai 2021</string>
+    <string name="podcast_title_dummy">Flos biodesintegrierender China-Rollrasen des Todes!</string>
+    <string name="podcast_episode">Folge</string>
+
+
+    // Menu, Drawer
+    <string name="podcast">Podcast</string>
+    <string name="topic">Themen</string>
+    <string name="wiki">Wiki</string>
+    <string name="login_register">Login / Register</string>
+    <string name="open">Drawer öffnen</string>
+    <string name="close">Drawer schließen</string>
+    <string name="anonym">360er</string>
+    <string name="contentDescription_background">Hintergrund</string>
+    <string name="contentDescription_divider">Trennstrich</string>
+    <string name="contentDescription_profile_image">Profilbild</string>
+
 
 </resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Themenschaedel" parent="Theme.Themenschaedel.Base">
+        <item name="android:ambientShadowAlpha">0.1</item>
+        <item name="android:outlineAmbientShadowColor">@color/primary</item>
+        <item name="android:spotShadowAlpha">0.25</item>
+        <item name="android:outlineSpotShadowColor">@color/primary</item>
+    </style>
+
+    <style name="Card" parent="CardView">
+        <item name="android:outlineSpotShadowColor">@color/primary</item>
+        <item name="android:spotShadowAlpha">0.3</item>
+    </style>
+
+</resources>
