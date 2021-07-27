@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/cell_background"
+        android:layout_width="0dp"
+        android:layout_height="90dp"
+        android:background="@drawable/ic_line"
+        android:backgroundTint="@color/surface"
+        android:contentDescription="@string/contentDescription_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/cell_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:contentDescription="@string/contentDescription_podcast_image"
+        app:layout_constraintBottom_toTopOf="@+id/cell_divider"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_view_cards" />
+
+    <TextView
+        android:id="@+id/cell_date"
+        style="@style/Cell.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/podcast_date_dummy"
+        app:layout_constraintBottom_toBottomOf="@+id/cell_image"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/cell_title"
+        style="@style/Cell.Title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/podcast_title_dummy"
+        app:layout_constraintBottom_toBottomOf="@+id/cell_image"
+        app:layout_constraintEnd_toEndOf="@+id/cell_date"
+        app:layout_constraintStart_toEndOf="@+id/cell_image"
+        app:layout_constraintTop_toTopOf="@+id/cell_image" />
+
+    <ImageView
+        android:id="@+id/cell_divider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_line"
+        android:contentDescription="@string/contentDescription_divider"
+        app:layout_constraintBottom_toBottomOf="@+id/cell_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
