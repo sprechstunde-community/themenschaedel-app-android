@@ -1,6 +1,7 @@
 package sprechstunde.community.themenschaedel.room;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -9,8 +10,8 @@ import androidx.room.Update;
 import java.util.List;
 
 import sprechstunde.community.themenschaedel.model.Episode;
-import sprechstunde.community.themenschaedel.model.Topic;
 
+@Dao
 public interface EpisodeDAO {
     @Insert
     void insert(Episode episode);

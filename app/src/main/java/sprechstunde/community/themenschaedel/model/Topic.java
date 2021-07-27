@@ -4,37 +4,41 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+
 @Entity(tableName = "topic_table")
 public class Topic {
 
     @PrimaryKey
     @ColumnInfo(name="id")
+    @SerializedName("id")
     private int mId;
 
     @ColumnInfo(name = "name")
+    @SerializedName("name")
     String mName;
 
     @ColumnInfo(name = "start")
+    @SerializedName("start")
     int mStart;
 
     @ColumnInfo(name = "end")
+    @SerializedName("end")
     int mEnd;
 
-    @ColumnInfo(name = "duration")
-    int mDuration;
-
     @ColumnInfo(name = "ad")
+    @SerializedName("ad")
     boolean mAd;
 
-    @ColumnInfo(name = "episode")
+    @ColumnInfo(name = "episode_id")
+    @SerializedName("episode_id")
     int mEpisode;
 
-    public Topic (int id, String name, int start, int end, int duration, boolean ad, int episode) {
+    public Topic (int id, String name, int start, int end, boolean ad, int episode) {
         mId = id;
         mName = name;
         mStart = start;
         mEnd = end;
-        mDuration = duration;
         mAd = ad;
         mEpisode = episode;
     }
@@ -69,14 +73,6 @@ public class Topic {
 
     public void setEnd(int end) {
         mEnd = end;
-    }
-
-    public int getDuration() {
-        return mDuration;
-    }
-
-    public void setDuration(int duration) {
-        mDuration = duration;
     }
 
     public boolean isAd() {
