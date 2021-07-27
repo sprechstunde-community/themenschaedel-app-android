@@ -9,11 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import sprechstunde.community.themenschaedel.R;
-import sprechstunde.community.themenschaedel.data.Podcast;
+import sprechstunde.community.themenschaedel.model.Episode;
 
 public class PodcastRowAdapter extends RecyclerView.Adapter<PodcastRowAdapter.ViewHolder> {
 
-    private Podcast[] mPodcasts;
+    private Episode[] mEpisodes;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView title;
@@ -28,8 +28,8 @@ public class PodcastRowAdapter extends RecyclerView.Adapter<PodcastRowAdapter.Vi
         }
     }
 
-    public PodcastRowAdapter(Podcast[] podcasts) {
-        mPodcasts = podcasts;
+    public PodcastRowAdapter(Episode[] episodes) {
+        mEpisodes = episodes;
     }
 
     @NonNull
@@ -42,12 +42,12 @@ public class PodcastRowAdapter extends RecyclerView.Adapter<PodcastRowAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.getTitle().setText(mPodcasts[position].getTitle());
+        viewHolder.getTitle().setText(mEpisodes[position].getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return mPodcasts.length;
+        return mEpisodes.length;
     }
 
 }

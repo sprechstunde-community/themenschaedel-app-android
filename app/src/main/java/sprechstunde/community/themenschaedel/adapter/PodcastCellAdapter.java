@@ -12,12 +12,12 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 import sprechstunde.community.themenschaedel.R;
-import sprechstunde.community.themenschaedel.data.Podcast;
+import sprechstunde.community.themenschaedel.model.Episode;
 
 public class PodcastCellAdapter extends RecyclerView.Adapter<PodcastCellAdapter.ViewHolder> {
 
     private final Context context;
-    private final Podcast[] mPodcasts;
+    private final Episode[] mEpisodes;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView date;
@@ -44,9 +44,9 @@ public class PodcastCellAdapter extends RecyclerView.Adapter<PodcastCellAdapter.
         }
     }
 
-    public PodcastCellAdapter(Context context, Podcast[] podcasts) {
+    public PodcastCellAdapter(Context context, Episode[] episodes) {
         this.context = context;
-        mPodcasts = podcasts;
+        mEpisodes = episodes;
     }
 
     @NonNull
@@ -60,14 +60,14 @@ public class PodcastCellAdapter extends RecyclerView.Adapter<PodcastCellAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.getDate().setText(mPodcasts[position].getDate());
-        viewHolder.getTitle().setText(mPodcasts[position].getTitle());
+        viewHolder.getDate().setText(mEpisodes[position].getDate());
+        viewHolder.getTitle().setText(mEpisodes[position].getTitle());
         viewHolder.getImage().setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.ic_view_cards));
     }
 
     @Override
     public int getItemCount() {
-        return mPodcasts.length;
+        return mEpisodes.length;
     }
 
 }
