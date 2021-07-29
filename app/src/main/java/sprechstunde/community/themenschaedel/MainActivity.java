@@ -1,12 +1,13 @@
 package sprechstunde.community.themenschaedel;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -23,12 +25,28 @@ import java.util.Objects;
 
 import sprechstunde.community.themenschaedel.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, NavController.OnDestinationChangedListener {
 
     private ActivityMainBinding mBinding;
     private DISPLAY mCurrentDisplay;
     private NavController mNavController;
     private AppBarConfiguration mAppBarConfiguration;
+
+    @Override
+    public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+        int id = destination.getId();
+
+       if (id == R.id.nav_podcast) {
+           Toast.makeText(this, "Podcast clicked", Toast.LENGTH_SHORT).show();
+       } else if(id == R.id.nav_topic) {
+           Toast.makeText(this, "Topic clicked", Toast.LENGTH_SHORT).show();
+       } else if(id == R.id.nav_wiki) {
+            Toast.makeText(this, "Wiki clicked", Toast.LENGTH_SHORT).show();
+       } else if(id == R.id.nav_login) {
+           Toast.makeText(this, "LogIn clicked", Toast.LENGTH_SHORT).show();
+       }
+    }
+
     private enum DISPLAY {
         CARDS,
         CELLS,
@@ -51,7 +69,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setUpNavigation() {
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_podcast);
+        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_podcast, R.id.nav_topic, R.id.nav_wiki, R.id.nav_login, R.id.card, R.id.cell, R.id.row).setOpenableLayout(mBinding.drawerLayout).build();
         mNavController = Objects.requireNonNull(navHostFragment).getNavController();
     }
 
@@ -63,18 +82,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onSupportNavigateUp() {
-        return NavigationUI.navigateUp(mNavController, mAppBarConfiguration);
+        return NavigationUI.navigateUp(mNavController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 
     private void setUpDrawer() {
-        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, mBinding.drawerLayout, R.string.open, R.string.close);
-        mBinding.drawerLayout.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();
-
-        NavigationUI.setupWithNavController(mBinding.navView, mNavController);
-        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.menu_podcast, R.id.menu_topic, R.id.menu_wiki, R.id.menu_login, R.id.podcastCardFragment, R.id.podcastCellFragment, R.id.podcastRowFragment).setOpenableLayout(mBinding.drawerLayout).build();
         NavigationUI.setupActionBarWithNavController(this, mNavController, mAppBarConfiguration);
-        mBinding.navView.setNavigationItemSelectedListener(this);
+        NavigationUI.setupWithNavController(mBinding.navView, mNavController);
     }
 
     @Override
@@ -91,8 +104,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+        if (item.getItemId() == R.id.nav_podcast) {
+            Toast.makeText(this, "Podcast clicked", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if(item.getItemId() == R.id.nav_topic) {
+            Toast.makeText(this, "Topic clicked", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if(item.getItemId() == R.id.nav_wiki) {
+            Toast.makeText(this, "Wiki clicked", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if(item.getItemId() == R.id.nav_login) {
+            Toast.makeText(this, "LogIn clicked", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return true;
     }
+
 
     @Override
     public void onClick(View v) {

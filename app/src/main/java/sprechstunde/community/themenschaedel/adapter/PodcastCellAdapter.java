@@ -53,7 +53,7 @@ public class PodcastCellAdapter extends RecyclerView.Adapter<PodcastCellAdapter.
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.listitem_podcast_cell, viewGroup, false);
+                .inflate(R.layout.list_item_podcast_cell, viewGroup, false);
 
         return new ViewHolder(view);
     }

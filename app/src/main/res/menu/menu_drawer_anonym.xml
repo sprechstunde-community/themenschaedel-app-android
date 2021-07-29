@@ -4,27 +4,27 @@
     tools:showIn="navigation_view">
 
     <group
-        android:id="@+id/menu_middle"
+        android:id="@+id/nav_middle"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/menu_podcast"
+            android:id="@+id/nav_podcast"
             android:icon="@drawable/ic_podcast"
             android:title="@string/podcast" />
         <item
-            android:id="@+id/menu_topic"
+            android:id="@+id/nav_topic"
             android:icon="@drawable/ic_topic"
             android:title="@string/topic" />
         <item
-            android:id="@+id/menu_wiki"
+            android:id="@+id/nav_wiki"
             android:icon="@drawable/ic_wiki"
             android:title="@string/wiki" />
     </group>
 
     <group
-        android:id="@+id/menu_bottom"
+        android:id="@+id/nav_bottom"
         android:checkableBehavior="none">
             <item
-                android:id="@+id/menu_login"
+                android:id="@+id/nav_login"
                 android:icon="@drawable/ic_login"
                 android:title="@string/login_register"/>
     </group>

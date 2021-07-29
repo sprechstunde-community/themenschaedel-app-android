@@ -1,6 +1,5 @@
 package sprechstunde.community.themenschaedel.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,7 +48,7 @@ public class PodcastCardAdapter extends BaseAdapter {
         }
 
         if(convertView == null) {
-            convertView = mInflater.inflate(R.layout.listitem_podcast_card, null);
+            convertView = mInflater.inflate(R.layout.list_item_podcast_card, null);
         }
 
         ImageView imageView = convertView.findViewById(R.id.card_image);

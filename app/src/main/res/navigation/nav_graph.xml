@@ -3,36 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/podcastCardFragment">
+    app:startDestination="@id/card">
 
     <fragment
-        android:id="@+id/podcastCellFragment"
+        android:id="@+id/cell"
         android:name="sprechstunde.community.themenschaedel.view.PodcastCellFragment"
         tools:layout="@layout/fragment_podcast_cell">
         <action
             android:id="@+id/action_cell_to_row"
-            app:destination="@id/podcastRowFragment"
-            app:popUpTo="@id/podcastCellFragment"
+            app:destination="@id/row"
+            app:popUpTo="@id/cell"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/podcastRowFragment"
+        android:id="@+id/row"
         android:name="sprechstunde.community.themenschaedel.view.PodcastRowFragment"
         tools:layout="@layout/fragment_podcast_row">
         <action
             android:id="@+id/action_row_to_card"
-            app:destination="@id/podcastCardFragment"
-            app:popUpTo="@id/podcastRowFragment"
+            app:destination="@id/card"
+            app:popUpTo="@id/row"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/podcastCardFragment"
+        android:id="@+id/card"
         android:name="sprechstunde.community.themenschaedel.view.PodcastCardFragment"
         tools:layout="@layout/fragment_podcast_card">
         <action
             android:id="@+id/action_card_to_cell"
-            app:destination="@id/podcastCellFragment"
-            app:popUpTo="@id/podcastCardFragment"
+            app:destination="@id/cell"
+            app:popUpTo="@id/card"
             app:popUpToInclusive="true" />
     </fragment>
     <activity
@@ -40,4 +40,27 @@
         android:name="sprechstunde.community.themenschaedel.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
+    <activity
+        android:id="@+id/nav_topic"
+        android:name="sprechstunde.community.themenschaedel.view.TopicActivity"
+        android:label="nav_topic"
+        tools:layout="@layout/activity_topic" />
+    <fragment
+        android:id="@+id/nav_list"
+        android:name="sprechstunde.community.themenschaedel.view.ListFragment"
+        android:label="fragment_list"
+        tools:layout="@layout/fragment_list" >
+        <action
+            android:id="@+id/action_list_to_draw"
+            app:destination="@id/nav_draw" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_draw"
+        android:name="sprechstunde.community.themenschaedel.view.DrawFragment"
+        android:label="fragment_draw"
+        tools:layout="@layout/fragment_draw" >
+        <action
+            android:id="@+id/action_draw_to_list"
+            app:destination="@id/nav_list" />
+    </fragment>
 </navigation>

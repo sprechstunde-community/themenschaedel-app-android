@@ -4,12 +4,15 @@
     <string name="app_name">Themenschädel</string>
     <string name="settings">Einstellungen</string>
     <string name="search">Suche</string>
+    <string name="info">Info</string>
 
     // Sort &amp; Filter
     <string name="filter_date">Datum</string>
     <string name="filter_title">Titel</string>
     <string name="filter_user">User</string>
     <string name="filter_state">Status</string>
+    <string name="filter_number">Folge</string>
+    <string name="filter_name">Name</string>
 
     // Content Description
     <string name="contentDescription_split">feiner Strich</string>
@@ -24,7 +27,6 @@
     <string name="podcast_title_dummy">Flos biodesintegrierender China-Rollrasen des Todes!</string>
     <string name="podcast_episode">Folge</string>
 
-
     // Menu, Drawer
     <string name="podcast">Podcast</string>
     <string name="topic">Themen</string>
@@ -37,5 +39,9 @@
     <string name="contentDescription_divider">Trennstrich</string>
     <string name="contentDescription_profile_image">Profilbild</string>
 
+
+    // Topic Activity
+    <string name="list">Liste</string>
+    <string name="draw">Ziehen</string>
 
 </resources>
