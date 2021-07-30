@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialog_info_sugg_topic_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/dialog_info_sugg_topic_background"
+        android:layout_width="300dp"
+        android:layout_height="321dp"
+        android:background="@drawable/ic_card"
+        android:contentDescription="@string/contentDescription_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dialog_info_sugg_topic_types_open_details"
+        style="@style/Dialog.Details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/dialog_info_open_subtitle"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_info_sugg_topic_types_sugg_details"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_sugg_topic_types_open"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_sugg_topic_types_open" />
+
+    <TextView
+        android:id="@+id/dialog_info_sugg_topic_types_dis_details"
+        style="@style/Dialog.Details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/dialog_info_discussed_subtitle"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_info_sugg_topic_types_sugg_details"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_sugg_topic_types_discussed"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_sugg_topic_types_discussed" />
+
+    <TextView
+        android:id="@+id/dialog_info_sugg_topic_types_reject_details"
+        style="@style/Dialog.Details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/dialog_info_rejected_subtitle"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_info_sugg_topic_types_sugg_details"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_sugg_topic_types_discussed"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_sugg_topic_types_rejected" />
+
+    <TextView
+        android:id="@+id/dialog_info_sugg_topic_types_open"
+        style="@style/Dialog.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/dialog_info_open"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_sugg_topic_types_sugg_details"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_sugg_topic_types_sugg_details" />
+
+    <TextView
+        android:id="@+id/dialog_info_sugg_topic_types_discussed"
+        style="@style/Dialog.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/dialog_info_discussed"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_sugg_topic_types_open_details"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_sugg_topic_types_open_details" />
+
+    <TextView
+        android:id="@+id/dialog_info_sugg_topic_types_rejected"
+        style="@style/Dialog.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/dialog_info_rejected"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_sugg_topic_types_open_details"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_sugg_topic_types_dis_details" />
+
+    <TextView
+        android:id="@+id/dialog_info_sugg_topic_types_sugg_details"
+        style="@style/Dialog.Details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/dialog_info_suggestion_subtitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_sugg_topic_types_suggestion"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_sugg_topic_types_suggestion" />
+
+    <TextView
+        android:id="@+id/dialog_info_sugg_topic_types_suggestion"
+        style="@style/Dialog.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/dialog_info_suggestion"
+        app:layout_constraintStart_toEndOf="@+id/dialog_info_sugg_topic_types_sugg_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/dialog_info_sugg_topic_types_sugg_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/contentDescription_icon_suggested"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_sugg_topic_begin"
+        app:layout_constraintTop_toTopOf="@+id/dialog_info_sugg_topic_types_suggestion"
+        app:srcCompat="@drawable/ic_info" />
+
+    <ImageView
+        android:id="@+id/dialog_info_sugg_topic_types_open_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/contentDescription_icon_open"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_info_sugg_topic_types_open"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_info_sugg_topic_types_sugg_icon"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_sugg_topic_types_sugg_icon"
+        app:layout_constraintTop_toTopOf="@+id/dialog_info_sugg_topic_types_open"
+        app:srcCompat="@drawable/ic_info" />
+
+    <ImageView
+        android:id="@+id/dialog_info_sugg_topic_types_dis_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/contentDescription_icon_discussed"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_info_sugg_topic_types_discussed"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_info_sugg_topic_types_sugg_icon"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_sugg_topic_types_sugg_icon"
+        app:layout_constraintTop_toTopOf="@+id/dialog_info_sugg_topic_types_discussed"
+        app:srcCompat="@drawable/ic_info" />
+
+    <ImageView
+        android:id="@+id/dialog_info_sugg_topic_types_reject_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/contentDescription_icon_rejected"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_info_sugg_topic_types_rejected"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_info_sugg_topic_types_sugg_icon"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_sugg_topic_types_sugg_icon"
+        app:layout_constraintTop_toTopOf="@+id/dialog_info_sugg_topic_types_rejected"
+        app:srcCompat="@drawable/ic_info" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/dialog_info_sugg_topic_begin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="32dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

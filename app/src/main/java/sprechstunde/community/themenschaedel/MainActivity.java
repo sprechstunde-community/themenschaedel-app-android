@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
@@ -26,7 +27,7 @@ import java.util.Objects;
 
 import sprechstunde.community.themenschaedel.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private ActivityMainBinding mBinding;
     private NavController mNavController;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setUpNavigation() {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_main);
-        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_podcast, R.id.nav_topic, R.id.nav_wiki, R.id.nav_login).setOpenableLayout(mBinding.drawerLayout).build();
+        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_podcast, R.id.nav_topic, R.id.nav_wiki, R.id.nav_login, R.id.nav_profile).setOpenableLayout(mBinding.drawerLayout).build();
         mNavController = Objects.requireNonNull(navHostFragment).getNavController();
     }
 
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationUI.setupActionBarWithNavController(this, mNavController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(mBinding.navView, mNavController);
         mBinding.navView.setNavigationItemSelectedListener(this);
+        mBinding.navView.getHeaderView(0).setOnClickListener(this);
     }
 
     @Override
@@ -86,11 +88,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if(item.getItemId() == R.id.nav_topic) {
             mNavController.navigate(R.id.nav_topic);
         } else if(item.getItemId() == R.id.nav_wiki) {
-            Toast.makeText(this, "Wiki clicked", Toast.LENGTH_SHORT).show();
+            mNavController.navigate(R.id.nav_wiki);
         } else if(item.getItemId() == R.id.nav_login) {
             Toast.makeText(this, "LogIn clicked", Toast.LENGTH_SHORT).show();
         }
 
+        mBinding.activityMainToolbar.setBackgroundColor(getColor(R.color.background));
         mBinding.drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -101,6 +104,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mBinding.drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == mBinding.navView.getHeaderView(0)) {
+            mBinding.activityMainToolbar.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.toolbar_gradient,getTheme()));
+            mNavController.navigate(R.id.nav_profile);
+            mBinding.drawerLayout.closeDrawer(GravityCompat.START);
         }
     }
 }

@@ -1,4 +1,4 @@
-package sprechstunde.community.themenschaedel.view.topic;
+package sprechstunde.community.themenschaedel.view.wiki;
 
 import android.os.Bundle;
 
@@ -12,14 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import sprechstunde.community.themenschaedel.R;
-import sprechstunde.community.themenschaedel.databinding.FragmentDrawBinding;
-import sprechstunde.community.themenschaedel.databinding.FragmentPodcastCardBinding;
+import sprechstunde.community.themenschaedel.databinding.FragmentWikiBinding;
 
-public class DrawFragment extends Fragment {
+public class WikiFragment extends Fragment {
 
-    FragmentDrawBinding mBinding;
+    FragmentWikiBinding mBinding;
 
-    public DrawFragment() {
+    public WikiFragment() {
         // Required empty public constructor
     }
 
@@ -32,7 +31,7 @@ public class DrawFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mBinding = FragmentDrawBinding.inflate(inflater, container, false);
+        mBinding = FragmentWikiBinding.inflate(inflater, container, false);
         return mBinding.getRoot();
     }
 
@@ -48,5 +47,4 @@ public class DrawFragment extends Fragment {
         super.onDestroyView();
         mBinding = null;
     }
-
 }

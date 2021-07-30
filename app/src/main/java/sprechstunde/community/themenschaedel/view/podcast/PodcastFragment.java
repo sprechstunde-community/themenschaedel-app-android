@@ -1,4 +1,4 @@
-package sprechstunde.community.themenschaedel.view;
+package sprechstunde.community.themenschaedel.view.podcast;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -60,23 +60,23 @@ public class PodcastFragment extends Fragment implements View.OnClickListener {
     }
 
     private void saveDisplayTypeToSharedPreferences() {
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(getString(R.string.saved_display_type), mCurrentDisplay.ordinal());
         editor.apply();
     }
 
     private void getDisplayTypeFromSharedPreferences() {
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);
         int defaultValue = Display.CARDS.ordinal();
         int displayType = sharedPref.getInt(getString(R.string.saved_display_type), defaultValue);
         mCurrentDisplay = Display.values()[displayType];
     }
 
     private void changeDisplayFragment(boolean startedFragment) {
-        Drawable card = AppCompatResources.getDrawable(getActivity(), R.drawable.ic_view_cards);
-        Drawable cell = AppCompatResources.getDrawable(getActivity(), R.drawable.ic_view_cells);
-        Drawable row = AppCompatResources.getDrawable(getActivity(), R.drawable.ic_view_rows);
+        Drawable card = AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_view_cards);
+        Drawable cell = AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_view_cells);
+        Drawable row = AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_view_rows);
 
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

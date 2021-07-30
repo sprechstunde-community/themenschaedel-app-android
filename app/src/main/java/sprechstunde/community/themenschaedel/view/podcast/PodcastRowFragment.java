@@ -1,4 +1,4 @@
-package sprechstunde.community.themenschaedel.view;
+package sprechstunde.community.themenschaedel.view.podcast;
 
 import android.os.Bundle;
 

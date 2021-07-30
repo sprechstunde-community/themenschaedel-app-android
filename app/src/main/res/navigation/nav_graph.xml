@@ -12,7 +12,17 @@
         tools:layout="@layout/fragment_topic" />
     <fragment
         android:id="@+id/nav_podcast"
-        android:name="sprechstunde.community.themenschaedel.view.PodcastFragment"
+        android:name="sprechstunde.community.themenschaedel.view.podcast.PodcastFragment"
         android:label="fragment_podcast"
         tools:layout="@layout/fragment_podcast" />
+    <fragment
+        android:id="@+id/nav_wiki"
+        android:name="sprechstunde.community.themenschaedel.view.wiki.WikiFragment"
+        android:label="fragment_wiki"
+        tools:layout="@layout/fragment_wiki" />
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="sprechstunde.community.themenschaedel.view.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

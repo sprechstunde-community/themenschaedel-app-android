@@ -19,6 +19,22 @@
     <string name="contentDescription_display">Anzeigeart - groß, mittel oder klein</string>
     <string name="contentDescription_card">Abgerundetes Rechteck mit leichtem Schatten</string>
     <string name="contentDescription_podcast_image">Bild der Podcastfolge</string>
+    <string name="contentDescription_profile_role">Das Icon deiner Rolle, welche deine Benutztungsrechte der App widerspiegelt.</string>
+    <string name="contentDescription_profile_field_background">Abgerundetes Rechteck</string>
+    <string name="contentDescription_background">Hintergrund</string>
+    <string name="contentDescription_divider">Trennstrich</string>
+    <string name="contentDescription_profile_image">Profilbild</string>
+    <string name="contentDescription_profile_platform_user">"Icon, das die bevorzugte Plattform des Users darstellt."</string>
+    <string name="contentDescription_icon_community">Ein Symbol mit 2 Menschen.</string>
+    <string name="contentDescription_icon_boys">Ein Symbol mit einer Person</string>
+    <string name="contentDescription_icon_ad">Ein Symbol eines Einkaufswagens</string>
+    <string name="contentDescription_icon_suggested">Zwei Kreise nebeneinander. In dem 2. ist ein Plus.</string>
+    <string name="contentDescription_icon_open">Ein leerer Kreis</string>
+    <string name="contentDescription_icon_discussed">Ein Kreis mit einem Häckchen in der Mitte</string>
+    <string name="contentDescription_icon_rejected">Ein durchgestrichener Kreis</string>
+    <string name="contentDescription_curve">Eine wellenartige Form, die einen Verlauf hat</string>
+    <string name="contentDescription_curve_shadow">Der Schatten der oberen Wellenform</string>
+    <string name="contentDescription_card_button">Ein großer abgerundeter Button</string>
 
     // Podcast Card, Cell, Row
     <string name="podcast_number_dummy">Folge 220</string>
@@ -35,16 +51,47 @@
     <string name="open">Drawer öffnen</string>
     <string name="close">Drawer schließen</string>
     <string name="anonym">360er</string>
-    <string name="contentDescription_background">Hintergrund</string>
-    <string name="contentDescription_divider">Trennstrich</string>
-    <string name="contentDescription_profile_image">Profilbild</string>
-
 
     // Topic Fragment
     <string name="list">Liste</string>
     <string name="draw">Ziehen</string>
 
+    // Profile Fragment
+    <string name="profile_name_dummy">Mira M</string>
+    <string name="profile_email_dummy">mira.m12@gmail.com</string>
+    <string name="profile_password_dummy">*****</string>
+
+    <string name="profile_name_autofill">Dein Username</string>
+    <string name="profile_email_autofill">Deine E-Mail</string>
+    <string name="profile_password_autofill">Dein Passwort</string>
+
+    <string name="profile_name_hint">Username</string>
+    <string name="profile_email_hint">E-Mail</string>
+    <string name="profile_password_hint">Passwort</string>
+
+    <string name="profile_role_user">User</string>
+    <string name="profile_platform">Bevorzugte Plattform</string>
+
     // SharedPreferences
     <string name="saved_display_type">saved_display_type</string>
+
+    // Dialog Info
+    <string name="dialog_info_episode_type_title">Vorgeschlagen von</string>
+    <string name="dialog_info_community">Community</string>
+    <string name="dialog_info_boys">Jungs</string>
+    <string name="dialog_info_ad">Werbung</string>
+    <string name="dialog_info_community_subtitle">Ein Thema, welches von der Community vorgeschlagen wurde.</string>
+    <string name="dialog_info_boys_subtitle">Ein Thema, welches von einer (oder mehreren) der Jungs vorgeschlagen wurde</string>
+    <string name="dialog_info_ad_subtitle">Dies ist kein Thema, sondern eine Werbeeinblendung</string>
+
+    <string name="dialog_info_suggestion">Vorgeschlagen</string>
+    <string name="dialog_info_open">Offen</string>
+    <string name="dialog_info_discussed">Besprochen</string>
+    <string name="dialog_info_rejected">Abgelehnt</string>
+    <string name="dialog_info_suggestion_subtitle">Die Community hat das Thema eingereicht, es wurde jedoch noch nicht von den Jungs angenommen / abgelehnt</string>
+    <string name="dialog_info_open_subtitle">Ein angenommenes Thema, dass jedoch noch nicht von den Jungs gezogen wurde.</string>
+    <string name="dialog_info_discussed_subtitle">Ein Thema, dass bereits gezogen und von den Jungs besprochen wurde</string>
+    <string name="dialog_info_rejected_subtitle">Ein von der Community vorgeschlagenes Thema, welches die Jungs abgelehnt haben</string>
+
 
 </resources>

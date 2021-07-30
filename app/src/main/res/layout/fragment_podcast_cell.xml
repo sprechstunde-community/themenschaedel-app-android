@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.PodcastCellFragment">
+    tools:context=".view.podcast.PodcastCellFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_cell_recyclerview"
