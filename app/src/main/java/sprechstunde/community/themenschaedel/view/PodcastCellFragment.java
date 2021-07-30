@@ -51,4 +51,11 @@ public class PodcastCellFragment extends Fragment {
         mBinding.fragmentCellRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;
     }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding = null;
+    }
 }

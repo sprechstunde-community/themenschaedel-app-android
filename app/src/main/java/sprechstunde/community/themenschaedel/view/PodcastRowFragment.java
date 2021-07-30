@@ -18,6 +18,8 @@ import sprechstunde.community.themenschaedel.databinding.FragmentPodcastRowBindi
 
 public class PodcastRowFragment extends Fragment {
 
+    FragmentPodcastRowBinding mBinding;
+
     public PodcastRowFragment() {
         // Required empty public constructor
     }
@@ -30,7 +32,7 @@ public class PodcastRowFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentPodcastRowBinding mBinding = FragmentPodcastRowBinding.inflate(inflater, container, false);
+       mBinding = FragmentPodcastRowBinding.inflate(inflater, container, false);
         View view = mBinding.getRoot();
 
         Podcast[] podcasts = {
@@ -45,5 +47,11 @@ public class PodcastRowFragment extends Fragment {
         Objects.requireNonNull(mBinding.fragmentRowRecyclerview).setAdapter(adapter);
         mBinding.fragmentRowRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding = null;
     }
 }

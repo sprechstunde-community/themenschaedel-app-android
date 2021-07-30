@@ -24,90 +24,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/activity_main_line"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/activity_main_toolbar">
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/activity_main_filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:singleLine="true"
-                app:singleSelection="true">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/filter_date"
-                    style="@style/Chip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/filter_date"
-                    android:textAlignment="center"
-                    app:textEndPadding="12dp"
-                    app:textStartPadding="14dp" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/filter_title"
-                    style="@style/Chip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/filter_title"
-                    android:textAlignment="center"
-                    app:textEndPadding="12dp"
-                    app:textStartPadding="14dp" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/filter_user"
-                    style="@style/Chip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/filter_user"
-                    app:textEndPadding="12dp"
-                    app:textStartPadding="14dp" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/filter_state"
-                    style="@style/Chip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/filter_state"
-                    android:textAlignment="center"
-                    app:textEndPadding="12dp"
-                    app:textStartPadding="14dp" />
-            </com.google.android.material.chip.ChipGroup>
-        </HorizontalScrollView>
-
-        <ImageView
-            android:id="@+id/activity_main_line"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/ic_view_split"
-            android:contentDescription="@string/contentDescription_split"
-            app:layout_constraintBottom_toBottomOf="@+id/horizontalScrollView"
-            app:layout_constraintEnd_toStartOf="@+id/activity_main_display"
-            app:layout_constraintTop_toTopOf="@+id/horizontalScrollView" />
-
-        <ImageButton
-            android:id="@+id/activity_main_display"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/ic_view_cards"
-            android:backgroundTint="@color/primary"
-            android:contentDescription="@string/contentDescription_display"
-            app:layout_constraintBottom_toBottomOf="@+id/activity_main_line"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/activity_main_line" />
-
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/nav_host_fragment_podcast"
+            android:id="@+id/nav_host_fragment_main"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -116,7 +34,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+            app:layout_constraintTop_toBottomOf="@+id/activity_main_toolbar"
             app:navGraph="@navigation/nav_graph" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

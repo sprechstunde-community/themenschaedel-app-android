@@ -40,8 +40,11 @@
     <string name="contentDescription_profile_image">Profilbild</string>
 
 
-    // Topic Activity
+    // Topic Fragment
     <string name="list">Liste</string>
     <string name="draw">Ziehen</string>
+
+    // SharedPreferences
+    <string name="saved_display_type">saved_display_type</string>
 
 </resources>

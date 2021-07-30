@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
@@ -25,33 +26,11 @@ import java.util.Objects;
 
 import sprechstunde.community.themenschaedel.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, NavController.OnDestinationChangedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityMainBinding mBinding;
-    private DISPLAY mCurrentDisplay;
     private NavController mNavController;
     private AppBarConfiguration mAppBarConfiguration;
-
-    @Override
-    public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-        int id = destination.getId();
-
-       if (id == R.id.nav_podcast) {
-           Toast.makeText(this, "Podcast clicked", Toast.LENGTH_SHORT).show();
-       } else if(id == R.id.nav_topic) {
-           Toast.makeText(this, "Topic clicked", Toast.LENGTH_SHORT).show();
-       } else if(id == R.id.nav_wiki) {
-            Toast.makeText(this, "Wiki clicked", Toast.LENGTH_SHORT).show();
-       } else if(id == R.id.nav_login) {
-           Toast.makeText(this, "LogIn clicked", Toast.LENGTH_SHORT).show();
-       }
-    }
-
-    private enum DISPLAY {
-        CARDS,
-        CELLS,
-        ROWS
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +42,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setUpNavigation();
         setUpToolbar();
         setUpDrawer();
-
-        mCurrentDisplay = DISPLAY.CARDS;
-        mBinding.activityMainDisplay.setOnClickListener(this);
     }
 
     private void setUpNavigation() {
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_podcast);
-        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_podcast, R.id.nav_topic, R.id.nav_wiki, R.id.nav_login, R.id.card, R.id.cell, R.id.row).setOpenableLayout(mBinding.drawerLayout).build();
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_main);
+        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_podcast, R.id.nav_topic, R.id.nav_wiki, R.id.nav_login).setOpenableLayout(mBinding.drawerLayout).build();
         mNavController = Objects.requireNonNull(navHostFragment).getNavController();
     }
 
@@ -88,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setUpDrawer() {
         NavigationUI.setupActionBarWithNavController(this, mNavController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(mBinding.navView, mNavController);
+        mBinding.navView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -105,43 +82,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.nav_podcast) {
-            Toast.makeText(this, "Podcast clicked", Toast.LENGTH_SHORT).show();
-            return true;
+            mNavController.navigate(R.id.nav_podcast);
         } else if(item.getItemId() == R.id.nav_topic) {
-            Toast.makeText(this, "Topic clicked", Toast.LENGTH_SHORT).show();
-            return true;
+            mNavController.navigate(R.id.nav_topic);
         } else if(item.getItemId() == R.id.nav_wiki) {
             Toast.makeText(this, "Wiki clicked", Toast.LENGTH_SHORT).show();
-            return true;
         } else if(item.getItemId() == R.id.nav_login) {
             Toast.makeText(this, "LogIn clicked", Toast.LENGTH_SHORT).show();
-            return true;
         }
+
+        mBinding.drawerLayout.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        if (mBinding.activityMainDisplay == v) {
-            Drawable card = AppCompatResources.getDrawable(this, R.drawable.ic_view_cards);
-            Drawable cell = AppCompatResources.getDrawable(this, R.drawable.ic_view_cells);
-            Drawable row = AppCompatResources.getDrawable(this, R.drawable.ic_view_rows);
-
-            if (mCurrentDisplay == DISPLAY.CARDS) {
-                mCurrentDisplay = DISPLAY.CELLS;
-                mBinding.activityMainDisplay.setBackground(cell);
-                mNavController.navigate(R.id.action_card_to_cell);
-            } else if (mCurrentDisplay == DISPLAY.CELLS) {
-                mCurrentDisplay = DISPLAY.ROWS;
-                mBinding.activityMainDisplay.setBackground(row);
-                mNavController.navigate(R.id.action_cell_to_row);
-            } else {
-                mCurrentDisplay = DISPLAY.CARDS;
-                mBinding.activityMainDisplay.setBackground(card);
-                mNavController.navigate(R.id.action_row_to_card);
-            }
-        }
     }
 
     @Override
