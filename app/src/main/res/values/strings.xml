@@ -93,5 +93,12 @@
     <string name="dialog_info_discussed_subtitle">Ein Thema, dass bereits gezogen und von den Jungs besprochen wurde</string>
     <string name="dialog_info_rejected_subtitle">Ein von der Community vorgeschlagenes Thema, welches die Jungs abgelehnt haben</string>
 
+    // List item
+    <string name="list_item_sugg_topic_title_dummy">Schwert oder Axt</string>
+    <string name="list_item_sugg_topic_number_dummy">Nr. 120</string>
+    <string name="contentDescription_list_item_icon">Ein Symbol das entweder eine Person zeigt und dafür steht, dass dieses Thema von den Jungs kam, oder 2 Personen hintereinander, was dafür steht, dass das Thema von der Community vorgeschlagen wurde.</string>
+    <string name="contentDescription_filter">Eine Lupe die vor einem Text ist. Der Text wird durch Linien dargestellt.</string>
+    <string name="contentDescription_line">Eine vertikale Linie</string>
+
 
 </resources>
