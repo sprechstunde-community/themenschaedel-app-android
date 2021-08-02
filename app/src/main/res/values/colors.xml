@@ -19,6 +19,7 @@
     <color name="onPrimary">#FFFFFFFF</color>
     <color name="onSecondary">#FF000000</color>
     <color name="onBackground">#FF000000</color>
+    <color name="onBackgroundSecondary">#C1C1C1</color>
     <color name="onSurface">#FF000000</color>
     <color name="onSurfaceSecondary">#979797</color>
     <color name="onError">#FFFFFFFF</color>

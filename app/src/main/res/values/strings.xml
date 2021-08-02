@@ -35,6 +35,9 @@
     <string name="contentDescription_curve">Eine wellenartige Form, die einen Verlauf hat</string>
     <string name="contentDescription_curve_shadow">Der Schatten der oberen Wellenform</string>
     <string name="contentDescription_card_button">Ein großer abgerundeter Button</string>
+    <string name="contentDescription_filter">Eine Lupe die vor einem Text ist. Der Text wird durch Linien dargestellt.</string>
+    <string name="contentDescription_line">Eine vertikale Linie</string>
+    <string name="contentDescription_list_item_icon">Ein Symbol das entweder eine Person zeigt und dafür steht, dass dieses Thema von den Jungs kam, oder 2 Personen hintereinander, was dafür steht, dass das Thema von der Community vorgeschlagen wurde.</string>
 
     // Podcast Card, Cell, Row
     <string name="podcast_number_dummy">Folge 220</string>
@@ -96,9 +99,7 @@
     // List item
     <string name="list_item_sugg_topic_title_dummy">Schwert oder Axt</string>
     <string name="list_item_sugg_topic_number_dummy">Nr. 120</string>
-    <string name="contentDescription_list_item_icon">Ein Symbol das entweder eine Person zeigt und dafür steht, dass dieses Thema von den Jungs kam, oder 2 Personen hintereinander, was dafür steht, dass das Thema von der Community vorgeschlagen wurde.</string>
-    <string name="contentDescription_filter">Eine Lupe die vor einem Text ist. Der Text wird durch Linien dargestellt.</string>
-    <string name="contentDescription_line">Eine vertikale Linie</string>
+    <string name="list_item_topic_number">Nr.</string>
 
 
 </resources>

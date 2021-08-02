@@ -135,6 +135,7 @@
     <style name="ListItem.Subtitle">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/onSurface</item>
+        <item name="android:textAlignment">textStart</item>
     </style>
 
 </resources>

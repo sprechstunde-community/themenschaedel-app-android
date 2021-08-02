@@ -82,21 +82,12 @@ public class PodcastFragment extends Fragment implements View.OnClickListener {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setReorderingAllowed(true);
 
-        if (mCurrentDisplay == Display.CARDS) {
-            if(startedFragment)
-                changeToCards(card, transaction);
-            else
-                changeToCells(cell, transaction);
-        } else if (mCurrentDisplay == Display.CELLS) {
-            if(startedFragment)
-                changeToCells(cell, transaction);
-            else
-                changeToRows(row, transaction);
-        } else {
-            if(startedFragment)
-                changeToRows(row, transaction);
-            else
-                changeToCards(card, transaction);
+        if (mCurrentDisplay == Display.CARDS && startedFragment || mCurrentDisplay == Display.ROWS && !startedFragment) {
+            changeToCards(card, transaction);
+        } else if (mCurrentDisplay == Display.CELLS && startedFragment || mCurrentDisplay == Display.CARDS && !startedFragment) {
+            changeToCells(cell, transaction);
+        } else if (mCurrentDisplay == Display.ROWS && startedFragment || mCurrentDisplay == Display.CELLS && !startedFragment) {
+            changeToRows(row, transaction);
         }
 
         saveDisplayTypeToSharedPreferences();

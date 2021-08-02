@@ -15,6 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,10 +28,16 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 import sprechstunde.community.themenschaedel.MainActivity;
 import sprechstunde.community.themenschaedel.R;
+import sprechstunde.community.themenschaedel.adapter.PodcastRowAdapter;
+import sprechstunde.community.themenschaedel.adapter.TopicAdapter;
+import sprechstunde.community.themenschaedel.data.Podcast;
+import sprechstunde.community.themenschaedel.data.Topic;
 import sprechstunde.community.themenschaedel.databinding.FragmentListBinding;
 import sprechstunde.community.themenschaedel.databinding.FragmentPodcastCardBinding;
 
@@ -52,7 +59,20 @@ public class ListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = FragmentListBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
+        View view = mBinding.getRoot();
+
+        List<Topic> topics = new LinkedList<>();
+        topics.add(new Topic("Call of the Void", 0, 55,true));
+        topics.add(new Topic("Der Mars", 0, 162,false));
+        topics.add(new Topic("Eine Random Campingplatz-Geschichte", 0, 100,false));
+        topics.add(new Topic("Erlebnisse im Verkehr", 0, 120,false));
+        topics.add(new Topic("Erste Erinnerung", 0, 108,true));
+        topics.add(new Topic("Omas Essen", 0, 120,false));
+
+        TopicAdapter adapter = new TopicAdapter(topics, getContext());
+        Objects.requireNonNull(mBinding.fragmentListRecylerview).setAdapter(adapter);
+        mBinding.fragmentListRecylerview.setLayoutManager(new LinearLayoutManager(getContext()));
+        return view;
     }
 
     @Override
