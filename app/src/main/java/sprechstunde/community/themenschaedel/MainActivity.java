@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,9 +30,15 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.List;
 import java.util.Objects;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import sprechstunde.community.themenschaedel.api.ApiClient;
 import sprechstunde.community.themenschaedel.databinding.ActivityMainBinding;
+import sprechstunde.community.themenschaedel.model.Episode;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
@@ -130,5 +137,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mNavController.navigate(R.id.nav_profile);
             mBinding.drawerLayout.closeDrawer(GravityCompat.START);
         }
+    }
+
+    private void getEpisodes() {
+        Call<List<Episode>> call = ApiClient.getInstance().getMyApi().getEpisodes();
+        call.enqueue(new Callback<List<Episode>>() {
+            @Override
+            public void onResponse(Call<List<Episode>> call, Response<List<Episode>> response) {
+                List<Episode> episodes = response.body();
+                String[] episodeList = new String[episodes.size()];
+
+                for (int i = 0; i < episodes.size(); i++) {
+                    episodeList[i] = episodes.get(i).getTitle();
+                    Log.i("HELLO", episodes.get(i).getTitle());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Episode>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "An error has occured", Toast.LENGTH_LONG).show();
+            }
+
+        });
     }
 }

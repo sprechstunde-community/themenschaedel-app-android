@@ -49,4 +49,14 @@ dependencies {
 
     // Viewpager Implementation for TabLayout
     implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    // Room components
+    implementation "androidx.room:room-runtime:2.3.0"
+    annotationProcessor "androidx.room:room-compiler:2.3.0"
+    androidTestImplementation "androidx.room:room-testing:2.3.0"
+
+    // Retrofit for API Calls
+    implementation 'com.squareup.retrofit2:retrofit:2.7.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.7'
 }

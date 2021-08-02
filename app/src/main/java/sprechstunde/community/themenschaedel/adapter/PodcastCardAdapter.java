@@ -11,23 +11,23 @@ import android.widget.TextView;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import sprechstunde.community.themenschaedel.R;
-import sprechstunde.community.themenschaedel.data.Podcast;
+import sprechstunde.community.themenschaedel.model.Episode;
 
 public class PodcastCardAdapter extends BaseAdapter {
 
     private final Context context;
-    Podcast[] mPodcasts;
+    Episode[] mEpisodes;
     LayoutInflater mInflater;
 
-    public PodcastCardAdapter(Context context, Podcast[] podcasts)
+    public PodcastCardAdapter(Context context, Episode[] episodes)
     {
         this.context = context;
-        mPodcasts = podcasts;
+        mEpisodes = episodes;
     }
 
     @Override
     public int getCount() {
-        return mPodcasts.length;
+        return mEpisodes.length;
     }
 
     @Override
@@ -56,10 +56,10 @@ public class PodcastCardAdapter extends BaseAdapter {
         TextView date = convertView.findViewById(R.id.card_date);
         TextView length = convertView.findViewById(R.id.card_length);
 
-        String episode = context.getResources().getString(R.string.podcast_episode) + " " + mPodcasts[position].getNumber();
+        String episode = context.getResources().getString(R.string.podcast_episode) + " " + mEpisodes[position].getNumber();
         number.setText(episode);
-        date.setText(mPodcasts[position].getDate());
-        length.setText(mPodcasts[position].getLength());
+        date.setText(mEpisodes[position].getDate());
+        length.setText(mEpisodes[position].getDuration());
         imageView.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.ic_view_cards));
         return convertView;
     }
