@@ -1,10 +1,12 @@
 package sprechstunde.community.themenschaedel;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.FragmentManager;
@@ -14,8 +16,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationUI.setupWithNavController(mBinding.navView, mNavController);
         mBinding.navView.setNavigationItemSelectedListener(this);
         mBinding.navView.getHeaderView(0).setOnClickListener(this);
+        setTextColorForMenuItem();
     }
 
     @Override
@@ -79,6 +86,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return NavigationUI.onNavDestinationSelected(item, mNavController) || super.onOptionsItemSelected(item);
+    }
+
+    private void setTextColorForMenuItem() {
+        Menu menuNav = mBinding.navView.getMenu();
+        MenuItem menuItem = menuNav.findItem(R.id.nav_hint);
+        SpannableString spanString = new SpannableString(menuItem.getTitle().toString());
+        spanString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.onSurfaceSecondary)), 0, spanString.length(), 0);
+        spanString.setSpan(new StyleSpan(Typeface.ITALIC), 0, spanString.length(), 0);
+        menuItem.setTitle(spanString);
     }
 
     @Override

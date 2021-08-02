@@ -100,7 +100,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/contentDescription_profile_role"
-        android:src="@drawable/ic_info"
+        android:src="@drawable/ic_user"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_profile_image_mask"
         app:layout_constraintDimensionRatio="1:0.3"
         app:layout_constraintEnd_toEndOf="@+id/fragment_profile_image_mask"
@@ -210,50 +211,30 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/fragment_profile_field_role"
+        android:id="@+id/fragment_profile_field_platfrom"
         style="@style/Profile.Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="14dp"
-        android:text="@string/profile_role_user"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_profile_field_mask"
-        app:layout_constraintEnd_toStartOf="@+id/fragment_profile_field_platform"
-        app:layout_constraintStart_toStartOf="@+id/fragment_profile_field_mask"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_profile_field_role_icon" />
-
-    <TextView
-        android:id="@+id/fragment_profile_field_platform"
-        style="@style/Profile.Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="@string/profile_platform"
-        app:layout_constraintBaseline_toBaselineOf="@+id/fragment_profile_field_role"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_profile_field_mask"
         app:layout_constraintEnd_toEndOf="@+id/fragment_profile_field_mask"
-        app:layout_constraintHorizontal_bias="0.085"
-        app:layout_constraintStart_toEndOf="@+id/fragment_profile_field_role" />
+        app:layout_constraintStart_toStartOf="@+id/fragment_profile_field_mask"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_profile_field_platform_icon" />
 
     <ImageView
-        android:id="@+id/fragment_profile_field_role_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/fragment_profile_field_platform_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/ic_user_transparent"
         android:contentDescription="@string/profile_role_user"
-        android:src="@drawable/ic_info"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_profile_field_role"
-        app:layout_constraintEnd_toEndOf="@+id/fragment_profile_field_role"
-        app:layout_constraintStart_toStartOf="@+id/fragment_profile_field_role"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_profile_field_platfrom"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_profile_field_platfrom"
+        app:layout_constraintStart_toStartOf="@+id/fragment_profile_field_platfrom"
         app:layout_constraintTop_toTopOf="@+id/fragment_profile_field_mask"
         app:layout_constraintVertical_chainStyle="packed" />
-
-    <ImageView
-        android:id="@+id/fragment_profile_field_platfrom_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/contentDescription_profile_platform_user"
-        android:src="@drawable/ic_info"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_profile_field_role_icon"
-        app:layout_constraintEnd_toEndOf="@+id/fragment_profile_field_platform"
-        app:layout_constraintStart_toStartOf="@+id/fragment_profile_field_platform"
-        app:layout_constraintTop_toTopOf="@+id/fragment_profile_field_role_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

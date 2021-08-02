@@ -10,12 +10,12 @@
         android:layout_height="0dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/ic_boys"
         android:contentDescription="@string/contentDescription_list_item_icon"
         app:layout_constraintBottom_toBottomOf="@+id/list_item_sugg_details_subtopics_title"
         app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/list_item_sugg_details_subtopics_title"
-        app:srcCompat="@drawable/ic_info" />
+        app:layout_constraintTop_toTopOf="@+id/list_item_sugg_details_subtopics_title" />
 
     <TextView
         android:id="@+id/list_item_sugg_details_subtopics_title"

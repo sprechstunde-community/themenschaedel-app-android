@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
@@ -26,18 +25,7 @@
         android:checkableBehavior="none">
             <item
                 android:id="@+id/nav_login"
-                android:icon="@drawable/ic_login"
-                android:title="@string/login_register"/>
+                android:icon="@drawable/ic_logout"
+                android:title="@string/logout"/>
     </group>
-
-    <group
-        android:id="@+id/nav_hint_group"
-        android:checkableBehavior="none">
-        <item
-            android:id="@+id/nav_hint"
-            android:title="@string/observer_now"
-            app:showAsAction="always" />
-    </group>
-
-
 </menu>

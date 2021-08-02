@@ -51,9 +51,11 @@
     <string name="topic">Themen</string>
     <string name="wiki">Wiki</string>
     <string name="login_register">Login / Register</string>
+    <string name="logout">Logout</string>
     <string name="open">Drawer öffnen</string>
     <string name="close">Drawer schließen</string>
     <string name="anonym">360er</string>
+    <string name="observer_now">Du bist derzeit ein Betrachter</string>
 
     // Topic Fragment
     <string name="list">Liste</string>
@@ -95,6 +97,12 @@
     <string name="dialog_info_open_subtitle">Ein angenommenes Thema, dass jedoch noch nicht von den Jungs gezogen wurde.</string>
     <string name="dialog_info_discussed_subtitle">Ein Thema, dass bereits gezogen und von den Jungs besprochen wurde</string>
     <string name="dialog_info_rejected_subtitle">Ein von der Community vorgeschlagenes Thema, welches die Jungs abgelehnt haben</string>
+
+    <string name="dialog_info_anonym">Anonym</string>
+    <string name="dialog_info_user">User</string>
+
+    <string name="dialog_info_anonym_subtitle">Kann alles anschauen und lesen</string>
+    <string name="dialog_info_user_subtitle">Kann Themen vorschlagen und Feedback einbringen</string>
 
     // List item
     <string name="list_item_sugg_topic_title_dummy">Schwert oder Axt</string>
