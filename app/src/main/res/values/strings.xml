@@ -5,6 +5,7 @@
     <string name="settings">Einstellungen</string>
     <string name="search">Suche</string>
     <string name="info">Info</string>
+    <string name="suggested_by">Vorgeschlagen von</string>
 
     // Sort &amp; Filter
     <string name="filter_date">Datum</string>
@@ -13,6 +14,9 @@
     <string name="filter_state">Status</string>
     <string name="filter_number">Folge</string>
     <string name="filter_name">Name</string>
+    <string name="filter_sorted_by">Sortieren nach</string>
+    <string name="filter_show_details">Details anzeigen</string>
+
 
     // Content Description
     <string name="contentDescription_split">feiner Strich</string>
@@ -81,7 +85,6 @@
     <string name="saved_display_type">saved_display_type</string>
 
     // Dialog Info
-    <string name="dialog_info_episode_type_title">Vorgeschlagen von</string>
     <string name="dialog_info_community">Community</string>
     <string name="dialog_info_boys">Jungs</string>
     <string name="dialog_info_ad">Werbung</string>

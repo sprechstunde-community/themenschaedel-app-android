@@ -2,26 +2,35 @@
 <resources>
 
     <color name="primaryColor">#5fdb54</color>
-    <color name="primaryLightColor">#ACF44F</color>
     <color name="primaryColor_Alpha60">#995FDB54</color>
     <color name="primaryColor_Alpha40">#665FDB54</color>
+    <color name="primaryColor_Alpha26">#425FDB54</color>
     <color name="primaryColor_Alpha0">#005FDB54</color>
+
+    <color name="primaryLightColor">#ACF44F</color>
     <color name="primaryDarkColor">#2EB67F</color>
+
     <color name="secondaryColor">#FFAFE7</color>
     <color name="secondaryColor_Alpha60">#99FFAFE7</color>
     <color name="secondaryColor_Alpha40">#66FFAFE7</color>
     <color name="secondaryColor_Alpha0">#00FFAFE7</color>
+
     <color name="secondaryDarkColor">#FF79D7</color>
+
     <color name="Error">#B00020</color>
     <color name="background">#FFFFFFFF</color>
     <color name="surface">#FFFFFFFF</color>
 
     <color name="onPrimary">#FFFFFFFF</color>
     <color name="onSecondary">#FF000000</color>
+
     <color name="onBackground">#FF000000</color>
     <color name="onBackgroundSecondary">#C1C1C1</color>
+    <color name="onBackgroundSecondaryLight">#EAEAEA</color>
+
     <color name="onSurface">#FF000000</color>
     <color name="onSurfaceSecondary">#979797</color>
+
     <color name="onError">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>

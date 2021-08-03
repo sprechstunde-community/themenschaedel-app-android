@@ -15,6 +15,7 @@
         <item name="chipBackgroundColor">@color/chip_background_color</item>
         <item name="chipStrokeColor">@color/primaryColor</item>
         <item name="chipStrokeWidth">2dp</item>
+        <item name="rippleColor">@color/primaryColor_Alpha26</item>
         <item name="android:textColor">@color/chip_text_color</item>
     </style>
 
@@ -136,6 +137,24 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/onSurface</item>
         <item name="android:textAlignment">textStart</item>
+    </style>
+
+    <style name="Sort"/>
+
+    <style name="Sort.Title">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/onSurface</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Sort.Subtitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/onSurface</item>
+    </style>
+
+    <style name="Switch" parent="@style/Widget.AppCompat.CompoundButton.Switch">
+        <item name="android:thumbTint">@color/switch_thumb_color</item>
+        <item name="android:trackTint">@color/switch_track_color</item>
     </style>
 
 </resources>

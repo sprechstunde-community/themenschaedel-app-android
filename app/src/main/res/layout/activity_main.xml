@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
+    style="@style/Drawer"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,6 +45,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/drawer_header_anonym"
+        app:itemIconTint="@drawable/drawer_item_color"
+        app:itemTextColor="@color/drawer_item_color"
+        app:itemShapeFillColor="@color/drawer_background_color"
         app:menu="@menu/menu_drawer_anonym">
 
     </com.google.android.material.navigation.NavigationView>

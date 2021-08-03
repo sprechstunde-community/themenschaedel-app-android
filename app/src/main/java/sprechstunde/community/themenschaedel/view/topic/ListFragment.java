@@ -34,7 +34,7 @@ import sprechstunde.community.themenschaedel.databinding.FragmentListBinding;
 import sprechstunde.community.themenschaedel.model.Topic;
 import sprechstunde.community.themenschaedel.view.CustomPopupWindow;
 
-public class ListFragment extends Fragment {
+public class ListFragment extends Fragment implements View.OnClickListener {
 
     FragmentListBinding mBinding;
 
@@ -65,6 +65,9 @@ public class ListFragment extends Fragment {
         TopicAdapter adapter = new TopicAdapter(topics, getContext());
         Objects.requireNonNull(mBinding.fragmentListRecylerview).setAdapter(adapter);
         mBinding.fragmentListRecylerview.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        mBinding.fragmentListDetails.setOnClickListener(this);
+
         return view;
     }
 
@@ -92,5 +95,13 @@ public class ListFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         mBinding = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == mBinding.fragmentListDetails) {
+            final BottomSheetDialogFilterFragment bottomSheetDialog = new BottomSheetDialogFilterFragment();
+            bottomSheetDialog.show(getChildFragmentManager(), "OpenFilterBottomSheet");
+        }
     }
 }
