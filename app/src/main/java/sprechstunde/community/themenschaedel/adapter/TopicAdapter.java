@@ -1,7 +1,6 @@
 package sprechstunde.community.themenschaedel.adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,8 @@ import sprechstunde.community.themenschaedel.adapter.viewHolder.SubtopicDetailsV
 import sprechstunde.community.themenschaedel.adapter.viewHolder.SubtopicViewHolder;
 import sprechstunde.community.themenschaedel.adapter.viewHolder.TopicDetailsViewHolder;
 import sprechstunde.community.themenschaedel.adapter.viewHolder.TopicViewHolder;
-import sprechstunde.community.themenschaedel.data.Topic;
+import sprechstunde.community.themenschaedel.model.Subtopic;
+import sprechstunde.community.themenschaedel.model.Topic;
 
 public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -49,10 +49,10 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             case TYPE_TOPIC_WITH_SUBTOPICS: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.list_item_suggested_topic_with_subtopics, viewGroup, false);
 
-                List<Topic> subtopics = new LinkedList<>();
-                subtopics.add(new Topic("Subtopic 1"));
-                subtopics.add(new Topic("Subtopic 2"));
-                subtopics.add(new Topic("Subtopic 3"));
+                List<Subtopic> subtopics = new LinkedList<>();
+                subtopics.add(new Subtopic("Subtopic 1"));
+                subtopics.add(new Subtopic("Subtopic 2"));
+                subtopics.add(new Subtopic("Subtopic 3"));
 
                 return new SubtopicViewHolder(view, subtopics);
             }
@@ -70,7 +70,7 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        if (mTopics.get(position).isHasSubtopics()) {
+        if (mTopics.get(position).hasSubtopics()) {
             return TYPE_TOPIC_WITH_SUBTOPICS;
         } else {
             return TYPE_TOPIC;

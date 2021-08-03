@@ -81,32 +81,33 @@
         android:id="@+id/dialog_info_topic_types_comm_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/ic_community"
         android:contentDescription="@string/contentDescription_icon_community"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_info_topic_types_community"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_topic_types_begin"
-        app:layout_constraintTop_toTopOf="@+id/dialog_info_topic_types_community"
-        app:srcCompat="@drawable/ic_info" />
+        app:layout_constraintTop_toTopOf="@+id/dialog_info_topic_types_community" />
 
     <ImageView
         android:id="@+id/dialog_info_topic_types_boys_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/ic_boys"
         android:contentDescription="@string/contentDescription_icon_boys"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_info_topic_types_boys"
         app:layout_constraintEnd_toEndOf="@+id/dialog_info_topic_types_comm_icon"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_topic_types_comm_icon"
-        app:layout_constraintTop_toTopOf="@+id/dialog_info_topic_types_boys"
-        app:srcCompat="@drawable/ic_info" />
+        app:layout_constraintTop_toTopOf="@+id/dialog_info_topic_types_boys" />
 
     <ImageView
         android:id="@+id/dialog_info_topic_types_ad_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/ic_ad"
         android:contentDescription="@string/contentDescription_icon_ad"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_info_topic_types_ad"
         app:layout_constraintEnd_toEndOf="@+id/dialog_info_topic_types_comm_icon"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_topic_types_comm_icon"
-        app:layout_constraintTop_toTopOf="@+id/dialog_info_topic_types_ad"
-        app:srcCompat="@drawable/ic_info" />
+        app:layout_constraintTop_toTopOf="@+id/dialog_info_topic_types_ad" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/dialog_info_topic_types_begin"

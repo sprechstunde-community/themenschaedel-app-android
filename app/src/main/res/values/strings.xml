@@ -102,7 +102,7 @@
     <string name="dialog_info_user">User</string>
 
     <string name="dialog_info_anonym_subtitle">Kann alles anschauen und lesen</string>
-    <string name="dialog_info_user_subtitle">Kann Themen vorschlagen und Feedback einbringen</string>
+    <string name="dialog_info_user_subtitle">Hat mehrere Einstellungsmöglichkeiten in der App</string>
 
     // List item
     <string name="list_item_sugg_topic_title_dummy">Schwert oder Axt</string>

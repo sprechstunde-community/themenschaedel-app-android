@@ -15,12 +15,18 @@ import androidx.constraintlayout.helper.widget.Layer;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.Objects;
 
 import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.databinding.FragmentProfileBinding;
@@ -45,6 +51,19 @@ public class ProfileFragment extends Fragment {
         menu.clear();
         inflater.inflate(R.menu.menu_info_settings, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+        if(item.getItemId() == R.id.menu_info) {
+            CustomPopupWindow popupWindow = new CustomPopupWindow();
+            popupWindow.showSortPopup(R.id.dialog_info_profile_roles_layout, R.layout.dialog_info_profile_roles, requireActivity());
+        }
+
+        NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_main);
+        NavController nvController = Objects.requireNonNull(navHostFragment).getNavController();
+        return  NavigationUI.onNavDestinationSelected(item, nvController);
     }
 
     @Override

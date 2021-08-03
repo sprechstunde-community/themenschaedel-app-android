@@ -13,11 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import sprechstunde.community.themenschaedel.R;
-import sprechstunde.community.themenschaedel.data.Topic;
+import sprechstunde.community.themenschaedel.model.Subtopic;
+import sprechstunde.community.themenschaedel.model.Topic;
 
 public class SubtopicAdapter extends RecyclerView.Adapter<SubtopicAdapter.ViewHolder> {
 
-    private final List<Topic> mSubtopics;
+    private final List<Subtopic> mSubtopics;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView mTitle;
@@ -37,7 +38,7 @@ public class SubtopicAdapter extends RecyclerView.Adapter<SubtopicAdapter.ViewHo
         }
     }
 
-    public SubtopicAdapter(List<Topic> subtopics) {
+    public SubtopicAdapter(List<Subtopic> subtopics) {
         mSubtopics = subtopics;
     }
 
@@ -52,7 +53,7 @@ public class SubtopicAdapter extends RecyclerView.Adapter<SubtopicAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         setVerticalLine(viewHolder, position);
-        viewHolder.getTitle().setText(mSubtopics.get(position).getTitle());
+        viewHolder.getTitle().setText(mSubtopics.get(position).getName());
     }
 
     private void setVerticalLine(ViewHolder viewHolder, int position) {

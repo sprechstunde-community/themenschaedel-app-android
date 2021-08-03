@@ -2,6 +2,7 @@ package sprechstunde.community.themenschaedel.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
@@ -28,18 +29,35 @@ public class Topic {
 
     @ColumnInfo(name = "ad")
     @SerializedName("ad")
-    boolean mAd;
+    int mAd;
+
+    @ColumnInfo(name = "community_contribution")
+    @SerializedName("community_contribution")
+    int mCommunityContribution;
+
+    @Ignore
+    boolean mSubtopics;
 
     @ColumnInfo(name = "episode_id")
     @SerializedName("episode_id")
     int mEpisode;
 
-    public Topic (int id, String name, int start, int end, boolean ad, int episode) {
+    public Topic (int id, String name, int start, int end, int ad, int communityContribution, int episode) {
         mId = id;
         mName = name;
         mStart = start;
         mEnd = end;
         mAd = ad;
+        mCommunityContribution = communityContribution;
+        mEpisode = episode;
+    }
+
+    @Ignore
+    public Topic (String name, int ad, int communityContribution, boolean subtopics, int episode) {
+        mName = name;
+        mAd = ad;
+        mCommunityContribution = communityContribution;
+        mSubtopics = subtopics;
         mEpisode = episode;
     }
 
@@ -75,12 +93,28 @@ public class Topic {
         mEnd = end;
     }
 
-    public boolean isAd() {
+    public int getAd() {
         return mAd;
     }
 
-    public void setAd(boolean ad) {
+    public void setAd(int ad) {
         mAd = ad;
+    }
+
+    public int getCommunityContribution() {
+        return mCommunityContribution;
+    }
+
+    public void setCommunityContribution(int communityContribution) {
+        mCommunityContribution = communityContribution;
+    }
+
+    public boolean hasSubtopics() {
+        return mSubtopics;
+    }
+
+    public void setSubtopics(boolean subtopics) {
+        mSubtopics = subtopics;
     }
 
     public int getEpisode() {

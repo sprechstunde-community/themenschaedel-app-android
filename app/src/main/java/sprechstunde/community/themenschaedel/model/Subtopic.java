@@ -1,6 +1,7 @@
 package sprechstunde.community.themenschaedel.model;
 
 import androidx.room.ColumnInfo;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
@@ -24,6 +25,11 @@ public class Subtopic {
         mId = id;
         mName = name;
         mTopicId = topicId;
+    }
+
+    @Ignore
+    public Subtopic(String name) {
+        mName = name;
     }
 
     public int getId() {

@@ -2,15 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/dialog_info_sugg_topic_layout"
-    android:layout_width="wrap_content"
+    android:layout_width="300dp"
     android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/dialog_info_sugg_topic_background"
-        android:layout_width="300dp"
-        android:layout_height="321dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@drawable/ic_card"
         android:contentDescription="@string/contentDescription_background"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +44,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"
         android:text="@string/dialog_info_rejected_subtitle"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/dialog_info_sugg_topic_types_sugg_details"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_sugg_topic_types_discussed"
         app:layout_constraintTop_toBottomOf="@+id/dialog_info_sugg_topic_types_rejected" />
@@ -105,43 +108,44 @@
         android:id="@+id/dialog_info_sugg_topic_types_sugg_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/ic_suggested"
         android:contentDescription="@string/contentDescription_icon_suggested"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_info_sugg_topic_types_suggestion"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_sugg_topic_begin"
-        app:layout_constraintTop_toTopOf="@+id/dialog_info_sugg_topic_types_suggestion"
-        app:srcCompat="@drawable/ic_info" />
+        app:layout_constraintTop_toTopOf="@+id/dialog_info_sugg_topic_types_suggestion" />
 
     <ImageView
         android:id="@+id/dialog_info_sugg_topic_types_open_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/ic_open"
         android:contentDescription="@string/contentDescription_icon_open"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_info_sugg_topic_types_open"
         app:layout_constraintEnd_toEndOf="@+id/dialog_info_sugg_topic_types_sugg_icon"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_sugg_topic_types_sugg_icon"
-        app:layout_constraintTop_toTopOf="@+id/dialog_info_sugg_topic_types_open"
-        app:srcCompat="@drawable/ic_info" />
+        app:layout_constraintTop_toTopOf="@+id/dialog_info_sugg_topic_types_open" />
 
     <ImageView
         android:id="@+id/dialog_info_sugg_topic_types_dis_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/ic_discussed"
         android:contentDescription="@string/contentDescription_icon_discussed"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_info_sugg_topic_types_discussed"
         app:layout_constraintEnd_toEndOf="@+id/dialog_info_sugg_topic_types_sugg_icon"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_sugg_topic_types_sugg_icon"
-        app:layout_constraintTop_toTopOf="@+id/dialog_info_sugg_topic_types_discussed"
-        app:srcCompat="@drawable/ic_info" />
+        app:layout_constraintTop_toTopOf="@+id/dialog_info_sugg_topic_types_discussed" />
 
     <ImageView
         android:id="@+id/dialog_info_sugg_topic_types_reject_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/ic_rejected"
         android:contentDescription="@string/contentDescription_icon_rejected"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_info_sugg_topic_types_rejected"
         app:layout_constraintEnd_toEndOf="@+id/dialog_info_sugg_topic_types_sugg_icon"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_sugg_topic_types_sugg_icon"
-        app:layout_constraintTop_toTopOf="@+id/dialog_info_sugg_topic_types_rejected"
-        app:srcCompat="@drawable/ic_info" />
+        app:layout_constraintTop_toTopOf="@+id/dialog_info_sugg_topic_types_rejected" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/dialog_info_sugg_topic_begin"

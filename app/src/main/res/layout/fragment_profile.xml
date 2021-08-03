@@ -227,7 +227,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
         android:background="@drawable/ic_user_transparent"
         android:contentDescription="@string/profile_role_user"
         app:layout_constraintBottom_toTopOf="@+id/fragment_profile_field_platfrom"
