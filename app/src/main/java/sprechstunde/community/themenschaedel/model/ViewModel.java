@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class ViewModel extends AndroidViewModel {
 
     private Repository mRepository;
     private LiveData<List<Episode>> mEpisodes;
+    private final MutableLiveData<Episode> selected = new MutableLiveData<>();
 
     public ViewModel(@NonNull Application application) {
         super(application);
@@ -21,10 +23,20 @@ public class ViewModel extends AndroidViewModel {
         mEpisodes = mRepository.getAllEpisodes();
     }
 
+
+    public void selectedEpisode(Episode episode) {
+        selected.setValue(episode);
+    }
+
+    public LiveData<Episode> getSelected() {
+        return selected;
+    }
+
     public void insert(Episode e){
         mRepository.insert(e);
     }
     public void insert(Topic t){ mRepository.insert(t); }
+    public void insert(Subtopic st){ mRepository.insert(st); }
 
     public void update(Episode e){ mRepository.update(e); }
     public void update(Topic t){
@@ -45,6 +57,11 @@ public class ViewModel extends AndroidViewModel {
         mRepository.deleteAllTopics();
     }
 
+    public LiveData<List<Episode>> getAllEpisodes() { return mRepository.getAllEpisodes(); }
+    public LiveData<List<Topic>> getAllTopics() { return mRepository.getAllTopics(); }
+    public LiveData<List<Subtopic>> getAllSubtopics() { return mRepository.getAllSubtopics(); }
+
+    public LiveData<List<Subtopic>> getAllSubtopicsFromTopic(int number) { return mRepository.getAllSubtopicsFromTopic(number); }
     public LiveData<List<Topic>> getAllTopicsFromEpisode(int number) { return mRepository.getAllTopicsFromEpisode(number); }
 
     public LiveData<Episode> getEpisode(int number) { return mRepository.getEpisode(number); }

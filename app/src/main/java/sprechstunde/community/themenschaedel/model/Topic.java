@@ -53,6 +53,17 @@ public class Topic {
     }
 
     @Ignore
+    public Topic (String name,int start, int end, int ad, int communityContribution, boolean subtopics, int episode) {
+        mName = name;
+        mStart = start;
+        mEnd = end;
+        mAd = ad;
+        mCommunityContribution = communityContribution;
+        mSubtopics = subtopics;
+        mEpisode = episode;
+    }
+
+    @Ignore
     public Topic (String name, int ad, int communityContribution, boolean subtopics, int episode) {
         mName = name;
         mAd = ad;

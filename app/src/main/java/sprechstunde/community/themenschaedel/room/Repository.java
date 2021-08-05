@@ -8,15 +8,18 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import sprechstunde.community.themenschaedel.model.Episode;
+import sprechstunde.community.themenschaedel.model.Subtopic;
 import sprechstunde.community.themenschaedel.model.Topic;
 
 public class Repository {
 
-        private EpisodeDAO mEpisodeDAO;
-        private TopicDAO mTopicDAO;
+        private final EpisodeDAO mEpisodeDAO;
+        private final TopicDAO mTopicDAO;
+        private final SubtopicDAO mSubtopicDAO;
 
-        private LiveData<List<Episode>> mAllEpisodes;
-        private LiveData<List<Topic>> mAllTopics;
+        private final LiveData<List<Episode>> mAllEpisodes;
+        private final LiveData<List<Topic>> mAllTopics;
+        private final LiveData<List<Subtopic>> mAllSubtopics;
 
         /**
          * Constructor
@@ -30,6 +33,9 @@ public class Repository {
 
             mTopicDAO = db.topicDAO();
             mAllTopics = mTopicDAO.getAllTopics();
+
+            mSubtopicDAO = db.subtopicDAO();
+            mAllSubtopics = mSubtopicDAO.getAllSubtopics();
         }
 
         /**
@@ -37,6 +43,7 @@ public class Repository {
          * Those are the ones that the API exposes to the outside.
          * Make an AsyncTask for each method
          */
+        public void insert(Subtopic subtopic){ new InsertSubtopicAsyncTask(mSubtopicDAO).execute(subtopic); }
 
         public void insert(Topic topic){ new InsertTopicAsyncTask(mTopicDAO).execute(topic); }
 
@@ -58,9 +65,15 @@ public class Repository {
             return mAllTopics;
         }
 
+        public LiveData<List<Subtopic>> getAllSubtopics(){
+        return mAllSubtopics;
+    }
+
         public LiveData<List<Episode>> getAllEpisodes(){
             return mAllEpisodes;
         }
+
+        public LiveData<List<Subtopic>> getAllSubtopicsFromTopic(int number){ return mSubtopicDAO.getAllSubtopicsFrom(number); }
 
         public LiveData<List<Topic>> getAllTopicsFromEpisode(int number){ return mTopicDAO.getAllTopicsFrom(number); }
 
@@ -68,7 +81,7 @@ public class Repository {
 
         public LiveData<Episode> getEpisode(int number) { return mEpisodeDAO.getEpisode(number); }
 
-    private static class InsertTopicAsyncTask extends AsyncTask<Topic, Void, Void> {
+        private static class InsertTopicAsyncTask extends AsyncTask<Topic, Void, Void> {
             private final TopicDAO mTopicDAO;
 
             private InsertTopicAsyncTask(TopicDAO topicDAO){ mTopicDAO = topicDAO; }
@@ -76,6 +89,18 @@ public class Repository {
             @Override
             protected Void doInBackground(Topic... topics) {
                 mTopicDAO.insert(topics[0]);
+                return null;
+            }
+        }
+
+        private static class InsertSubtopicAsyncTask extends AsyncTask<Subtopic, Void, Void> {
+            private final SubtopicDAO mSubtopicDAO;
+
+            private InsertSubtopicAsyncTask(SubtopicDAO subtopicDAO){ mSubtopicDAO = subtopicDAO; }
+
+            @Override
+            protected Void doInBackground(Subtopic... topics) {
+                mSubtopicDAO.insert(topics[0]);
                 return null;
             }
         }

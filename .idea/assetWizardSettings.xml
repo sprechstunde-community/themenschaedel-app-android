@@ -3,6 +3,11 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
+        <entry key="imageWizard">
+          <value>
+            <PersistentState />
+          </value>
+        </entry>
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -18,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/check_circle_outline/baseline_check_circle_outline_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/play_circle_outline/baseline_play_circle_outline_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,8 +33,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_discussed" />
-                            <entry key="sourceFile" value="C:\Users\edery\Documents\Sprechstunde\Icons\ic_open.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_curve_bottom_register" />
+                            <entry key="sourceFile" value="C:\Users\edery\Documents\Sprechstunde\Icons\ic_curve_bottom_register.svg" />
                           </map>
                         </option>
                       </PersistentState>

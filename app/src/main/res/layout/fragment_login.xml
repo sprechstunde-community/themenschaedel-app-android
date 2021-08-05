@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.LoginFragment">
+
+    <ImageView
+        android:id="@+id/fragment_login_top_shadow"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/ic_curve_top_login"
+        android:backgroundTint="@color/secondaryColor_Alpha60"
+        android:contentDescription="@string/contentDescription_curve"
+        app:layout_constraintDimensionRatio="w,1:2.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fragment_login_top"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_curve_top_login"
+        android:contentDescription="@string/contentDescription_curve_top_shadow"
+        app:layout_constraintDimensionRatio="w,1:2.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fragment_login_bottom_shadow"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/ic_curve_bottom_login"
+        android:backgroundTint="@color/secondaryColor_Alpha60"
+        android:contentDescription="@string/contentDescription_curve_bottom_shadow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="w,1:3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/fragment_login_bottom"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_curve_bottom_login"
+        android:contentDescription="@string/contentDescription_curve"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="w,1:3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/fragment_login_hello_shadow"
+        style="@style/Login.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/login_hello"
+        android:textColor="@color/secondaryColor_Alpha40"
+        app:layout_constraintStart_toStartOf="@+id/fragment_login_hello"
+        app:layout_constraintTop_toTopOf="@+id/fragment_login_guideline" />
+
+    <TextView
+        android:id="@+id/fragment_login_hello"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        style="@style/Login.Title"
+        android:text="@string/login_hello"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fragment_login_guideline" />
+
+    <EditText
+        android:id="@+id/fragment_login_username"
+        style="@style/Login.EditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="16dp"
+        android:autofillHints="@string/profile_email_autofill"
+        android:ems="10"
+        android:hint="@string/login_username_hint"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_login_hello" />
+
+    <TextView
+        android:id="@+id/fragment_login_username_hint"
+        style="@style/Login.EditText_Hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:text="@string/profile_name_hint"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_login_username"
+        app:layout_constraintStart_toStartOf="@+id/fragment_login_username"
+        app:layout_constraintTop_toTopOf="@+id/fragment_login_username" />
+
+    <EditText
+        android:id="@+id/fragment_login_password"
+        style="@style/Login.EditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/login_password_hint"
+        android:inputType="textPassword"
+        android:autofillHints="@string/profile_password_autofill"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_login_username"
+        app:layout_constraintStart_toStartOf="@+id/fragment_login_username"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_login_username" />
+
+    <TextView
+        android:id="@+id/fragment_login_password_hint"
+        style="@style/Login.EditText_Hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_password_hint"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_login_password"
+        app:layout_constraintStart_toStartOf="@+id/fragment_login_username_hint"
+        app:layout_constraintTop_toTopOf="@+id/fragment_login_password" />
+
+    <Button
+        android:id="@+id/fragment_login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/black"
+        android:text="@string/login"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_login_password"
+        app:layout_constraintStart_toStartOf="@+id/fragment_login_password"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_login_password" />
+
+    <TextView
+        android:id="@+id/fragment_login_register_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        style="@style/Login.Subtitle"
+        android:text="@string/login_register_1"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_login_register_link"
+        app:layout_constraintStart_toStartOf="@+id/fragment_login_button"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_login_button" />
+
+    <TextView
+        android:id="@+id/fragment_login_register_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        style="@style/Login.Subtitle_Link"
+        android:text="@string/login_register_link"
+        app:layout_constraintBaseline_toBaselineOf="@+id/fragment_login_register_1"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_login_register_2"
+        app:layout_constraintStart_toEndOf="@+id/fragment_login_register_1" />
+
+    <TextView
+        android:id="@+id/fragment_login_register_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        style="@style/Login.Subtitle"
+        android:text="@string/login_register_2"
+        app:layout_constraintBaseline_toBaselineOf="@+id/fragment_login_register_link"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_login_button"
+        app:layout_constraintStart_toEndOf="@+id/fragment_login_register_link" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_login_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <ImageView
+        android:id="@+id/fragment_login_password_underline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/ic_line"
+        android:contentDescription="@string/contentDescription_undeline"
+        android:backgroundTint="@color/primaryColor"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_login_register_link"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_login_register_2"
+        app:layout_constraintStart_toEndOf="@+id/fragment_login_register_1" />
+</androidx.constraintlayout.widget.ConstraintLayout>

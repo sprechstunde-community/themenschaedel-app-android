@@ -1,50 +1,38 @@
 package sprechstunde.community.themenschaedel;
 
-import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.List;
 import java.util.Objects;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import sprechstunde.community.themenschaedel.api.ApiClient;
 import sprechstunde.community.themenschaedel.databinding.ActivityMainBinding;
-import sprechstunde.community.themenschaedel.model.Episode;
+import sprechstunde.community.themenschaedel.view.CustomPopupWindow;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private ActivityMainBinding mBinding;
     private NavController mNavController;
     private AppBarConfiguration mAppBarConfiguration;
+    private CustomPopupWindow mPopupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setUpToolbar();
         setUpDrawer();
     }
+
 
     private void setUpNavigation() {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_main);
@@ -106,6 +95,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        mBinding.activityMainToolbar.setBackgroundColor(getColor(R.color.background));
+
         if (item.getItemId() == R.id.nav_podcast) {
             mNavController.navigate(R.id.nav_podcast);
         } else if(item.getItemId() == R.id.nav_topic) {
@@ -113,11 +104,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if(item.getItemId() == R.id.nav_wiki) {
             mNavController.navigate(R.id.nav_wiki);
         } else if(item.getItemId() == R.id.nav_login) {
-            Toast.makeText(this, "LogIn clicked", Toast.LENGTH_SHORT).show();
+            mBinding.activityMainToolbar.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.toolbar_gradient_register,getTheme()));
+            mNavController.navigate(R.id.nav_login);
         }
 
-        mBinding.activityMainToolbar.setBackgroundColor(getColor(R.color.background));
-        mBinding.drawerLayout.closeDrawer(GravityCompat.START);
+        if(item.getItemId() == R.id.nav_hint) {
+            mPopupWindow = new CustomPopupWindow();
+            mPopupWindow.showSortPopup(R.id.dialog_info_anonym_layout, R.layout.dialog_info_anonym, this);
+            mPopupWindow.getContentView().findViewById(R.id.dialog_info_anonym_button).setOnClickListener(this);
+        } else {
+            mBinding.drawerLayout.closeDrawer(GravityCompat.START);
+        }
         return true;
     }
 
@@ -135,15 +132,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(v == mBinding.navView.getHeaderView(0)) {
             mBinding.activityMainToolbar.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.toolbar_gradient,getTheme()));
             mNavController.navigate(R.id.nav_profile);
-            mBinding.drawerLayout.closeDrawer(GravityCompat.START);
+        } else if(v.getId() == R.id.dialog_info_anonym_button) {
+            mBinding.activityMainToolbar.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.toolbar_gradient_register,getTheme()));
+            mNavController.navigate(R.id.nav_register);
+            mPopupWindow.dismiss();
         }
+
+        mBinding.drawerLayout.closeDrawer(GravityCompat.START);
     }
 
-    private void getEpisodes() {
+    /* private void getEpisodes() {
         Call<List<Episode>> call = ApiClient.getInstance().getMyApi().getEpisodes();
         call.enqueue(new Callback<List<Episode>>() {
             @Override
-            public void onResponse(Call<List<Episode>> call, Response<List<Episode>> response) {
+            public void onResponse(@NonNull Call<List<Episode>> call, @NonNull Response<List<Episode>> response) {
                 List<Episode> episodes = response.body();
                 String[] episodeList = new String[episodes.size()];
 
@@ -151,13 +153,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     episodeList[i] = episodes.get(i).getTitle();
                     Log.i("HELLO", episodes.get(i).getTitle());
                 }
+                Log.i("HELLO", Arrays.toString(episodeList));
+
             }
 
             @Override
-            public void onFailure(Call<List<Episode>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Episode>> call, @NonNull Throwable t) {
                 Toast.makeText(getApplicationContext(), "An error has occured", Toast.LENGTH_LONG).show();
             }
 
         });
-    }
+    }*/
 }

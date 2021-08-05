@@ -1,0 +1,9 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="502.63dp"
+    android:height="158.8dp"
+    android:viewportWidth="502.63"
+    android:viewportHeight="158.8">
+  <path
+      android:fillColor="@color/curve_gradient_login"
+      android:pathData="M502.63,13.21C353.2,23.74 126.67,98.46 0,158.8V0H502.63Z"/>
+</vector>

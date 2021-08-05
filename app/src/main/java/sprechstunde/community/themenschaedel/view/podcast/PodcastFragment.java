@@ -15,13 +15,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.chip.ChipGroup;
+
+import java.util.List;
+
 import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.databinding.FragmentPodcastBinding;
+import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
 
-public class PodcastFragment extends Fragment implements View.OnClickListener {
+public class PodcastFragment extends Fragment implements View.OnClickListener, ChipGroup.OnCheckedChangeListener {
 
     private FragmentPodcastBinding mBinding;
     private Display mCurrentDisplay;
+
+    @Override
+    public void onCheckedChanged(ChipGroup group, int checkedId) {
+        if(checkedId == R.id.filter_date) {
+            notifyFragments(ParentChildFragmentListener.SORTED_BY.DATE);
+        } else if (checkedId == R.id.filter_title) {
+            notifyFragments(ParentChildFragmentListener.SORTED_BY.TITLE);
+        } else if (checkedId == R.id.filter_user) {
+            notifyFragments(ParentChildFragmentListener.SORTED_BY.USER);
+        } else {
+            notifyFragments(ParentChildFragmentListener.SORTED_BY.STATE);
+        }
+    }
 
     private enum Display {
         CARDS,
@@ -31,6 +49,14 @@ public class PodcastFragment extends Fragment implements View.OnClickListener {
 
     public PodcastFragment() {
         // Required empty public constructor
+    }
+
+    private void notifyFragments(ParentChildFragmentListener.SORTED_BY sortedBy) {
+        List<Fragment> fragments = getParentFragmentManager().getFragments();
+        for (Fragment f : fragments) {
+            if(f != this)
+                ((ParentChildFragmentListener) f).onSortChanged(sortedBy);
+        }
     }
 
     @Override
@@ -45,6 +71,7 @@ public class PodcastFragment extends Fragment implements View.OnClickListener {
 
         getDisplayTypeFromSharedPreferences();
         mBinding.fragmentPodcastDisplay.setOnClickListener(this);
+        mBinding.fragmentPodcastFilter.setOnCheckedChangeListener(this);
 
         changeDisplayFragment(true);
 
@@ -81,6 +108,7 @@ public class PodcastFragment extends Fragment implements View.OnClickListener {
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setReorderingAllowed(true);
+
 
         if (mCurrentDisplay == Display.CARDS && startedFragment || mCurrentDisplay == Display.ROWS && !startedFragment) {
             changeToCards(card, transaction);

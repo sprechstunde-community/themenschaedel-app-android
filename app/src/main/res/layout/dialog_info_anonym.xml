@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialog_info_anonym_layout"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/dialog_info_anonym_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_card"
+        android:contentDescription="@string/contentDescription_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/dialog_info_anonym_title"
+        style="@style/Dialog.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/anonym"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dialog_info_anonym_subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/dialog_info_anonym_state"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_anonym_title"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_anonym_title" />
+
+    <TextView
+        android:id="@+id/dialog_info_anonym_can"
+        style="@style/Dialog.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/dialog_info_anonym_rigths_title"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_anonym_subtitle"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_anonym_subtitle" />
+
+    <TextView
+        android:id="@+id/dialog_info_anonym_can_subtitle"
+        style="@style/Dialog.Details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/dialog_info_anonym_rigths_subtitle"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_info_anonym_subtitle"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_anonym_can"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_anonym_can" />
+
+    <TextView
+        android:id="@+id/dialog_info_anonym_can_not_1"
+        style="@style/Dialog.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:text="@string/dialog_info_anonym_no_rigths_title_1"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_anonym_can_subtitle"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_anonym_can_subtitle" />
+
+    <TextView
+        android:id="@+id/dialog_info_anonym_can_not_2"
+        style="@style/Dialog.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="@string/dialog_info_anonym_no_rigths_title_2"
+        android:textStyle="italic"
+        app:layout_constraintBaseline_toBaselineOf="@+id/dialog_info_anonym_can_not_1"
+        app:layout_constraintStart_toEndOf="@+id/dialog_info_anonym_can_not_1" />
+
+    <TextView
+        android:id="@+id/dialog_info_anonym_can_not_subtitle"
+        style="@style/Dialog.Details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/dialog_info_anonym_no_rigths_subtitle"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_info_anonym_can_subtitle"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_anonym_can_not_1"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_anonym_can_not_1" />
+
+    <TextView
+        android:id="@+id/dialog_info_anonym_change"
+        style="@style/Dialog.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/dialog_info_register_change"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_anonym_can_not_subtitle" />
+
+    <Button
+        android:id="@+id/dialog_info_anonym_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/primaryColor"
+        android:text="@string/dialog_info_register"
+        android:textAllCaps="false"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_anonym_change" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

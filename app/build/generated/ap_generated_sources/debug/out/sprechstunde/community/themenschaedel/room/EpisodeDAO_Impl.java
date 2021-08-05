@@ -273,11 +273,11 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
   }
 
   @Override
-  public LiveData<Episode> getEpisode(final int number) {
-    final String _sql = "SELECT * FROM episode_table WHERE number = ?";
+  public LiveData<Episode> getEpisode(final int id) {
+    final String _sql = "SELECT * FROM episode_table WHERE id = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
-    _statement.bindLong(_argIndex, number);
+    _statement.bindLong(_argIndex, id);
     return __db.getInvalidationTracker().createLiveData(new String[]{"episode_table"}, false, new Callable<Episode>() {
       @Override
       public Episode call() throws Exception {

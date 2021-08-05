@@ -30,6 +30,8 @@ public final class Database_Impl extends Database {
 
   private volatile TopicDAO _topicDAO;
 
+  private volatile SubtopicDAO _subtopicDAO;
+
   @Override
   protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration configuration) {
     final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(1) {
@@ -37,14 +39,16 @@ public final class Database_Impl extends Database {
       public void createAllTables(SupportSQLiteDatabase _db) {
         _db.execSQL("CREATE TABLE IF NOT EXISTS `episode_table` (`id` INTEGER NOT NULL, `title` TEXT, `subtitle` TEXT, `description` TEXT, `date` TEXT, `number` INTEGER NOT NULL, `image` TEXT, `duration` TEXT, PRIMARY KEY(`id`))");
         _db.execSQL("CREATE TABLE IF NOT EXISTS `topic_table` (`id` INTEGER NOT NULL, `name` TEXT, `start` INTEGER NOT NULL, `end` INTEGER NOT NULL, `ad` INTEGER NOT NULL, `community_contribution` INTEGER NOT NULL, `episode_id` INTEGER NOT NULL, PRIMARY KEY(`id`))");
+        _db.execSQL("CREATE TABLE IF NOT EXISTS `subtopic_table` (`id` INTEGER NOT NULL, `name` TEXT, `topic_id` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         _db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dcf62dfa27e4d5aedb508fba1d1f1773')");
+        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '81b7f236c1be13dce7407e1e47a9a043')");
       }
 
       @Override
       public void dropAllTables(SupportSQLiteDatabase _db) {
         _db.execSQL("DROP TABLE IF EXISTS `episode_table`");
         _db.execSQL("DROP TABLE IF EXISTS `topic_table`");
+        _db.execSQL("DROP TABLE IF EXISTS `subtopic_table`");
         if (mCallbacks != null) {
           for (int _i = 0, _size = mCallbacks.size(); _i < _size; _i++) {
             mCallbacks.get(_i).onDestructiveMigration(_db);
@@ -118,9 +122,22 @@ public final class Database_Impl extends Database {
                   + " Expected:\n" + _infoTopicTable + "\n"
                   + " Found:\n" + _existingTopicTable);
         }
+        final HashMap<String, TableInfo.Column> _columnsSubtopicTable = new HashMap<String, TableInfo.Column>(3);
+        _columnsSubtopicTable.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSubtopicTable.put("name", new TableInfo.Column("name", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsSubtopicTable.put("topic_id", new TableInfo.Column("topic_id", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysSubtopicTable = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesSubtopicTable = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoSubtopicTable = new TableInfo("subtopic_table", _columnsSubtopicTable, _foreignKeysSubtopicTable, _indicesSubtopicTable);
+        final TableInfo _existingSubtopicTable = TableInfo.read(_db, "subtopic_table");
+        if (! _infoSubtopicTable.equals(_existingSubtopicTable)) {
+          return new RoomOpenHelper.ValidationResult(false, "subtopic_table(sprechstunde.community.themenschaedel.model.Subtopic).\n"
+                  + " Expected:\n" + _infoSubtopicTable + "\n"
+                  + " Found:\n" + _existingSubtopicTable);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "dcf62dfa27e4d5aedb508fba1d1f1773", "d720b41c71b98592e7e9ffdca5e140e6");
+    }, "81b7f236c1be13dce7407e1e47a9a043", "6f3b8bd8efdad8a3575a5e2e6f05b349");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(configuration.context)
         .name(configuration.name)
         .callback(_openCallback)
@@ -133,7 +150,7 @@ public final class Database_Impl extends Database {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "episode_table","topic_table");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "episode_table","topic_table","subtopic_table");
   }
 
   @Override
@@ -144,6 +161,7 @@ public final class Database_Impl extends Database {
       super.beginTransaction();
       _db.execSQL("DELETE FROM `episode_table`");
       _db.execSQL("DELETE FROM `topic_table`");
+      _db.execSQL("DELETE FROM `subtopic_table`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -159,6 +177,7 @@ public final class Database_Impl extends Database {
     final HashMap<Class<?>, List<Class<?>>> _typeConvertersMap = new HashMap<Class<?>, List<Class<?>>>();
     _typeConvertersMap.put(EpisodeDAO.class, EpisodeDAO_Impl.getRequiredConverters());
     _typeConvertersMap.put(TopicDAO.class, TopicDAO_Impl.getRequiredConverters());
+    _typeConvertersMap.put(SubtopicDAO.class, SubtopicDAO_Impl.getRequiredConverters());
     return _typeConvertersMap;
   }
 
@@ -186,6 +205,20 @@ public final class Database_Impl extends Database {
           _topicDAO = new TopicDAO_Impl(this);
         }
         return _topicDAO;
+      }
+    }
+  }
+
+  @Override
+  public SubtopicDAO subtopicDAO() {
+    if (_subtopicDAO != null) {
+      return _subtopicDAO;
+    } else {
+      synchronized(this) {
+        if(_subtopicDAO == null) {
+          _subtopicDAO = new SubtopicDAO_Impl(this);
+        }
+        return _subtopicDAO;
       }
     }
   }

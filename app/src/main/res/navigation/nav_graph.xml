@@ -14,7 +14,11 @@
         android:id="@+id/nav_podcast"
         android:name="sprechstunde.community.themenschaedel.view.podcast.PodcastFragment"
         android:label="fragment_podcast"
-        tools:layout="@layout/fragment_podcast" />
+        tools:layout="@layout/fragment_podcast" >
+        <action
+            android:id="@+id/action_podcast_to_episode"
+            app:destination="@id/nav_episode" />
+    </fragment>
     <fragment
         android:id="@+id/nav_wiki"
         android:name="sprechstunde.community.themenschaedel.view.wiki.WikiFragment"
@@ -25,4 +29,24 @@
         android:name="sprechstunde.community.themenschaedel.view.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/nav_episode"
+        android:name="sprechstunde.community.themenschaedel.view.EpisodeFragment"
+        android:label="fragment_episode"
+        tools:layout="@layout/fragment_episode" >
+        <argument
+            android:name="episodeId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="sprechstunde.community.themenschaedel.view.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/nav_register"
+        android:name="sprechstunde.community.themenschaedel.view.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
 </navigation>

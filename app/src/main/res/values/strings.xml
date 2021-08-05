@@ -14,9 +14,9 @@
     <string name="filter_state">Status</string>
     <string name="filter_number">Folge</string>
     <string name="filter_name">Name</string>
+    <string name="filter_time">Zeit</string>
     <string name="filter_sorted_by">Sortieren nach</string>
     <string name="filter_show_details">Details anzeigen</string>
-
 
     // Content Description
     <string name="contentDescription_split">feiner Strich</string>
@@ -24,11 +24,12 @@
     <string name="contentDescription_card">Abgerundetes Rechteck mit leichtem Schatten</string>
     <string name="contentDescription_podcast_image">Bild der Podcastfolge</string>
     <string name="contentDescription_profile_role">Das Icon deiner Rolle, welche deine Benutztungsrechte der App widerspiegelt.</string>
-    <string name="contentDescription_profile_field_background">Abgerundetes Rechteck</string>
+    <string name="contentDescription_profile_field_background">Kreis hinter dem Profilbild</string>
     <string name="contentDescription_background">Hintergrund</string>
     <string name="contentDescription_divider">Trennstrich</string>
     <string name="contentDescription_profile_image">Profilbild</string>
     <string name="contentDescription_profile_platform_user">"Icon, das die bevorzugte Plattform des Users darstellt."</string>
+    <string name="contentDescription_icon_community_boys">"Icon, das zeigt wer das Thema vorgeschlagen hat."</string>
     <string name="contentDescription_icon_community">Ein Symbol mit 2 Menschen.</string>
     <string name="contentDescription_icon_boys">Ein Symbol mit einer Person</string>
     <string name="contentDescription_icon_ad">Ein Symbol eines Einkaufswagens</string>
@@ -37,10 +38,12 @@
     <string name="contentDescription_icon_discussed">Ein Kreis mit einem Häckchen in der Mitte</string>
     <string name="contentDescription_icon_rejected">Ein durchgestrichener Kreis</string>
     <string name="contentDescription_curve">Eine wellenartige Form, die einen Verlauf hat</string>
-    <string name="contentDescription_curve_shadow">Der Schatten der oberen Wellenform</string>
+    <string name="contentDescription_curve_top_shadow">Der Schatten der oberen Wellenform</string>
+    <string name="contentDescription_curve_bottom_shadow">Der Schatten der oberen Wellenform</string>
     <string name="contentDescription_card_button">Ein großer abgerundeter Button</string>
     <string name="contentDescription_filter">Eine Lupe die vor einem Text ist. Der Text wird durch Linien dargestellt.</string>
     <string name="contentDescription_line">Eine vertikale Linie</string>
+    <string name="contentDescription_undeline">Eine Unterstrich</string>
     <string name="contentDescription_list_item_icon">Ein Symbol das entweder eine Person zeigt und dafür steht, dass dieses Thema von den Jungs kam, oder 2 Personen hintereinander, was dafür steht, dass das Thema von der Community vorgeschlagen wurde.</string>
 
     // Podcast Card, Cell, Row
@@ -70,11 +73,11 @@
     <string name="profile_email_dummy">mira.m12@gmail.com</string>
     <string name="profile_password_dummy">*****</string>
 
-    <string name="profile_name_autofill">Dein Username</string>
+    <string name="profile_name_autofill">Dein Benutzername</string>
     <string name="profile_email_autofill">Deine E-Mail</string>
     <string name="profile_password_autofill">Dein Passwort</string>
 
-    <string name="profile_name_hint">Username</string>
+    <string name="profile_name_hint">Benutzername</string>
     <string name="profile_email_hint">E-Mail</string>
     <string name="profile_password_hint">Passwort</string>
 
@@ -102,15 +105,43 @@
     <string name="dialog_info_rejected_subtitle">Ein von der Community vorgeschlagenes Thema, welches die Jungs abgelehnt haben</string>
 
     <string name="dialog_info_anonym">Anonym</string>
+    <string name="dialog_info_anonym_state">Du bist derzeit ein Betrachter.</string>
+    <string name="dialog_info_anonym_rigths_title">Du kannst:</string>
+    <string name="dialog_info_anonym_rigths_subtitle">Alles anschauen und lesen.</string>
+    <string name="dialog_info_anonym_no_rigths_title_1">Du kannst</string>
+    <string name="dialog_info_anonym_no_rigths_title_2">NICHT:</string>
+    <string name="dialog_info_anonym_no_rigths_subtitle">Die Einstellungsmöglichkeiten in der App benutzen.</string>
     <string name="dialog_info_user">User</string>
 
     <string name="dialog_info_anonym_subtitle">Kann alles anschauen und lesen</string>
     <string name="dialog_info_user_subtitle">Hat mehrere Einstellungsmöglichkeiten in der App</string>
+    <string name="dialog_info_register_change">Du willst das ändern?</string>
+    <string name="dialog_info_register">Registiere dich hier</string>
 
     // List item
-    <string name="list_item_sugg_topic_title_dummy">Schwert oder Axt</string>
+    <string name="list_item_topic_title_dummy">Schwert oder Axt</string>
+    <string name="list_item_topic_time_dummy">00:04:50</string>
     <string name="list_item_sugg_topic_number_dummy">Nr. 120</string>
     <string name="list_item_topic_number">Nr.</string>
 
+    // Episode Fragment
+    <string name="episode_hosts_and_guests">Hosts &amp; Gäste</string>
+    <string name="episode_edited_by">Bearbeitet von:</string>
+    <string name="state_closed">Abgeschlossen</string>
+
+    // Login Fragment
+    <string name="login">Login</string>
+    <string name="login_register_1">Noch kein Konto?</string>
+    <string name="login_register_link">Hier</string>
+    <string name="login_register_2">registrieren</string>
+    <string name="login_hello">Hallo 360er!</string>
+    <string name="login_username_hint">Gib deinen Benutzername ein</string>
+    <string name="login_password_hint">Gib dein Passwort ein</string>
+    <string name="login_password_again_hint">Wiederhole dein Passwort</string>
+    <string name="login_choosen_platform">Bevorzugte Platform</string>
+    <string name="contentDescription_play">Ein Symbol mit einem Play-Button</string>
+    <string name="contentDescription_pill">Ein Rechteck mit stark abgerundeten Ecken</string>
+    <string name="contentDescription_point">Ein kleiner Punkt, der nicht unten platziert ist sondern in der Mitte der Texthöhe</string>
+    <string name="login_mail_hint">Gib deine E-Mail Adresse ein</string>
 
 </resources>

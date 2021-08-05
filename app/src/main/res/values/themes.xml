@@ -116,12 +116,12 @@
     </style>
 
     <style name="Dialog.Subtitle">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/onSurface</item>
     </style>
 
     <style name="Dialog.Details">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/onSurfaceSecondary</item>
         <item name="android:textStyle">italic</item>
     </style>
@@ -157,4 +157,61 @@
         <item name="android:trackTint">@color/switch_track_color</item>
     </style>
 
+    <style name="Episode"/>
+
+    <style name="Episode.Title">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/onSurface</item>
+    </style>
+
+    <style name="Episode.Subtitle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/onSurface</item>
+    </style>
+
+    <style name="Episode.ListItem_Title">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/onSurface</item>
+    </style>
+
+    <style name="Login"/>
+
+    <style name="Login.Title">
+        <item name="android:textSize">36sp</item>
+        <item name="android:textColor">@color/onSurface</item>
+    </style>
+
+    <style name="Login.Subtitle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/onSurface</item>
+    </style>
+
+    <style name="Login.Subtitle_Link">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/primaryColor</item>
+    </style>
+
+    <style name="Login.EditText">
+        <item name="android:background">@drawable/custom_edit_text_gradient_pill</item>
+        <item name="android:paddingTop">19dp</item>
+        <item name="android:paddingBottom">19dp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+    </style>
+
+    <style name="Login.EditText_Hint">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/onBackground</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">4dp</item>
+        <item name="android:background">@color/background</item>
+    </style>
+
+    <style name="Register"/>
+
+    <style name="Register.Subtitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/onSurface</item>
+    </style>
 </resources>

@@ -18,7 +18,6 @@ import sprechstunde.community.themenschaedel.R;
 
 public class CustomPopupWindow extends PopupWindow {
 
-
     public void showSortPopup(int viewId, int layoutId, final Activity context)
     {
         ConstraintLayout viewGroup = context.findViewById(viewId);

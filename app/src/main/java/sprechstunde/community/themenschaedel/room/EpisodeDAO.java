@@ -28,8 +28,8 @@ public interface EpisodeDAO {
     @Query("SELECT * FROM episode_table WHERE title = :title")
     LiveData<Episode> getEpisode(String title);
 
-    @Query("SELECT * FROM episode_table WHERE number = :number")
-    LiveData<Episode> getEpisode(int number);
+    @Query("SELECT * FROM episode_table WHERE id = :id")
+    LiveData<Episode> getEpisode(int id);
 
     @Query("SELECT * FROM episode_table ORDER BY title ASC")
     LiveData<List<Episode>> getAllEpisodes();
