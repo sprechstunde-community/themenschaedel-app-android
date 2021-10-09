@@ -147,5 +147,6 @@
     <string name="login_mail_hint">Gib deine E-Mail Adresse ein</string>
     <string name="saved_filter_type_podcast">saved_filter_type_podcast</string>
     <string name="saved_filter_type_list">saved_filter_type_list</string>
+    <string name="search_hint">Suche nach Folgen</string>
 
 </resources>

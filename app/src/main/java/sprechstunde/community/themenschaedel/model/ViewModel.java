@@ -68,4 +68,6 @@ public class ViewModel extends AndroidViewModel {
 
     public LiveData<Episode> getEpisode(String title) { return mRepository.getEpisode(title); }
 
+    public LiveData<Episode> search(String title) { return mRepository.getEpisode(title); }
+
 }

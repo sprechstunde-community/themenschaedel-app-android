@@ -11,14 +11,12 @@ import androidx.room.Update;
 import java.util.List;
 
 import sprechstunde.community.themenschaedel.model.Episode;
+import sprechstunde.community.themenschaedel.model.EpisodeFTS;
 
 @Dao
 public interface EpisodeDAO {
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     void insert(Episode episode);
-
-    @Insert (onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Episode> episodes);
 
     @Update
     void update(Episode episode);
@@ -37,4 +35,7 @@ public interface EpisodeDAO {
 
     @Query("SELECT * FROM episode_table ORDER BY title ASC")
     LiveData<List<Episode>> getAllEpisodes();
+
+    @Query("SELECT * FROM episode_table JOIN episode_fts_table ON episode_table.title = episode_fts_table.title WHERE episode_fts_table MATCH :query")
+    LiveData<Episode> search(String query);
 }

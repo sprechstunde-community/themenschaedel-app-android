@@ -2,16 +2,21 @@ package sprechstunde.community.themenschaedel;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.SearchManager;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -38,9 +43,9 @@ import sprechstunde.community.themenschaedel.model.Episode;
 import sprechstunde.community.themenschaedel.model.ViewModel;
 import sprechstunde.community.themenschaedel.view.CustomPopupWindow;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SearchView.OnQueryTextListener {
 
-    private MainActivity mActivity = this;
+    private final MainActivity mActivity = this;
     private ActivityMainBinding mBinding;
     private NavController mNavController;
     private AppBarConfiguration mAppBarConfiguration;
@@ -58,50 +63,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setUpToolbar();
         setUpDrawer();
     }
-
-    private void getEpisodes() {
-
-        Call<ResponseData> call = ApiClient.getInstance().getMyApi().getEpisodesByPage(1);
-        call.enqueue(new retrofit2.Callback<ResponseData>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseData> call, @NonNull Response<ResponseData> response) {
-                ResponseData results = response.body();
-
-                ViewModel mViewModel = new ViewModelProvider(mActivity).get(ViewModel.class);
-
-                Log.d("Message", "url..." + response.raw().request().url() + "code..." + response.code() + " message..." + response.message() + " body..." + response.body());
-                for (int i = 0; i < Objects.requireNonNull(results).getData().size(); i++) {
-                    mViewModel.insert(formatEpisodeFromApi(results.getData().get(i)));
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseData> call, @NonNull Throwable t) {
-                Log.e("ERROR--", t.getMessage());
-            }
-        });
-    }
-
-    private Episode formatEpisodeFromApi(Episode episode) {
-        try {
-            String date = episode.getDate();
-            SimpleDateFormat fromUser = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
-            SimpleDateFormat myFormat = new SimpleDateFormat("d. MMMM yyyy", Locale.getDefault());
-            String reformattedDate = myFormat.format(Objects.requireNonNull(fromUser.parse(date)));
-
-            int duration = Integer.parseInt(episode.getDuration());
-            int hours = duration / 3600;
-            int minutes = (duration % 3600) / 60;
-            String reformattedDuration = String.format(Locale.getDefault(), "%01dh %01dmin", hours, minutes);
-
-            episode.setDate(reformattedDate);
-            episode.setDuration(reformattedDuration);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return episode;
-    }
-
 
     private void setUpNavigation() {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_main);
@@ -128,10 +89,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setTextColorForMenuItem();
     }
 
+    private void setUpSearch() {
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            ViewModel viewModel = new ViewModelProvider(this).get(ViewModel .class);
+            viewModel.search(query).observe(this, episode -> {
+                Log.i("HELLO ", episode.getTitle());
+            });
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_search_settings, menu);
+
+        MenuItem menuItem = findViewById(R.id.menu_search);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setOnQueryTextListener(this);
         return true;
     }
 
@@ -197,5 +174,67 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         mBinding.drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    private void getEpisodes() {
+
+        Call<ResponseData> call = ApiClient.getInstance().getMyApi().getEpisodesByPage(1);
+        call.enqueue(new retrofit2.Callback<ResponseData>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseData> call, @NonNull Response<ResponseData> response) {
+                ResponseData results = response.body();
+
+                ViewModel mViewModel = new ViewModelProvider(mActivity).get(ViewModel.class);
+
+                Log.d("Message", "url..." + response.raw().request().url() + "code..." + response.code() + " message..." + response.message() + " body..." + response.body());
+                for (int i = 0; i < Objects.requireNonNull(results).getData().size(); i++) {
+                    mViewModel.insert(formatEpisodeFromApi(results.getData().get(i)));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseData> call, @NonNull Throwable t) {
+                Log.e("ERROR--", t.getMessage());
+            }
+        });
+    }
+
+    private Episode formatEpisodeFromApi(Episode episode) {
+        try {
+            String date = episode.getDate();
+            SimpleDateFormat fromUser = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
+            SimpleDateFormat myFormat = new SimpleDateFormat("d. MMMM yyyy", Locale.getDefault());
+            String reformattedDate = myFormat.format(Objects.requireNonNull(fromUser.parse(date)));
+
+            int duration = Integer.parseInt(episode.getDuration());
+            int hours = duration / 3600;
+            int minutes = (duration % 3600) / 60;
+            String reformattedDuration = String.format(Locale.getDefault(), "%01dh %01dmin", hours, minutes);
+
+            episode.setDate(reformattedDate);
+            episode.setDuration(reformattedDuration);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return episode;
+    }
+
+    private void handleIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            // Pass the [query] received to a fragment in which actual data-searching process will be done
+            NavOptions navOptions = new NavOptions.Builder().setLaunchSingleTop(true).build();
+            //mNavController.navigate(R.id.dest_search_results, SearchResultsFragmentArgs(query).toBundle(), navOptions);
+        }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 }

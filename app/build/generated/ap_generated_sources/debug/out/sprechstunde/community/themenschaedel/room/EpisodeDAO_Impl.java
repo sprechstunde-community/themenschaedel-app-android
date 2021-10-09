@@ -153,18 +153,6 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
   }
 
   @Override
-  public void insertAll(final List<Episode> episodes) {
-    __db.assertNotSuspendingTransaction();
-    __db.beginTransaction();
-    try {
-      __insertionAdapterOfEpisode.insert(episodes);
-      __db.setTransactionSuccessful();
-    } finally {
-      __db.endTransaction();
-    }
-  }
-
-  @Override
   public void delete(final Episode episode) {
     __db.assertNotSuspendingTransaction();
     __db.beginTransaction();
@@ -424,6 +412,136 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
             }
             _item = new Episode(_tmpMId,_tmpMTitle,_tmpMSubtitle,_tmpMDescription,_tmpMDate,_tmpMNumber,_tmpMImage,_tmpMDuration);
             _result.add(_item);
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
+  public LiveData<Episode> search(final String query) {
+    final String _sql = "SELECT * FROM episode_table JOIN episode_fts_table ON episode_table.title = episode_fts_table.title WHERE episode_fts_table MATCH ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    if (query == null) {
+      _statement.bindNull(_argIndex);
+    } else {
+      _statement.bindString(_argIndex, query);
+    }
+    return __db.getInvalidationTracker().createLiveData(new String[]{"episode_table","episode_fts_table"}, false, new Callable<Episode>() {
+      @Override
+      public Episode call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfMId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfMTitle = CursorUtil.getColumnIndexOrThrow(_cursor, "title");
+          final int _cursorIndexOfMSubtitle = CursorUtil.getColumnIndexOrThrow(_cursor, "subtitle");
+          final int _cursorIndexOfMDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
+          final int _cursorIndexOfMDate = CursorUtil.getColumnIndexOrThrow(_cursor, "date");
+          final int _cursorIndexOfMNumber = CursorUtil.getColumnIndexOrThrow(_cursor, "number");
+          final int _cursorIndexOfMImage = CursorUtil.getColumnIndexOrThrow(_cursor, "image");
+          final int _cursorIndexOfMDuration = CursorUtil.getColumnIndexOrThrow(_cursor, "duration");
+          final int _cursorIndexOfMId_1 = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfMTitle_1 = CursorUtil.getColumnIndexOrThrow(_cursor, "title");
+          final int _cursorIndexOfMSubtitle_1 = CursorUtil.getColumnIndexOrThrow(_cursor, "subtitle");
+          final int _cursorIndexOfMDescription_1 = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
+          final int _cursorIndexOfMDate_1 = CursorUtil.getColumnIndexOrThrow(_cursor, "date");
+          final int _cursorIndexOfMNumber_1 = CursorUtil.getColumnIndexOrThrow(_cursor, "number");
+          final int _cursorIndexOfMImage_1 = CursorUtil.getColumnIndexOrThrow(_cursor, "image");
+          final int _cursorIndexOfMDuration_1 = CursorUtil.getColumnIndexOrThrow(_cursor, "duration");
+          final Episode _result;
+          if(_cursor.moveToFirst()) {
+            final int _tmpMId;
+            _tmpMId = _cursor.getInt(_cursorIndexOfMId);
+            final String _tmpMTitle;
+            if (_cursor.isNull(_cursorIndexOfMTitle)) {
+              _tmpMTitle = null;
+            } else {
+              _tmpMTitle = _cursor.getString(_cursorIndexOfMTitle);
+            }
+            final String _tmpMSubtitle;
+            if (_cursor.isNull(_cursorIndexOfMSubtitle)) {
+              _tmpMSubtitle = null;
+            } else {
+              _tmpMSubtitle = _cursor.getString(_cursorIndexOfMSubtitle);
+            }
+            final String _tmpMDescription;
+            if (_cursor.isNull(_cursorIndexOfMDescription)) {
+              _tmpMDescription = null;
+            } else {
+              _tmpMDescription = _cursor.getString(_cursorIndexOfMDescription);
+            }
+            final String _tmpMDate;
+            if (_cursor.isNull(_cursorIndexOfMDate)) {
+              _tmpMDate = null;
+            } else {
+              _tmpMDate = _cursor.getString(_cursorIndexOfMDate);
+            }
+            final int _tmpMNumber;
+            _tmpMNumber = _cursor.getInt(_cursorIndexOfMNumber);
+            final String _tmpMImage;
+            if (_cursor.isNull(_cursorIndexOfMImage)) {
+              _tmpMImage = null;
+            } else {
+              _tmpMImage = _cursor.getString(_cursorIndexOfMImage);
+            }
+            final String _tmpMDuration;
+            if (_cursor.isNull(_cursorIndexOfMDuration)) {
+              _tmpMDuration = null;
+            } else {
+              _tmpMDuration = _cursor.getString(_cursorIndexOfMDuration);
+            }
+            final int _tmpMId_1;
+            _tmpMId_1 = _cursor.getInt(_cursorIndexOfMId_1);
+            final String _tmpMTitle_1;
+            if (_cursor.isNull(_cursorIndexOfMTitle_1)) {
+              _tmpMTitle_1 = null;
+            } else {
+              _tmpMTitle_1 = _cursor.getString(_cursorIndexOfMTitle_1);
+            }
+            final String _tmpMSubtitle_1;
+            if (_cursor.isNull(_cursorIndexOfMSubtitle_1)) {
+              _tmpMSubtitle_1 = null;
+            } else {
+              _tmpMSubtitle_1 = _cursor.getString(_cursorIndexOfMSubtitle_1);
+            }
+            final String _tmpMDescription_1;
+            if (_cursor.isNull(_cursorIndexOfMDescription_1)) {
+              _tmpMDescription_1 = null;
+            } else {
+              _tmpMDescription_1 = _cursor.getString(_cursorIndexOfMDescription_1);
+            }
+            final String _tmpMDate_1;
+            if (_cursor.isNull(_cursorIndexOfMDate_1)) {
+              _tmpMDate_1 = null;
+            } else {
+              _tmpMDate_1 = _cursor.getString(_cursorIndexOfMDate_1);
+            }
+            final int _tmpMNumber_1;
+            _tmpMNumber_1 = _cursor.getInt(_cursorIndexOfMNumber_1);
+            final String _tmpMImage_1;
+            if (_cursor.isNull(_cursorIndexOfMImage_1)) {
+              _tmpMImage_1 = null;
+            } else {
+              _tmpMImage_1 = _cursor.getString(_cursorIndexOfMImage_1);
+            }
+            final String _tmpMDuration_1;
+            if (_cursor.isNull(_cursorIndexOfMDuration_1)) {
+              _tmpMDuration_1 = null;
+            } else {
+              _tmpMDuration_1 = _cursor.getString(_cursorIndexOfMDuration_1);
+            }
+            _result = new Episode(_tmpMId,_tmpMTitle,_tmpMSubtitle,_tmpMDescription,_tmpMDate,_tmpMNumber,_tmpMImage,_tmpMDuration);
+          } else {
+            _result = null;
           }
           return _result;
         } finally {

@@ -3,65 +3,34 @@ package sprechstunde.community.themenschaedel.model;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Fts4;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
 
-import com.google.gson.annotations.SerializedName;
+@Entity(tableName = "episode_fts_table")
+@Fts4(contentEntity = Episode.class)
+public class EpisodeFTS {
 
-@Entity(tableName = "episode_table")
-public class Episode {
-
-    @PrimaryKey
-    @SerializedName("id")
     @ColumnInfo(name = "id")
     private int mId;
 
-    @SerializedName("title")
     @ColumnInfo(name = "title")
     private String mTitle;
 
-    @SerializedName("subtitle")
     @ColumnInfo(name = "subtitle")
     private String mSubtitle;
 
-    @SerializedName("description")
     @ColumnInfo(name = "description")
     private String mDescription;
 
-    @SerializedName("published_at")
     @ColumnInfo(name = "date")
     private String mDate;
 
     @ColumnInfo(name = "number")
-    @SerializedName("episode_number")
     private int mNumber;
 
     @ColumnInfo(name = "image")
-    @SerializedName("image")
     private String mImage;
 
     @ColumnInfo(name = "duration")
-    @SerializedName("duration")
     private String mDuration;
-
-    public Episode(int id, String title, String subtitle, String description, String date, int number, String image, String duration) {
-        mId = id;
-        mTitle = title;
-        mSubtitle = subtitle;
-        mDescription = description;
-        mDate = date;
-        mNumber = number;
-        mImage = image;
-        mDuration = duration;
-    }
-
-    @Ignore
-    public Episode(String title, String date, int number, String duration) {
-        mTitle = title;
-        mDate = date;
-        mNumber = number;
-        mDuration = duration;
-    }
 
     public int getId() {
         return mId;
