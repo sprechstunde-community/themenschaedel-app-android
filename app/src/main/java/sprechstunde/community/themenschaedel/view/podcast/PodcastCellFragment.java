@@ -103,4 +103,11 @@ public class PodcastCellFragment extends Fragment implements ParentChildFragment
         }
         adapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onSearch(List<Episode> episodeList) {
+       ((PodcastCellAdapter) mBinding.fragmentCellRecyclerview.getAdapter()).setEpisodes(episodeList);
+        mBinding.fragmentCellRecyclerview.getAdapter().notifyDataSetChanged();
+
+    }
 }

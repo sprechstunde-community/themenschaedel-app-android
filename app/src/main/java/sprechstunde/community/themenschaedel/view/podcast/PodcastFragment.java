@@ -13,7 +13,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,6 +27,7 @@ import java.util.List;
 import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.databinding.FragmentPodcastBinding;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
+import sprechstunde.community.themenschaedel.model.Episode;
 import sprechstunde.community.themenschaedel.model.ViewModel;
 
 public class PodcastFragment extends Fragment implements View.OnClickListener, SearchView.OnQueryTextListener {
@@ -47,11 +47,19 @@ public class PodcastFragment extends Fragment implements View.OnClickListener, S
         // Required empty public constructor
     }
 
-    private void notifyFragments(ParentChildFragmentListener.SORTED_BY sortedBy) {
+    private void notifyFragmentsForSort(ParentChildFragmentListener.SORTED_BY sortedBy) {
         List<Fragment> fragments = getParentFragmentManager().getFragments();
         for (Fragment f : fragments) {
             if(f != this)
                 ((ParentChildFragmentListener) f).onSortChanged(sortedBy);
+        }
+    }
+
+    private void notifyFragmentsForSearch(List<Episode> episodes) {
+        List<Fragment> fragments = getParentFragmentManager().getFragments();
+        for (Fragment f : fragments) {
+            if(f != this)
+                ((ParentChildFragmentListener) f).onSearch(episodes);
         }
     }
 
@@ -118,16 +126,7 @@ public class PodcastFragment extends Fragment implements View.OnClickListener, S
     @Override
     public boolean onQueryTextChange(String query) {
         ViewModel viewModel = new ViewModelProvider(this).get(ViewModel .class);
-        viewModel.search(query).observe(this, episode -> {
-            if(episode != null) {
-                for(int i = 0; i < episode.size(); i++) {
-                    Log.i("HELLO ", episode.get(i).getTitle());
-
-                }
-            } else {
-                Log.i("HELLO ", "There is NOTHING!");
-            }
-        });
+        viewModel.search(query).observe(this, this::notifyFragmentsForSearch);
         return false;
     }
 
@@ -137,12 +136,12 @@ public class PodcastFragment extends Fragment implements View.OnClickListener, S
         Drawable downIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_down);
 
         if (tag.equals("ASC") && wasAlreadySelected || (tag.equals("DESC") && !wasAlreadySelected)) { // if already selected -> make ASC to DESC or if was not selected and is DESC
-            notifyFragments(down);
+            notifyFragmentsForSort(down);
             chip.setTag("DESC");
             chip.setChipIcon(downIcon);
             saveFilterTypeToSharedPreferences(down);
         } else if (tag.equals("DESC") || tag.equals("ASC"))  { // if already selected -> make DESC to ASC or if was not selected and is ASC
-            notifyFragments(up);
+            notifyFragmentsForSort(up);
             chip.setTag("ASC");
             chip.setChipIcon(upIcon);
             saveFilterTypeToSharedPreferences(up);

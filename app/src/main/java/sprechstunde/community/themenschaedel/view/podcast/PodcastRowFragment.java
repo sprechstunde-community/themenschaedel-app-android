@@ -102,4 +102,10 @@ public class PodcastRowFragment extends Fragment implements ParentChildFragmentL
         }
         adapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onSearch(List<Episode> episodeList) {
+        ((PodcastRowAdapter) mBinding.fragmentRowRecyclerview.getAdapter()).setEpisodes(episodeList);
+        mBinding.fragmentRowRecyclerview.getAdapter().notifyDataSetChanged();
+    }
 }

@@ -100,4 +100,11 @@ public class PodcastCardFragment extends Fragment implements ParentChildFragment
 
         adapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onSearch(List<Episode> episodeList) {
+        ((PodcastCardAdapter) mBinding.fragmentCardGridview.getAdapter()).setEpisodes(episodeList);
+        ((PodcastCardAdapter) mBinding.fragmentCardGridview.getAdapter()).notifyDataSetChanged();
+
+    }
 }

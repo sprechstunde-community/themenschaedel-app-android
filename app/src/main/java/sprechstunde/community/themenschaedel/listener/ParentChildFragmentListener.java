@@ -1,5 +1,9 @@
 package sprechstunde.community.themenschaedel.listener;
 
+import java.util.List;
+
+import sprechstunde.community.themenschaedel.model.Episode;
+
 public interface ParentChildFragmentListener {
 
     enum SORTED_BY {
@@ -19,4 +23,5 @@ public interface ParentChildFragmentListener {
             "þ <u,U<v,V<w,W<x,X<y,Y<z,Z&AE,Æ&AE,æ&OE,Œ&OE,œ";
 
     void onSortChanged(SORTED_BY sortedBy);
+    void onSearch(List<Episode> episodeList);
 }
