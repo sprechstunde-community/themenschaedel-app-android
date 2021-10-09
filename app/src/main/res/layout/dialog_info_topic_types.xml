@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:id="@+id/dialog_info_topics_layout"
+    android:layout_width="300dp"
     android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/dialog_info_topic_background"
-        android:layout_width="300dp"
-        android:layout_height="252dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@drawable/ic_card"
         android:contentDescription="@string/contentDescription_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +33,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"
         android:text="@string/dialog_info_ad_subtitle"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/dialog_info_topic_types_comm_details"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_topic_types_boys"
         app:layout_constraintTop_toBottomOf="@+id/dialog_info_topic_types_ad" />
@@ -41,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/dialog_info_boys"
+        android:text="@string/boys"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_topic_types_comm_details"
         app:layout_constraintTop_toBottomOf="@+id/dialog_info_topic_types_comm_details" />
 
@@ -51,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="@string/dialog_info_ad"
+        android:text="@string/ad"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_topic_types_comm_details"
         app:layout_constraintTop_toBottomOf="@+id/dialog_info_topic_types_boys_details" />
 

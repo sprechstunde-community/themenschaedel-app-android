@@ -38,7 +38,7 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
     this.__insertionAdapterOfEpisode = new EntityInsertionAdapter<Episode>(__db) {
       @Override
       public String createQuery() {
-        return "INSERT OR ABORT INTO `episode_table` (`id`,`title`,`subtitle`,`description`,`date`,`number`,`image`,`duration`) VALUES (?,?,?,?,?,?,?,?)";
+        return "INSERT OR REPLACE INTO `episode_table` (`id`,`title`,`subtitle`,`description`,`date`,`number`,`image`,`duration`) VALUES (?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -146,6 +146,18 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
     __db.beginTransaction();
     try {
       __insertionAdapterOfEpisode.insert(episode);
+      __db.setTransactionSuccessful();
+    } finally {
+      __db.endTransaction();
+    }
+  }
+
+  @Override
+  public void insertAll(final List<Episode> episodes) {
+    __db.assertNotSuspendingTransaction();
+    __db.beginTransaction();
+    try {
+      __insertionAdapterOfEpisode.insert(episodes);
       __db.setTransactionSuccessful();
     } finally {
       __db.endTransaction();

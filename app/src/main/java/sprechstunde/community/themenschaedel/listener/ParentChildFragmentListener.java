@@ -3,8 +3,12 @@ package sprechstunde.community.themenschaedel.listener;
 public interface ParentChildFragmentListener {
 
     enum SORTED_BY {
-        DATE,
-        TITLE,
+        DATE_UP,
+        DATE_DOWN,
+        TITLE_UP,
+        TITLE_DOWN,
+        NUMBER_UP,
+        NUMBER_DOWN,
         USER,
         STATE
     }

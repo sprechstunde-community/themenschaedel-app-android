@@ -111,4 +111,7 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return mTopics.size();
     }
 
+    public List<Topic> getTopics() {
+        return mTopics;
+    }
 }

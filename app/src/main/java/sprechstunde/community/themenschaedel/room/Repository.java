@@ -28,13 +28,13 @@ public class Repository {
          */
         public Repository(Application _application){
             Database db = Database.getInstance(_application);
-            mEpisodeDAO = db.episodeDAO();
+            mEpisodeDAO = db.episodes();
             mAllEpisodes = mEpisodeDAO.getAllEpisodes();
 
-            mTopicDAO = db.topicDAO();
+            mTopicDAO = db.topics();
             mAllTopics = mTopicDAO.getAllTopics();
 
-            mSubtopicDAO = db.subtopicDAO();
+            mSubtopicDAO = db.subtopics();
             mAllSubtopics = mSubtopicDAO.getAllSubtopics();
         }
 

@@ -78,6 +78,7 @@ public class PodcastCellAdapter extends RecyclerView.Adapter<PodcastCellAdapter.
         Glide.with(context)
                 .load(mEpisodes.get(position).getImage())
                 .apply(requestOptions)
+                .error(R.drawable.podcast_defauft_image)
                 .into(viewHolder.getImage());
         viewHolder.itemView.setOnClickListener(v -> {
             PodcastFragmentDirections.ActionPodcastToEpisode action = PodcastFragmentDirections.actionPodcastToEpisode();

@@ -8,10 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -21,9 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.List;
 
 import sprechstunde.community.themenschaedel.R;
-import sprechstunde.community.themenschaedel.adapter.episodeList.EpisodeTopicViewHolder;
 import sprechstunde.community.themenschaedel.model.Episode;
-import sprechstunde.community.themenschaedel.model.ViewModel;
 import sprechstunde.community.themenschaedel.view.podcast.PodcastFragmentDirections;
 
 public class PodcastCardAdapter extends BaseAdapter {
@@ -75,10 +70,11 @@ public class PodcastCardAdapter extends BaseAdapter {
         length.setText(mEpisodes.get(position).getDuration());
 
         RequestOptions requestOptions = new RequestOptions();
-        requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(40));
+        requestOptions = requestOptions.transform(new CenterCrop());
 
         Glide.with(context)
                 .load(mEpisodes.get(position).getImage())
+                .fitCenter()
                 .apply(requestOptions)
                 .into(imageView);
 

@@ -24,10 +24,15 @@ public class Host {
     @ColumnInfo(name = "description")
     private String mDescription;
 
-    public Host(int id, String name, String description) {
+    @SerializedName("profile_picture")
+    @ColumnInfo(name = "profile_picture")
+    private String mImage;
+
+    public Host(int id, String name, String description, String image) {
         mId = id;
         mName = name;
         mDescription = description;
+        mImage = image;
     }
 
     @Ignore
@@ -57,5 +62,13 @@ public class Host {
 
     public void setDescription(String description) {
         mDescription = description;
+    }
+
+    public String getImage() {
+        return mImage;
+    }
+
+    public void setImage(String image) {
+        mImage = image;
     }
 }

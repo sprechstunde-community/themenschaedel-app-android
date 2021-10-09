@@ -6,6 +6,9 @@
     <string name="search">Suche</string>
     <string name="info">Info</string>
     <string name="suggested_by">Vorgeschlagen von</string>
+    <string name="boys">Jungs</string>
+    <string name="guests">Gäste</string>
+    <string name="ad">Werbung</string>
 
     // Sort &amp; Filter
     <string name="filter_date">Datum</string>
@@ -89,8 +92,6 @@
 
     // Dialog Info
     <string name="dialog_info_community">Community</string>
-    <string name="dialog_info_boys">Jungs</string>
-    <string name="dialog_info_ad">Werbung</string>
     <string name="dialog_info_community_subtitle">Ein Thema, welches von der Community vorgeschlagen wurde.</string>
     <string name="dialog_info_boys_subtitle">Ein Thema, welches von einer (oder mehreren) der Jungs vorgeschlagen wurde</string>
     <string name="dialog_info_ad_subtitle">Dies ist kein Thema, sondern eine Werbeeinblendung</string>
@@ -128,6 +129,7 @@
     <string name="episode_hosts_and_guests">Hosts &amp; Gäste</string>
     <string name="episode_edited_by">Bearbeitet von:</string>
     <string name="state_closed">Abgeschlossen</string>
+    <string name="episode_no_topics">Bei dieser Folge wurden noch keine Themen eingetragen.</string>
 
     // Login Fragment
     <string name="login">Login</string>
@@ -143,5 +145,7 @@
     <string name="contentDescription_pill">Ein Rechteck mit stark abgerundeten Ecken</string>
     <string name="contentDescription_point">Ein kleiner Punkt, der nicht unten platziert ist sondern in der Mitte der Texthöhe</string>
     <string name="login_mail_hint">Gib deine E-Mail Adresse ein</string>
+    <string name="saved_filter_type_podcast">saved_filter_type_podcast</string>
+    <string name="saved_filter_type_list">saved_filter_type_list</string>
 
 </resources>

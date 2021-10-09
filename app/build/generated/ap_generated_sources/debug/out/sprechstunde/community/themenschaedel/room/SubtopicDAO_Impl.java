@@ -38,7 +38,7 @@ public final class SubtopicDAO_Impl implements SubtopicDAO {
     this.__insertionAdapterOfSubtopic = new EntityInsertionAdapter<Subtopic>(__db) {
       @Override
       public String createQuery() {
-        return "INSERT OR ABORT INTO `subtopic_table` (`id`,`name`,`topic_id`) VALUES (?,?,?)";
+        return "INSERT OR REPLACE INTO `subtopic_table` (`id`,`name`,`topic_id`) VALUES (?,?,?)";
       }
 
       @Override

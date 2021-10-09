@@ -72,4 +72,8 @@ public class EpisodeTopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public int getItemCount() {
         return mTopics.size();
     }
+
+    public List<Topic> getTopics() {
+        return mTopics;
+    }
 }

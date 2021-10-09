@@ -1,5 +1,7 @@
 package sprechstunde.community.themenschaedel.view.podcast;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,10 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.text.Collator;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
+import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.adapter.podcast.PodcastRowAdapter;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
 import sprechstunde.community.themenschaedel.model.Episode;
@@ -24,6 +29,7 @@ import sprechstunde.community.themenschaedel.model.ViewModel;
 public class PodcastRowFragment extends Fragment implements ParentChildFragmentListener{
 
     FragmentPodcastRowBinding mBinding;
+    private SharedPreferences mSharedPref;
 
     public PodcastRowFragment() {
         // Required empty public constructor
@@ -46,6 +52,9 @@ public class PodcastRowFragment extends Fragment implements ParentChildFragmentL
             PodcastRowAdapter adapter = new PodcastRowAdapter(episodes);
             Objects.requireNonNull(mBinding.fragmentRowRecyclerview).setAdapter(adapter);
             mBinding.fragmentRowRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+
+            mSharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);
+            getFilterTypeFromSharedPreferences();
         });
 
         return view;
@@ -57,27 +66,38 @@ public class PodcastRowFragment extends Fragment implements ParentChildFragmentL
         mBinding = null;
     }
 
+    private void getFilterTypeFromSharedPreferences() {
+        int defaultValue = ParentChildFragmentListener.SORTED_BY.DATE_DOWN.ordinal();
+        int displayType = mSharedPref.getInt(getString(R.string.saved_filter_type_podcast), defaultValue);
+        onSortChanged(ParentChildFragmentListener.SORTED_BY.values()[displayType]);
+    }
+
     @Override
     public void onSortChanged(ParentChildFragmentListener.SORTED_BY sortedBy) {
         PodcastRowAdapter adapter = (PodcastRowAdapter) mBinding.fragmentRowRecyclerview.getAdapter();
-        List<Episode> episodes = adapter.getEpisodes();
+        List<Episode> episodes = Objects.requireNonNull(adapter).getEpisodes();
 
         switch (sortedBy) {
-            case DATE:
+            case DATE_UP:
             default: {
+                Collections.sort(episodes, (a,b) -> Integer.compare(a.getNumber(), b.getNumber()));
+            } break;
+            case DATE_DOWN: {
                 Collections.sort(episodes, (a,b) -> Integer.compare(b.getNumber(), a.getNumber()));
             } break;
-
-            case TITLE: {
-                Collections.sort(episodes, (a,b) ->  a.getTitle().compareTo(b.getTitle()));
+            case TITLE_UP: {
+                Collections.sort(episodes, (a,b) -> {
+                    Collator germanCollator = Collator.getInstance(Locale.GERMAN);
+                    germanCollator.setStrength(Collator.PRIMARY);
+                    return germanCollator.compare(a.getTitle(), b.getTitle());
+                });
             } break;
-
-            case USER: {
-
-            } break;
-
-            case STATE: {
-
+            case TITLE_DOWN: {
+                Collections.sort(episodes, (a,b) -> {
+                    Collator germanCollator = Collator.getInstance(Locale.GERMAN);
+                    germanCollator.setStrength(Collator.PRIMARY);
+                    return germanCollator.compare(b.getTitle(), a.getTitle());
+                });
             } break;
         }
         adapter.notifyDataSetChanged();

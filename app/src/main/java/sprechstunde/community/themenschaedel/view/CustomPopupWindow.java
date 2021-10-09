@@ -2,6 +2,7 @@ package sprechstunde.community.themenschaedel.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -27,7 +28,12 @@ public class CustomPopupWindow extends PopupWindow {
         setContentView(layout);
 
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        setWidth((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, displayMetrics));
+
+        if ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
+            setWidth((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 600, displayMetrics));
+        } else {
+            setWidth((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, displayMetrics));
+        }
 
         setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
         setFocusable(true);

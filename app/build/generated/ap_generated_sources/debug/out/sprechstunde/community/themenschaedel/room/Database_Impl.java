@@ -182,7 +182,7 @@ public final class Database_Impl extends Database {
   }
 
   @Override
-  public EpisodeDAO episodeDAO() {
+  public EpisodeDAO episodes() {
     if (_episodeDAO != null) {
       return _episodeDAO;
     } else {
@@ -196,7 +196,7 @@ public final class Database_Impl extends Database {
   }
 
   @Override
-  public TopicDAO topicDAO() {
+  public TopicDAO topics() {
     if (_topicDAO != null) {
       return _topicDAO;
     } else {
@@ -210,7 +210,7 @@ public final class Database_Impl extends Database {
   }
 
   @Override
-  public SubtopicDAO subtopicDAO() {
+  public SubtopicDAO subtopics() {
     if (_subtopicDAO != null) {
       return _subtopicDAO;
     } else {

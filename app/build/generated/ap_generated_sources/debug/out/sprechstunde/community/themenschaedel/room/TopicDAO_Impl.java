@@ -38,7 +38,7 @@ public final class TopicDAO_Impl implements TopicDAO {
     this.__insertionAdapterOfTopic = new EntityInsertionAdapter<Topic>(__db) {
       @Override
       public String createQuery() {
-        return "INSERT OR ABORT INTO `topic_table` (`id`,`name`,`start`,`end`,`ad`,`community_contribution`,`episode_id`) VALUES (?,?,?,?,?,?,?)";
+        return "INSERT OR REPLACE INTO `topic_table` (`id`,`name`,`start`,`end`,`ad`,`community_contribution`,`episode_id`) VALUES (?,?,?,?,?,?,?)";
       }
 
       @Override

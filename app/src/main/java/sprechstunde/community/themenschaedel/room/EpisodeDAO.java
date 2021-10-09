@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -13,8 +14,11 @@ import sprechstunde.community.themenschaedel.model.Episode;
 
 @Dao
 public interface EpisodeDAO {
-    @Insert
+    @Insert (onConflict = OnConflictStrategy.REPLACE)
     void insert(Episode episode);
+
+    @Insert (onConflict = OnConflictStrategy.REPLACE)
+    void insertAll(List<Episode> episodes);
 
     @Update
     void update(Episode episode);

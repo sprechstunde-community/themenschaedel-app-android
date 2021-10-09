@@ -8,7 +8,7 @@
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
@@ -21,8 +21,8 @@
             android:id="@+id/fragment_podcast_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:selectionRequired="true"
             app:checkedChip="@id/filter_date"
+            app:selectionRequired="true"
             app:singleLine="true"
             app:singleSelection="true">
 
@@ -31,16 +31,24 @@
                 style="@style/Chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:tag="DESC"
                 android:text="@string/filter_date"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                app:chipIcon="@drawable/ic_arrow_down"
+                app:chipIconVisible="true"
+                app:textStartPadding="0dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/filter_title"
                 style="@style/Chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:tag="ASC"
                 android:text="@string/filter_title"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                app:chipIcon="@drawable/ic_arrow_up"
+                app:chipIconVisible="true"
+                app:textStartPadding="0dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/filter_user"

@@ -10,26 +10,37 @@
         android:id="@+id/fragment_list_filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
+        app:checkedChip="@id/filter_number"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:selectionRequired="true"
         app:singleLine="true"
         app:singleSelection="true">
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/filter_name"
-            style="@style/Chip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_name" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/filter_number"
             style="@style/Chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/filter_number" />
+            android:tag="DESC"
+            android:text="@string/filter_number"
+            app:chipIcon="@drawable/ic_arrow_down"
+            app:chipIconVisible="true"
+            app:textStartPadding="0dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/filter_name"
+            style="@style/Chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="ASC"
+            android:text="@string/filter_name"
+            app:chipIcon="@drawable/ic_arrow_up"
+            app:chipIconVisible="true"
+            app:textStartPadding="0dp" />
+
     </com.google.android.material.chip.ChipGroup>
 
 
@@ -47,15 +58,15 @@
         android:id="@+id/fragment_list_details"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="11dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/ic_filter_details"
         android:backgroundTint="@color/primaryColor"
         android:contentDescription="@string/contentDescription_filter"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_list_filter"
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/fragment_list_filter" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

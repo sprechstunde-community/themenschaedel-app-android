@@ -30,6 +30,15 @@ public class BottomSheetDialogFilterFragment extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = FragmentBottomSheetDialogFilterBinding.inflate(inflater, container, false);
+        mBinding.filterBoys.setChecked(true);
+        mBinding.filterCommunity.setChecked(true);
         return mBinding.getRoot();
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding = null;
     }
 }
