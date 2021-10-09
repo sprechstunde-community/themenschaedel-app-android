@@ -13,8 +13,8 @@ import sprechstunde.community.themenschaedel.room.Repository;
 
 public class ViewModel extends AndroidViewModel {
 
-    private Repository mRepository;
-    private LiveData<List<Episode>> mEpisodes;
+    private final Repository mRepository;
+    private final LiveData<List<Episode>> mEpisodes;
     private final MutableLiveData<Episode> selected = new MutableLiveData<>();
 
     public ViewModel(@NonNull Application application) {
@@ -68,6 +68,7 @@ public class ViewModel extends AndroidViewModel {
 
     public LiveData<Episode> getEpisode(String title) { return mRepository.getEpisode(title); }
 
-    public LiveData<Episode> search(String title) { return mRepository.getEpisode(title); }
+    public LiveData<List<Episode>> search(String title) {
+        return mRepository.search(title); }
 
 }

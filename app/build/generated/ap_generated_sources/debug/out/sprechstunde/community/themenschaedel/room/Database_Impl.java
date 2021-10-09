@@ -6,7 +6,6 @@ import androidx.room.RoomOpenHelper;
 import androidx.room.RoomOpenHelper.Delegate;
 import androidx.room.RoomOpenHelper.ValidationResult;
 import androidx.room.util.DBUtil;
-import androidx.room.util.FtsTableInfo;
 import androidx.room.util.TableInfo;
 import androidx.room.util.TableInfo.Column;
 import androidx.room.util.TableInfo.ForeignKey;
@@ -35,25 +34,19 @@ public final class Database_Impl extends Database {
 
   @Override
   protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration configuration) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(2) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(5) {
       @Override
       public void createAllTables(SupportSQLiteDatabase _db) {
         _db.execSQL("CREATE TABLE IF NOT EXISTS `episode_table` (`id` INTEGER NOT NULL, `title` TEXT, `subtitle` TEXT, `description` TEXT, `date` TEXT, `number` INTEGER NOT NULL, `image` TEXT, `duration` TEXT, PRIMARY KEY(`id`))");
-        _db.execSQL("CREATE VIRTUAL TABLE IF NOT EXISTS `episode_fts_table` USING FTS4(`id` INTEGER NOT NULL, `title` TEXT, `subtitle` TEXT, `description` TEXT, `date` TEXT, `number` INTEGER NOT NULL, `image` TEXT, `duration` TEXT, content=`episode_table`)");
-        _db.execSQL("CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_episode_fts_table_BEFORE_UPDATE BEFORE UPDATE ON `episode_table` BEGIN DELETE FROM `episode_fts_table` WHERE `docid`=OLD.`rowid`; END");
-        _db.execSQL("CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_episode_fts_table_BEFORE_DELETE BEFORE DELETE ON `episode_table` BEGIN DELETE FROM `episode_fts_table` WHERE `docid`=OLD.`rowid`; END");
-        _db.execSQL("CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_episode_fts_table_AFTER_UPDATE AFTER UPDATE ON `episode_table` BEGIN INSERT INTO `episode_fts_table`(`docid`, `id`, `title`, `subtitle`, `description`, `date`, `number`, `image`, `duration`) VALUES (NEW.`rowid`, NEW.`id`, NEW.`title`, NEW.`subtitle`, NEW.`description`, NEW.`date`, NEW.`number`, NEW.`image`, NEW.`duration`); END");
-        _db.execSQL("CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_episode_fts_table_AFTER_INSERT AFTER INSERT ON `episode_table` BEGIN INSERT INTO `episode_fts_table`(`docid`, `id`, `title`, `subtitle`, `description`, `date`, `number`, `image`, `duration`) VALUES (NEW.`rowid`, NEW.`id`, NEW.`title`, NEW.`subtitle`, NEW.`description`, NEW.`date`, NEW.`number`, NEW.`image`, NEW.`duration`); END");
         _db.execSQL("CREATE TABLE IF NOT EXISTS `topic_table` (`id` INTEGER NOT NULL, `name` TEXT, `start` INTEGER NOT NULL, `end` INTEGER NOT NULL, `ad` INTEGER NOT NULL, `community_contribution` INTEGER NOT NULL, `episode_id` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         _db.execSQL("CREATE TABLE IF NOT EXISTS `subtopic_table` (`id` INTEGER NOT NULL, `name` TEXT, `topic_id` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         _db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ca19f7a3e541e3506f58cade60290811')");
+        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '81b7f236c1be13dce7407e1e47a9a043')");
       }
 
       @Override
       public void dropAllTables(SupportSQLiteDatabase _db) {
         _db.execSQL("DROP TABLE IF EXISTS `episode_table`");
-        _db.execSQL("DROP TABLE IF EXISTS `episode_fts_table`");
         _db.execSQL("DROP TABLE IF EXISTS `topic_table`");
         _db.execSQL("DROP TABLE IF EXISTS `subtopic_table`");
         if (mCallbacks != null) {
@@ -90,10 +83,6 @@ public final class Database_Impl extends Database {
 
       @Override
       public void onPostMigrate(SupportSQLiteDatabase _db) {
-        _db.execSQL("CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_episode_fts_table_BEFORE_UPDATE BEFORE UPDATE ON `episode_table` BEGIN DELETE FROM `episode_fts_table` WHERE `docid`=OLD.`rowid`; END");
-        _db.execSQL("CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_episode_fts_table_BEFORE_DELETE BEFORE DELETE ON `episode_table` BEGIN DELETE FROM `episode_fts_table` WHERE `docid`=OLD.`rowid`; END");
-        _db.execSQL("CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_episode_fts_table_AFTER_UPDATE AFTER UPDATE ON `episode_table` BEGIN INSERT INTO `episode_fts_table`(`docid`, `id`, `title`, `subtitle`, `description`, `date`, `number`, `image`, `duration`) VALUES (NEW.`rowid`, NEW.`id`, NEW.`title`, NEW.`subtitle`, NEW.`description`, NEW.`date`, NEW.`number`, NEW.`image`, NEW.`duration`); END");
-        _db.execSQL("CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_episode_fts_table_AFTER_INSERT AFTER INSERT ON `episode_table` BEGIN INSERT INTO `episode_fts_table`(`docid`, `id`, `title`, `subtitle`, `description`, `date`, `number`, `image`, `duration`) VALUES (NEW.`rowid`, NEW.`id`, NEW.`title`, NEW.`subtitle`, NEW.`description`, NEW.`date`, NEW.`number`, NEW.`image`, NEW.`duration`); END");
       }
 
       @Override
@@ -115,22 +104,6 @@ public final class Database_Impl extends Database {
           return new RoomOpenHelper.ValidationResult(false, "episode_table(sprechstunde.community.themenschaedel.model.Episode).\n"
                   + " Expected:\n" + _infoEpisodeTable + "\n"
                   + " Found:\n" + _existingEpisodeTable);
-        }
-        final HashSet<String> _columnsEpisodeFtsTable = new HashSet<String>(8);
-        _columnsEpisodeFtsTable.add("id");
-        _columnsEpisodeFtsTable.add("title");
-        _columnsEpisodeFtsTable.add("subtitle");
-        _columnsEpisodeFtsTable.add("description");
-        _columnsEpisodeFtsTable.add("date");
-        _columnsEpisodeFtsTable.add("number");
-        _columnsEpisodeFtsTable.add("image");
-        _columnsEpisodeFtsTable.add("duration");
-        final FtsTableInfo _infoEpisodeFtsTable = new FtsTableInfo("episode_fts_table", _columnsEpisodeFtsTable, "CREATE VIRTUAL TABLE IF NOT EXISTS `episode_fts_table` USING FTS4(`id` INTEGER NOT NULL, `title` TEXT, `subtitle` TEXT, `description` TEXT, `date` TEXT, `number` INTEGER NOT NULL, `image` TEXT, `duration` TEXT, content=`episode_table`)");
-        final FtsTableInfo _existingEpisodeFtsTable = FtsTableInfo.read(_db, "episode_fts_table");
-        if (!_infoEpisodeFtsTable.equals(_existingEpisodeFtsTable)) {
-          return new RoomOpenHelper.ValidationResult(false, "episode_fts_table(sprechstunde.community.themenschaedel.model.EpisodeFTS).\n"
-                  + " Expected:\n" + _infoEpisodeFtsTable + "\n"
-                  + " Found:\n" + _existingEpisodeFtsTable);
         }
         final HashMap<String, TableInfo.Column> _columnsTopicTable = new HashMap<String, TableInfo.Column>(7);
         _columnsTopicTable.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
@@ -164,7 +137,7 @@ public final class Database_Impl extends Database {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "ca19f7a3e541e3506f58cade60290811", "54ce3529106513b76d09087f8be88210");
+    }, "81b7f236c1be13dce7407e1e47a9a043", "6f3b8bd8efdad8a3575a5e2e6f05b349");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(configuration.context)
         .name(configuration.name)
         .callback(_openCallback)
@@ -175,10 +148,9 @@ public final class Database_Impl extends Database {
 
   @Override
   protected InvalidationTracker createInvalidationTracker() {
-    final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(1);
-    _shadowTablesMap.put("episode_fts_table", "episode_table");
+    final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "episode_table","episode_fts_table","topic_table","subtopic_table");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "episode_table","topic_table","subtopic_table");
   }
 
   @Override
@@ -188,7 +160,6 @@ public final class Database_Impl extends Database {
     try {
       super.beginTransaction();
       _db.execSQL("DELETE FROM `episode_table`");
-      _db.execSQL("DELETE FROM `episode_fts_table`");
       _db.execSQL("DELETE FROM `topic_table`");
       _db.execSQL("DELETE FROM `subtopic_table`");
       super.setTransactionSuccessful();

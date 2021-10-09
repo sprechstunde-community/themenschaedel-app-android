@@ -427,8 +427,8 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
   }
 
   @Override
-  public LiveData<Episode> search(final String query) {
-    final String _sql = "SELECT * FROM episode_table JOIN episode_fts_table ON episode_table.title = episode_fts_table.title WHERE episode_fts_table MATCH ?";
+  public LiveData<List<Episode>> search(final String query) {
+    final String _sql = "SELECT * FROM episode_table WHERE episode_table.title LIKE '%' || ? || '%'";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
     if (query == null) {
@@ -436,9 +436,9 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
     } else {
       _statement.bindString(_argIndex, query);
     }
-    return __db.getInvalidationTracker().createLiveData(new String[]{"episode_table","episode_fts_table"}, false, new Callable<Episode>() {
+    return __db.getInvalidationTracker().createLiveData(new String[]{"episode_table"}, false, new Callable<List<Episode>>() {
       @Override
-      public Episode call() throws Exception {
+      public List<Episode> call() throws Exception {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
           final int _cursorIndexOfMId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
@@ -449,16 +449,9 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
           final int _cursorIndexOfMNumber = CursorUtil.getColumnIndexOrThrow(_cursor, "number");
           final int _cursorIndexOfMImage = CursorUtil.getColumnIndexOrThrow(_cursor, "image");
           final int _cursorIndexOfMDuration = CursorUtil.getColumnIndexOrThrow(_cursor, "duration");
-          final int _cursorIndexOfMId_1 = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-          final int _cursorIndexOfMTitle_1 = CursorUtil.getColumnIndexOrThrow(_cursor, "title");
-          final int _cursorIndexOfMSubtitle_1 = CursorUtil.getColumnIndexOrThrow(_cursor, "subtitle");
-          final int _cursorIndexOfMDescription_1 = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
-          final int _cursorIndexOfMDate_1 = CursorUtil.getColumnIndexOrThrow(_cursor, "date");
-          final int _cursorIndexOfMNumber_1 = CursorUtil.getColumnIndexOrThrow(_cursor, "number");
-          final int _cursorIndexOfMImage_1 = CursorUtil.getColumnIndexOrThrow(_cursor, "image");
-          final int _cursorIndexOfMDuration_1 = CursorUtil.getColumnIndexOrThrow(_cursor, "duration");
-          final Episode _result;
-          if(_cursor.moveToFirst()) {
+          final List<Episode> _result = new ArrayList<Episode>(_cursor.getCount());
+          while(_cursor.moveToNext()) {
+            final Episode _item;
             final int _tmpMId;
             _tmpMId = _cursor.getInt(_cursorIndexOfMId);
             final String _tmpMTitle;
@@ -499,49 +492,8 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
             } else {
               _tmpMDuration = _cursor.getString(_cursorIndexOfMDuration);
             }
-            final int _tmpMId_1;
-            _tmpMId_1 = _cursor.getInt(_cursorIndexOfMId_1);
-            final String _tmpMTitle_1;
-            if (_cursor.isNull(_cursorIndexOfMTitle_1)) {
-              _tmpMTitle_1 = null;
-            } else {
-              _tmpMTitle_1 = _cursor.getString(_cursorIndexOfMTitle_1);
-            }
-            final String _tmpMSubtitle_1;
-            if (_cursor.isNull(_cursorIndexOfMSubtitle_1)) {
-              _tmpMSubtitle_1 = null;
-            } else {
-              _tmpMSubtitle_1 = _cursor.getString(_cursorIndexOfMSubtitle_1);
-            }
-            final String _tmpMDescription_1;
-            if (_cursor.isNull(_cursorIndexOfMDescription_1)) {
-              _tmpMDescription_1 = null;
-            } else {
-              _tmpMDescription_1 = _cursor.getString(_cursorIndexOfMDescription_1);
-            }
-            final String _tmpMDate_1;
-            if (_cursor.isNull(_cursorIndexOfMDate_1)) {
-              _tmpMDate_1 = null;
-            } else {
-              _tmpMDate_1 = _cursor.getString(_cursorIndexOfMDate_1);
-            }
-            final int _tmpMNumber_1;
-            _tmpMNumber_1 = _cursor.getInt(_cursorIndexOfMNumber_1);
-            final String _tmpMImage_1;
-            if (_cursor.isNull(_cursorIndexOfMImage_1)) {
-              _tmpMImage_1 = null;
-            } else {
-              _tmpMImage_1 = _cursor.getString(_cursorIndexOfMImage_1);
-            }
-            final String _tmpMDuration_1;
-            if (_cursor.isNull(_cursorIndexOfMDuration_1)) {
-              _tmpMDuration_1 = null;
-            } else {
-              _tmpMDuration_1 = _cursor.getString(_cursorIndexOfMDuration_1);
-            }
-            _result = new Episode(_tmpMId,_tmpMTitle,_tmpMSubtitle,_tmpMDescription,_tmpMDate,_tmpMNumber,_tmpMImage,_tmpMDuration);
-          } else {
-            _result = null;
+            _item = new Episode(_tmpMId,_tmpMTitle,_tmpMSubtitle,_tmpMDescription,_tmpMDate,_tmpMNumber,_tmpMImage,_tmpMDuration);
+            _result.add(_item);
           }
           return _result;
         } finally {

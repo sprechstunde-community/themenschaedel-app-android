@@ -7,11 +7,17 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -22,8 +28,9 @@ import java.util.List;
 import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.databinding.FragmentPodcastBinding;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
+import sprechstunde.community.themenschaedel.model.ViewModel;
 
-public class PodcastFragment extends Fragment implements View.OnClickListener {
+public class PodcastFragment extends Fragment implements View.OnClickListener, SearchView.OnQueryTextListener {
 
     private FragmentPodcastBinding mBinding;
     private Display mCurrentDisplay;
@@ -49,6 +56,23 @@ public class PodcastFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_search_settings, menu);
+        MenuItem searchItem = menu.findItem(R.id.menu_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.menu_search) {
+            requireActivity().onSearchRequested();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -67,6 +91,7 @@ public class PodcastFragment extends Fragment implements View.OnClickListener {
         mPreSelectedChipId = mBinding.filterDate.getId();
 
         changeDisplayFragment(true);
+        setHasOptionsMenu(true);
 
         return view;
     }
@@ -83,6 +108,27 @@ public class PodcastFragment extends Fragment implements View.OnClickListener {
             fromASCToDESC(mBinding.filterTitle, v.getId() == mPreSelectedChipId, ParentChildFragmentListener.SORTED_BY.TITLE_UP, ParentChildFragmentListener.SORTED_BY.TITLE_DOWN);
             mPreSelectedChipId = mBinding.filterTitle.getId();
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        ViewModel viewModel = new ViewModelProvider(this).get(ViewModel .class);
+        viewModel.search(query).observe(this, episode -> {
+            if(episode != null) {
+                for(int i = 0; i < episode.size(); i++) {
+                    Log.i("HELLO ", episode.get(i).getTitle());
+
+                }
+            } else {
+                Log.i("HELLO ", "There is NOTHING!");
+            }
+        });
+        return false;
     }
 
     private void fromASCToDESC(Chip chip, boolean wasAlreadySelected, ParentChildFragmentListener.SORTED_BY up, ParentChildFragmentListener.SORTED_BY down) {

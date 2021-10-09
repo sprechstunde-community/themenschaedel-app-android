@@ -107,7 +107,7 @@ public class Repository {
         return mEpisodeDAO.getEpisode(number);
     }
 
-    public LiveData<Episode> search(String query) {
+    public LiveData<List<Episode>> search(String query) {
         return mEpisodeDAO.search(query);
     }
 

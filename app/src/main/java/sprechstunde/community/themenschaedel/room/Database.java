@@ -8,11 +8,10 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import sprechstunde.community.themenschaedel.model.Episode;
-import sprechstunde.community.themenschaedel.model.EpisodeFTS;
 import sprechstunde.community.themenschaedel.model.Subtopic;
 import sprechstunde.community.themenschaedel.model.Topic;
 
-@androidx.room.Database(entities = {Episode.class, EpisodeFTS.class, Topic.class, Subtopic.class}, version = 2, exportSchema = false)
+@androidx.room.Database(entities = {Episode.class, Topic.class, Subtopic.class}, version = 5, exportSchema = false)
 abstract public class Database extends RoomDatabase {
 
     private static Database mInstance;
