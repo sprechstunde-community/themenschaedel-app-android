@@ -153,13 +153,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.nav_podcast) {
-            mBinding.activityMainToolbar.setBackgroundColor(getColor(R.color.background));
+            mBinding.activityMainToolbar.setBackgroundColor(getColor(R.color.primaryColor));
             mNavController.navigate(R.id.nav_podcast);
         } else if (item.getItemId() == R.id.nav_topic) {
-            mBinding.activityMainToolbar.setBackgroundColor(getColor(R.color.background));
+            mBinding.activityMainToolbar.setBackgroundColor(getColor(R.color.primaryColor));
             mNavController.navigate(R.id.nav_topic);
         } else if (item.getItemId() == R.id.nav_wiki) {
-            mBinding.activityMainToolbar.setBackgroundColor(getColor(R.color.background));
+            mBinding.activityMainToolbar.setBackgroundColor(getColor(R.color.primaryColor));
             mNavController.navigate(R.id.nav_wiki);
         } else if (item.getItemId() == R.id.nav_login) {
             mBinding.activityMainToolbar.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.toolbar_gradient_register, getTheme()));
