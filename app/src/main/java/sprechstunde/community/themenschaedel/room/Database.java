@@ -10,6 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import sprechstunde.community.themenschaedel.model.Episode;
 import sprechstunde.community.themenschaedel.model.Subtopic;
 import sprechstunde.community.themenschaedel.model.Topic;
+import sprechstunde.community.themenschaedel.model.TopicWithSubtopic;
 
 @androidx.room.Database(entities = {Episode.class, Topic.class, Subtopic.class}, version = 7, exportSchema = false)
 abstract public class Database extends RoomDatabase {

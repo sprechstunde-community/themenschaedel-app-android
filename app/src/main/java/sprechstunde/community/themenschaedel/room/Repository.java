@@ -10,6 +10,7 @@ import java.util.List;
 import sprechstunde.community.themenschaedel.model.Episode;
 import sprechstunde.community.themenschaedel.model.Subtopic;
 import sprechstunde.community.themenschaedel.model.Topic;
+import sprechstunde.community.themenschaedel.model.TopicWithSubtopic;
 
 public class Repository {
 
@@ -87,6 +88,9 @@ public class Repository {
         return mAllTopics;
     }
 
+    public LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopics() {
+        return mTopicDAO.getAllTopicsWithSubtopics();
+    }
     public LiveData<List<Subtopic>> getAllSubtopics() {
         return mAllSubtopics;
     }
@@ -119,7 +123,7 @@ public class Repository {
         return mTopicDAO.search(query);
     }
 
-    public LiveData<List<Subtopic>> searchForSubtopics(String query) {
+    public LiveData<List<TopicWithSubtopic>> searchForSubtopics(String query) {
         return mSubtopicDAO.search(query);
     }
 

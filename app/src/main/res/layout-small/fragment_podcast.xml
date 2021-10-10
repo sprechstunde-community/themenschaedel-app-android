@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.podcast.PodcastFragment">
+    tools:context=".view.podcast.PodcastFragment"
+    android:background="@color/primaryColor">
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
@@ -50,20 +51,6 @@
                 app:chipIconVisible="true"
                 app:textStartPadding="0dp" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/filter_user"
-                style="@style/Chip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/filter_user" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/filter_state"
-                style="@style/Chip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/filter_state"
-                android:textAlignment="center" />
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 
@@ -95,6 +82,7 @@
         android:id="@+id/fragment_podcast_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/surface"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -35,6 +35,7 @@ import sprechstunde.community.themenschaedel.adapter.list.TopicAdapter;
 import sprechstunde.community.themenschaedel.databinding.FragmentListBinding;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
 import sprechstunde.community.themenschaedel.model.Topic;
+import sprechstunde.community.themenschaedel.model.TopicWithSubtopic;
 import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 import sprechstunde.community.themenschaedel.view.CustomPopupWindow;
 
@@ -65,8 +66,8 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         View view = mBinding.getRoot();
 
         TopicViewModel mViewModel = new ViewModelProvider(requireActivity()).get(TopicViewModel.class);
-        mViewModel.getAllTopics().observe(getViewLifecycleOwner(), topics -> {
-            Collections.sort(topics, (a, b) -> a.getName().compareTo(b.getName()));
+        mViewModel.getAllTopicsWithSubtopics().observe(getViewLifecycleOwner(), topics -> {
+            Collections.sort(topics, (a, b) -> a.getTopic().getName().compareTo(b.getTopic().getName()));
             mAdapter = new TopicAdapter(topics, (MainActivity) requireActivity());
             Objects.requireNonNull(mBinding.fragmentListRecylerview).setAdapter(mAdapter);
             mBinding.fragmentListRecylerview.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -155,28 +156,28 @@ public class ListFragment extends Fragment implements View.OnClickListener {
 
     private void sortList(ParentChildFragmentListener.SORTED_BY sortedBy) {
         TopicAdapter adapter = (TopicAdapter) mBinding.fragmentListRecylerview.getAdapter();
-        List<Topic> topics = Objects.requireNonNull(adapter).getTopics();
+        List<TopicWithSubtopic> topics = Objects.requireNonNull(adapter).getTopics();
 
         switch (sortedBy) {
             case NUMBER_UP:
             default: {
-                Collections.sort(topics, (a,b) -> Integer.compare(a.getEpisode(), b.getEpisode()));
+                Collections.sort(topics, (a,b) -> Integer.compare(a.getTopic().getEpisode(), b.getTopic().getEpisode()));
             } break;
             case NUMBER_DOWN: {
-                Collections.sort(topics, (a,b) -> Integer.compare(b.getEpisode(), a.getEpisode()));
+                Collections.sort(topics, (a,b) -> Integer.compare(b.getTopic().getEpisode(), a.getTopic().getEpisode()));
             } break;
             case TITLE_UP: {
                 Collections.sort(topics, (a,b) -> {
                     Collator germanCollator = Collator.getInstance(Locale.GERMAN);
                     germanCollator.setStrength(Collator.PRIMARY);
-                    return germanCollator.compare(a.getName(), b.getName());
+                    return germanCollator.compare(a.getTopic().getName(), b.getTopic().getName());
                 });
             } break;
             case TITLE_DOWN: {
                 Collections.sort(topics, (a,b) -> {
                     Collator germanCollator = Collator.getInstance(Locale.GERMAN);
                     germanCollator.setStrength(Collator.PRIMARY);
-                    return germanCollator.compare(b.getName(), a.getName());
+                    return germanCollator.compare(b.getTopic().getName(), a.getTopic().getName());
                 });
             } break;
         }

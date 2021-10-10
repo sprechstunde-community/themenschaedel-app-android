@@ -15,6 +15,7 @@ import java.util.List;
 import sprechstunde.community.themenschaedel.MainActivity;
 import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.model.Topic;
+import sprechstunde.community.themenschaedel.model.TopicWithSubtopic;
 import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 
 public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -25,10 +26,10 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private static final int TYPE_TOPIC_WITH_SUBTOPICS_AND_DETAILS = 4;
 
     private final MainActivity mMainActivity;
-    private List<Topic> mTopics;
+    private List<TopicWithSubtopic> mTopics;
     private TopicViewModel mViewModel;
 
-    public TopicAdapter(List<Topic> topics, MainActivity mainActivity) {
+    public TopicAdapter(List<TopicWithSubtopic> topics, MainActivity mainActivity) {
         mTopics = topics;
         mMainActivity = mainActivity;
     }
@@ -61,7 +62,7 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        if (mTopics.get(position).hasSubtopics()) {
+        if (mTopics.get(position).getSubtopics() != null && mTopics.get(position).getSubtopics().size() < 0) {
             return TYPE_TOPIC_WITH_SUBTOPICS;
         } else {
             return TYPE_TOPIC;
@@ -70,16 +71,15 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
-        mViewModel.getAllSubtopicsFromTopic(mTopics.get(position).getId()).observe(mMainActivity, subtopics -> {
             switch (getItemViewType(position)) {
                 case TYPE_TOPIC_WITH_DETAILS:
                 case TYPE_TOPIC_WITH_SUBTOPICS_AND_DETAILS: {
-                    ((TopicDetailsViewHolder) viewHolder).setTopicValues(subtopics, mTopics.get(position));
+                    ((TopicDetailsViewHolder) viewHolder).setTopicValues(mTopics.get(position).getSubtopics(), mTopics.get(position).getTopic());
                     ((TopicDetailsViewHolder) viewHolder).itemView.setOnClickListener(v -> {
                         RecyclerView recyclerView = ((TopicDetailsViewHolder) viewHolder).getRecyclerView();
                         if (recyclerView.getVisibility() == View.VISIBLE) {
                             recyclerView.setVisibility(View.GONE);
-                        } else if (subtopics != null && subtopics.size() > 0) {
+                        } else if (mTopics.get(position).getSubtopics() != null && mTopics.get(position).getSubtopics().size() > 0) {
                             recyclerView.setVisibility(View.VISIBLE);
                         }
                     });
@@ -88,19 +88,18 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 case TYPE_TOPIC_WITH_SUBTOPICS:
                 case TYPE_TOPIC:
                 default: {
-                    ((TopicViewHolder) viewHolder).setTopicValues(subtopics, mTopics.get(position));
+                    ((TopicViewHolder) viewHolder).setTopicValues(mTopics.get(position).getSubtopics(), mTopics.get(position).getTopic());
                     ((TopicViewHolder) viewHolder).itemView.setOnClickListener(v -> {
                         RecyclerView recyclerView = ((TopicViewHolder) viewHolder).getRecyclerView();
                         if (recyclerView.getVisibility() == View.VISIBLE) {
                             recyclerView.setVisibility(View.GONE);
-                        } else if (subtopics != null && subtopics.size() > 0) {
+                        } else if (mTopics.get(position).getSubtopics() != null && mTopics.get(position).getSubtopics().size() > 0) {
                             recyclerView.setVisibility(View.VISIBLE);
                         }
                     });
                     break;
                 }
             }
-        });
     }
 
     @Override
@@ -108,11 +107,11 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return mTopics.size();
     }
 
-    public List<Topic> getTopics() {
+    public List<TopicWithSubtopic> getTopics() {
         return mTopics;
     }
 
-    public void setTopics(List<Topic> topics) {
+    public void setTopics(List<TopicWithSubtopic> topics) {
         mTopics = topics;
     }
 

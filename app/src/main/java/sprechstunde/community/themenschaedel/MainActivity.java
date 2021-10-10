@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavController mNavController;
     private AppBarConfiguration mAppBarConfiguration;
     private CustomPopupWindow mPopupWindow;
-    private SharedPreferences mSharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View view = mBinding.getRoot();
 
         UsedSharedPreferences.getInstance(this).saveFirstStartToSharedPreferences(UsedSharedPreferences.getInstance(this).getFirstStartFromSharedPreferences() + 1);
+        new ViewModelProvider(this).get(EpisodeViewModel.class).setCurrentPage(1);
+        new ViewModelProvider(this).get(TopicViewModel.class).setCurrentPage(1);
 
         setContentView(view);
         ApiClient.getInstance(this).saveEpisodesToDB(new ViewModelProvider(this).get(EpisodeViewModel.class));

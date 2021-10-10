@@ -11,15 +11,25 @@ import java.util.List;
 
 import sprechstunde.community.themenschaedel.model.Subtopic;
 import sprechstunde.community.themenschaedel.model.Topic;
+import sprechstunde.community.themenschaedel.model.TopicWithSubtopic;
 import sprechstunde.community.themenschaedel.room.Repository;
 
 public class TopicViewModel extends AndroidViewModel {
 
     private final Repository mRepository;
+    private int mCurrentPage = 1;
 
     public TopicViewModel(@NonNull Application application) {
         super(application);
         mRepository = new Repository(application);
+    }
+
+    public int getCurrentPage() {
+        return mCurrentPage;
+    }
+
+    public void setCurrentPage(int currentPage) {
+        mCurrentPage = currentPage;
     }
 
     public void insert(Topic t) {
@@ -50,6 +60,10 @@ public class TopicViewModel extends AndroidViewModel {
         return mRepository.getAllTopics();
     }
 
+    public LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopics() {
+        return mRepository.getAllTopicsWithSubtopics();
+    }
+
     public LiveData<List<Subtopic>> getAllSubtopics() {
         return mRepository.getAllSubtopics();
     }
@@ -66,7 +80,7 @@ public class TopicViewModel extends AndroidViewModel {
         return mRepository.searchForTopics(name);
     }
 
-    public LiveData<List<Subtopic>> searchForSubtopics(String name) {
+    public LiveData<List<TopicWithSubtopic>> searchForSubtopics(String name) {
         return mRepository.searchForSubtopics(name);
     }
 

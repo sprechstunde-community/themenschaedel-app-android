@@ -1,6 +1,7 @@
 package sprechstunde.community.themenschaedel.api;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -52,26 +53,36 @@ public class ApiClient {
 
     public void saveTopicsToDB(TopicViewModel viewModel) {
         Call<ResponseTopic> call = getMyApi().getTopicsByPage(1);
-        call.enqueue(new retrofit2.Callback<ResponseTopic>() {
+        Callback<ResponseTopic> callback = new retrofit2.Callback<ResponseTopic>() {
             @Override
             public void onResponse(@NonNull Call<ResponseTopic> call, @NonNull Response<ResponseTopic> response) {
                 ResponseTopic results = response.body();
+                int currentPage = viewModel.getCurrentPage();
 
                 for (int i = 0; i < Objects.requireNonNull(results).getData().size(); i++) {
                     Topic topic = results.getData().get(i);
-                    
+
                     String name = topic.getName().replace("&amp;", "&");
                     topic.setName(name);
 
-                    
-                    if(topic.getSubtopics() != null && topic.getSubtopics().size() > 0) {
+
+                    if (topic.getSubtopics() != null && topic.getSubtopics().size() > 0) {
                         saveSubTopicsToDB(topic.getSubtopics(), viewModel);
                         topic.setHasSubtopics(true);
                     } else {
                         topic.setHasSubtopics(false);
                     }
-                    
+
                     viewModel.insert(topic);
+                }
+
+                // true: first start & not last page
+                // OR    total episodes in DB =/= total episodes in API & not last page
+                if (currentPage < results.getMeta().getLastPage() && (UsedSharedPreferences.getInstance(mMainActivity).getFirstStartFromSharedPreferences() == 1 || results.getMeta().getTotal() != UsedSharedPreferences.getInstance(mMainActivity).getEpisodeCountFromSharedPreferences())) {
+                    viewModel.setCurrentPage(currentPage + 1);
+                    call = getMyApi().getTopicsByPage(currentPage);
+                    call.enqueue(this);
+                    UsedSharedPreferences.getInstance(mMainActivity).saveEpisodeCountToSharedPreferences(results.getMeta().getTotal());
                 }
             }
 
@@ -79,13 +90,14 @@ public class ApiClient {
             public void onFailure(@NonNull Call<ResponseTopic> call, @NonNull Throwable t) {
                 Log.e("ERROR--", t.getMessage());
             }
-        });
+        };
+        call.enqueue(callback);
     }
 
     private void saveSubTopicsToDB(List<Subtopic> subtopics, TopicViewModel viewModel) {
         for (int i = 0; i < subtopics.size(); i++) {
             Subtopic subtopic = subtopics.get(i);
-            
+
             String name = subtopic.getName().replace("&amp;", "&");
             subtopic.setName(name);
             viewModel.insert(subtopic);
@@ -103,14 +115,12 @@ public class ApiClient {
                 for (int i = 0; i < Objects.requireNonNull(results).getData().size(); i++) {
                     viewModel.insert(formatEpisodeFromApi(results.getData().get(i)));
                 }
-
-                if (currentPage < results.getMeta().getLastPage() && results.getMeta().getTotal() != UsedSharedPreferences.getInstance(mMainActivity).getEpisodeCountFromSharedPreferences()) {
+                // true: first start & not last page
+                // OR    total episodes in DB =/= total episodes in API & not last page
+                if (currentPage < results.getMeta().getLastPage() && (UsedSharedPreferences.getInstance(mMainActivity).getFirstStartFromSharedPreferences() == 1 || results.getMeta().getTotal() != UsedSharedPreferences.getInstance(mMainActivity).getEpisodeCountFromSharedPreferences())) {
                     viewModel.setCurrentPage(currentPage + 1);
                     call = getMyApi().getEpisodesByPage(currentPage);
                     call.enqueue(this);
-                }
-
-                if (UsedSharedPreferences.getInstance(mMainActivity).getFirstStartFromSharedPreferences() == 2) {
                     UsedSharedPreferences.getInstance(mMainActivity).saveEpisodeCountToSharedPreferences(results.getMeta().getTotal());
                 }
             }

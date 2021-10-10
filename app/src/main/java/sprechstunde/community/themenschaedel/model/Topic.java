@@ -48,6 +48,12 @@ public class Topic {
     @SerializedName("episode_id")
     int mEpisode;
 
+    public Topic(int id, String name) {
+        mId = id;
+        mName = name;
+    }
+    @Ignore
+
     public Topic(int id, String name, int start, int end, boolean ad, boolean communityContribution, int episode) {
         mId = id;
         mName = name;
