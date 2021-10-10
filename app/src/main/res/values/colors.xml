@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="primaryColor">#8AD0CE</color>
-    <color name="primaryColor_Alpha60">#998AD0CE</color>
-    <color name="primaryColor_Alpha40">#668AD0CE</color>
-    <color name="primaryColor_Alpha26">#428AD0CE</color>
-    <color name="primaryColor_Alpha0">#008AD0CE</color>
+    <color name="primaryColor">#2AAD94</color>
+    <color name="primaryColor_Alpha60">#992AAD94</color>
+    <color name="primaryColor_Alpha40">#662AAD94</color>
+    <color name="primaryColor_Alpha26">#422AAD94</color>
+    <color name="primaryColor_Alpha0">#002AAD94</color>
 
     <color name="primaryLightColor">#DAF4F2</color>
     <color name="primaryDarkColor">#157976</color>
