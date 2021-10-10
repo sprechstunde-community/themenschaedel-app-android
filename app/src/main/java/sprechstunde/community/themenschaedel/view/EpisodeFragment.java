@@ -83,17 +83,6 @@ public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChan
         EpisodeViewModel episodeViewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
         TopicViewModel topicViewModel = new ViewModelProvider(requireActivity()).get(TopicViewModel.class);
 
-        topicViewModel.getAllTopicsFromEpisode(id).observe(getViewLifecycleOwner(), topics -> {
-            EpisodeTopicAdapter adapter = new EpisodeTopicAdapter(topics, getContext());
-            Objects.requireNonNull(mBinding.fragmentEpisodeRecyclerview).setAdapter(adapter);
-            mBinding.fragmentEpisodeRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-
-            if(topics == null || topics.size() == 0) {
-                mBinding.fragmentEpisodeNoTopics.setVisibility(View.VISIBLE);
-                mBinding.fragmentEpisodeNoTopicsBackground.setVisibility(View.VISIBLE);
-            }
-        });
-
         episodeViewModel.getEpisode(id).observe(getViewLifecycleOwner(), episode -> {
             mBinding.fragmentEpisodeTitle.setText(episode.getTitle());
             String number =  getString(R.string.list_item_topic_number) + " " + episode.getNumber();
@@ -108,6 +97,17 @@ public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChan
                     .load(episode.getImage())
                     .apply(requestOptions)
                     .into(mBinding.fragmentEpisodeImage);
+        });
+
+        topicViewModel.getAllTopicsFromEpisode(id).observe(getViewLifecycleOwner(), topics -> {
+            EpisodeTopicAdapter adapter = new EpisodeTopicAdapter(topics, getContext());
+            Objects.requireNonNull(mBinding.fragmentEpisodeRecyclerview).setAdapter(adapter);
+            mBinding.fragmentEpisodeRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+
+            if(topics == null || topics.size() == 0) {
+                mBinding.fragmentEpisodeNoTopics.setVisibility(View.VISIBLE);
+                mBinding.fragmentEpisodeNoTopicsBackground.setVisibility(View.VISIBLE);
+            }
         });
 
         List<Host> hosts = new ArrayList<>();

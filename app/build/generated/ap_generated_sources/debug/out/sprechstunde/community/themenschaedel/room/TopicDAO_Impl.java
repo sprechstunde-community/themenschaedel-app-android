@@ -163,6 +163,71 @@ public final class TopicDAO_Impl implements TopicDAO {
   }
 
   @Override
+  public LiveData<Topic> getTopicById(final int topicId) {
+    final String _sql = "SELECT * FROM topic_table WHERE id = ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, topicId);
+    return __db.getInvalidationTracker().createLiveData(new String[]{"topic_table"}, false, new Callable<Topic>() {
+      @Override
+      public Topic call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfMId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfMName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+          final int _cursorIndexOfMStart = CursorUtil.getColumnIndexOrThrow(_cursor, "start");
+          final int _cursorIndexOfMEnd = CursorUtil.getColumnIndexOrThrow(_cursor, "end");
+          final int _cursorIndexOfMAd = CursorUtil.getColumnIndexOrThrow(_cursor, "ad");
+          final int _cursorIndexOfMCommunityContribution = CursorUtil.getColumnIndexOrThrow(_cursor, "community_contribution");
+          final int _cursorIndexOfMHasSubtopics = CursorUtil.getColumnIndexOrThrow(_cursor, "hasSubTopics");
+          final int _cursorIndexOfMEpisode = CursorUtil.getColumnIndexOrThrow(_cursor, "episode_id");
+          final Topic _result;
+          if(_cursor.moveToFirst()) {
+            final int _tmpMId;
+            _tmpMId = _cursor.getInt(_cursorIndexOfMId);
+            final String _tmpMName;
+            if (_cursor.isNull(_cursorIndexOfMName)) {
+              _tmpMName = null;
+            } else {
+              _tmpMName = _cursor.getString(_cursorIndexOfMName);
+            }
+            final int _tmpMStart;
+            _tmpMStart = _cursor.getInt(_cursorIndexOfMStart);
+            final int _tmpMEnd;
+            _tmpMEnd = _cursor.getInt(_cursorIndexOfMEnd);
+            final boolean _tmpMAd;
+            final int _tmp;
+            _tmp = _cursor.getInt(_cursorIndexOfMAd);
+            _tmpMAd = _tmp != 0;
+            final boolean _tmpMCommunityContribution;
+            final int _tmp_1;
+            _tmp_1 = _cursor.getInt(_cursorIndexOfMCommunityContribution);
+            _tmpMCommunityContribution = _tmp_1 != 0;
+            final int _tmpMEpisode;
+            _tmpMEpisode = _cursor.getInt(_cursorIndexOfMEpisode);
+            _result = new Topic(_tmpMId,_tmpMName,_tmpMStart,_tmpMEnd,_tmpMAd,_tmpMCommunityContribution,_tmpMEpisode);
+            final boolean _tmpMHasSubtopics;
+            final int _tmp_2;
+            _tmp_2 = _cursor.getInt(_cursorIndexOfMHasSubtopics);
+            _tmpMHasSubtopics = _tmp_2 != 0;
+            _result.setHasSubtopics(_tmpMHasSubtopics);
+          } else {
+            _result = null;
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
   public LiveData<List<Topic>> getAllTopics() {
     final String _sql = "SELECT * FROM topic_table ORDER BY name ASC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
