@@ -89,6 +89,8 @@
 
     // SharedPreferences
     <string name="saved_display_type">saved_display_type</string>
+    <string name="saved_episodeCount">saved_episodeCount</string>
+
 
     // Dialog Info
     <string name="dialog_info_community">Community</string>
@@ -148,5 +150,7 @@
     <string name="saved_filter_type_podcast">saved_filter_type_podcast</string>
     <string name="saved_filter_type_list">saved_filter_type_list</string>
     <string name="search_hint">Suche nach Folgen</string>
+    <string name="saved_first_start">saved_first_start</string>
+    <string name="toast">Saved meta - this should be displayed once</string>
 
 </resources>

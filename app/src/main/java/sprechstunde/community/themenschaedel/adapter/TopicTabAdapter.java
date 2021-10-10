@@ -4,13 +4,26 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import java.util.Objects;
+
 import sprechstunde.community.themenschaedel.view.topic.DrawFragment;
 import sprechstunde.community.themenschaedel.view.topic.ListFragment;
 
 public class TopicTabAdapter extends FragmentStateAdapter {
 
+    private final ListFragment mListFragment = new ListFragment();
+    private final DrawFragment mDrawFragment = new DrawFragment();
+
     public TopicTabAdapter(@NonNull Fragment fragment) {
         super(fragment);
+    }
+
+    public ListFragment getListFragment() {
+        return mListFragment;
+    }
+
+    public DrawFragment getDrawFragment() {
+        return mDrawFragment;
     }
 
     @NonNull
@@ -19,13 +32,14 @@ public class TopicTabAdapter extends FragmentStateAdapter {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new ListFragment();
+                fragment = mListFragment;
                 break;
             case 1:
-                fragment = new DrawFragment();
+                fragment = mDrawFragment;
                 break;
         }
-        return fragment;    }
+        return Objects.requireNonNull(fragment);
+    }
 
     @Override
     public int getItemCount() {

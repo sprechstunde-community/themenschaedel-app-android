@@ -79,6 +79,10 @@ public class Repository {
         mEpisodeDAO.deleteAllEpisodes();
     }
 
+    public LiveData<Topic> getTopicById(int topicId) {
+        return mTopicDAO.getTopicById(topicId);
+    }
+
     public LiveData<List<Topic>> getAllTopics() {
         return mAllTopics;
     }
@@ -107,9 +111,18 @@ public class Repository {
         return mEpisodeDAO.getEpisode(number);
     }
 
-    public LiveData<List<Episode>> search(String query) {
+    public LiveData<List<Episode>> searchForEpisodes(String query) {
         return mEpisodeDAO.search(query);
     }
+
+    public LiveData<List<Topic>> searchForTopics(String query) {
+        return mTopicDAO.search(query);
+    }
+
+    public LiveData<List<Subtopic>> searchForSubtopics(String query) {
+        return mSubtopicDAO.search(query);
+    }
+
 
     private static class InsertTopicAsyncTask extends AsyncTask<Topic, Void, Void> {
         private final TopicDAO mTopicDAO;

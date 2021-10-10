@@ -38,7 +38,7 @@ public final class TopicDAO_Impl implements TopicDAO {
     this.__insertionAdapterOfTopic = new EntityInsertionAdapter<Topic>(__db) {
       @Override
       public String createQuery() {
-        return "INSERT OR REPLACE INTO `topic_table` (`id`,`name`,`start`,`end`,`ad`,`community_contribution`,`episode_id`) VALUES (?,?,?,?,?,?,?)";
+        return "INSERT OR REPLACE INTO `topic_table` (`id`,`name`,`start`,`end`,`ad`,`community_contribution`,`hasSubTopics`,`episode_id`) VALUES (?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -51,9 +51,16 @@ public final class TopicDAO_Impl implements TopicDAO {
         }
         stmt.bindLong(3, value.getStart());
         stmt.bindLong(4, value.getEnd());
-        stmt.bindLong(5, value.getAd());
-        stmt.bindLong(6, value.getCommunityContribution());
-        stmt.bindLong(7, value.getEpisode());
+        final int _tmp;
+        _tmp = value.getAd() ? 1 : 0;
+        stmt.bindLong(5, _tmp);
+        final int _tmp_1;
+        _tmp_1 = value.getCommunityContribution() ? 1 : 0;
+        stmt.bindLong(6, _tmp_1);
+        final int _tmp_2;
+        _tmp_2 = value.hasSubtopics() ? 1 : 0;
+        stmt.bindLong(7, _tmp_2);
+        stmt.bindLong(8, value.getEpisode());
       }
     };
     this.__deletionAdapterOfTopic = new EntityDeletionOrUpdateAdapter<Topic>(__db) {
@@ -70,7 +77,7 @@ public final class TopicDAO_Impl implements TopicDAO {
     this.__updateAdapterOfTopic = new EntityDeletionOrUpdateAdapter<Topic>(__db) {
       @Override
       public String createQuery() {
-        return "UPDATE OR ABORT `topic_table` SET `id` = ?,`name` = ?,`start` = ?,`end` = ?,`ad` = ?,`community_contribution` = ?,`episode_id` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `topic_table` SET `id` = ?,`name` = ?,`start` = ?,`end` = ?,`ad` = ?,`community_contribution` = ?,`hasSubTopics` = ?,`episode_id` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -83,10 +90,17 @@ public final class TopicDAO_Impl implements TopicDAO {
         }
         stmt.bindLong(3, value.getStart());
         stmt.bindLong(4, value.getEnd());
-        stmt.bindLong(5, value.getAd());
-        stmt.bindLong(6, value.getCommunityContribution());
-        stmt.bindLong(7, value.getEpisode());
-        stmt.bindLong(8, value.getId());
+        final int _tmp;
+        _tmp = value.getAd() ? 1 : 0;
+        stmt.bindLong(5, _tmp);
+        final int _tmp_1;
+        _tmp_1 = value.getCommunityContribution() ? 1 : 0;
+        stmt.bindLong(6, _tmp_1);
+        final int _tmp_2;
+        _tmp_2 = value.hasSubtopics() ? 1 : 0;
+        stmt.bindLong(7, _tmp_2);
+        stmt.bindLong(8, value.getEpisode());
+        stmt.bindLong(9, value.getId());
       }
     };
     this.__preparedStmtOfDeleteAllTopics = new SharedSQLiteStatement(__db) {
@@ -163,6 +177,7 @@ public final class TopicDAO_Impl implements TopicDAO {
           final int _cursorIndexOfMEnd = CursorUtil.getColumnIndexOrThrow(_cursor, "end");
           final int _cursorIndexOfMAd = CursorUtil.getColumnIndexOrThrow(_cursor, "ad");
           final int _cursorIndexOfMCommunityContribution = CursorUtil.getColumnIndexOrThrow(_cursor, "community_contribution");
+          final int _cursorIndexOfMHasSubtopics = CursorUtil.getColumnIndexOrThrow(_cursor, "hasSubTopics");
           final int _cursorIndexOfMEpisode = CursorUtil.getColumnIndexOrThrow(_cursor, "episode_id");
           final List<Topic> _result = new ArrayList<Topic>(_cursor.getCount());
           while(_cursor.moveToNext()) {
@@ -179,13 +194,22 @@ public final class TopicDAO_Impl implements TopicDAO {
             _tmpMStart = _cursor.getInt(_cursorIndexOfMStart);
             final int _tmpMEnd;
             _tmpMEnd = _cursor.getInt(_cursorIndexOfMEnd);
-            final int _tmpMAd;
-            _tmpMAd = _cursor.getInt(_cursorIndexOfMAd);
-            final int _tmpMCommunityContribution;
-            _tmpMCommunityContribution = _cursor.getInt(_cursorIndexOfMCommunityContribution);
+            final boolean _tmpMAd;
+            final int _tmp;
+            _tmp = _cursor.getInt(_cursorIndexOfMAd);
+            _tmpMAd = _tmp != 0;
+            final boolean _tmpMCommunityContribution;
+            final int _tmp_1;
+            _tmp_1 = _cursor.getInt(_cursorIndexOfMCommunityContribution);
+            _tmpMCommunityContribution = _tmp_1 != 0;
             final int _tmpMEpisode;
             _tmpMEpisode = _cursor.getInt(_cursorIndexOfMEpisode);
             _item = new Topic(_tmpMId,_tmpMName,_tmpMStart,_tmpMEnd,_tmpMAd,_tmpMCommunityContribution,_tmpMEpisode);
+            final boolean _tmpMHasSubtopics;
+            final int _tmp_2;
+            _tmp_2 = _cursor.getInt(_cursorIndexOfMHasSubtopics);
+            _tmpMHasSubtopics = _tmp_2 != 0;
+            _item.setHasSubtopics(_tmpMHasSubtopics);
             _result.add(_item);
           }
           return _result;
@@ -218,6 +242,7 @@ public final class TopicDAO_Impl implements TopicDAO {
           final int _cursorIndexOfMEnd = CursorUtil.getColumnIndexOrThrow(_cursor, "end");
           final int _cursorIndexOfMAd = CursorUtil.getColumnIndexOrThrow(_cursor, "ad");
           final int _cursorIndexOfMCommunityContribution = CursorUtil.getColumnIndexOrThrow(_cursor, "community_contribution");
+          final int _cursorIndexOfMHasSubtopics = CursorUtil.getColumnIndexOrThrow(_cursor, "hasSubTopics");
           final int _cursorIndexOfMEpisode = CursorUtil.getColumnIndexOrThrow(_cursor, "episode_id");
           final List<Topic> _result = new ArrayList<Topic>(_cursor.getCount());
           while(_cursor.moveToNext()) {
@@ -234,13 +259,97 @@ public final class TopicDAO_Impl implements TopicDAO {
             _tmpMStart = _cursor.getInt(_cursorIndexOfMStart);
             final int _tmpMEnd;
             _tmpMEnd = _cursor.getInt(_cursorIndexOfMEnd);
-            final int _tmpMAd;
-            _tmpMAd = _cursor.getInt(_cursorIndexOfMAd);
-            final int _tmpMCommunityContribution;
-            _tmpMCommunityContribution = _cursor.getInt(_cursorIndexOfMCommunityContribution);
+            final boolean _tmpMAd;
+            final int _tmp;
+            _tmp = _cursor.getInt(_cursorIndexOfMAd);
+            _tmpMAd = _tmp != 0;
+            final boolean _tmpMCommunityContribution;
+            final int _tmp_1;
+            _tmp_1 = _cursor.getInt(_cursorIndexOfMCommunityContribution);
+            _tmpMCommunityContribution = _tmp_1 != 0;
             final int _tmpMEpisode;
             _tmpMEpisode = _cursor.getInt(_cursorIndexOfMEpisode);
             _item = new Topic(_tmpMId,_tmpMName,_tmpMStart,_tmpMEnd,_tmpMAd,_tmpMCommunityContribution,_tmpMEpisode);
+            final boolean _tmpMHasSubtopics;
+            final int _tmp_2;
+            _tmp_2 = _cursor.getInt(_cursorIndexOfMHasSubtopics);
+            _tmpMHasSubtopics = _tmp_2 != 0;
+            _item.setHasSubtopics(_tmpMHasSubtopics);
+            _result.add(_item);
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
+  public LiveData<List<Topic>> search(final String query) {
+    final String _sql = "SELECT * FROM topic_table WHERE (topic_table.name LIKE '%' || ? || '%') OR (topic_table.episode_id LIKE '%' || ? || '%')";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
+    int _argIndex = 1;
+    if (query == null) {
+      _statement.bindNull(_argIndex);
+    } else {
+      _statement.bindString(_argIndex, query);
+    }
+    _argIndex = 2;
+    if (query == null) {
+      _statement.bindNull(_argIndex);
+    } else {
+      _statement.bindString(_argIndex, query);
+    }
+    return __db.getInvalidationTracker().createLiveData(new String[]{"topic_table"}, false, new Callable<List<Topic>>() {
+      @Override
+      public List<Topic> call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfMId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfMName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+          final int _cursorIndexOfMStart = CursorUtil.getColumnIndexOrThrow(_cursor, "start");
+          final int _cursorIndexOfMEnd = CursorUtil.getColumnIndexOrThrow(_cursor, "end");
+          final int _cursorIndexOfMAd = CursorUtil.getColumnIndexOrThrow(_cursor, "ad");
+          final int _cursorIndexOfMCommunityContribution = CursorUtil.getColumnIndexOrThrow(_cursor, "community_contribution");
+          final int _cursorIndexOfMHasSubtopics = CursorUtil.getColumnIndexOrThrow(_cursor, "hasSubTopics");
+          final int _cursorIndexOfMEpisode = CursorUtil.getColumnIndexOrThrow(_cursor, "episode_id");
+          final List<Topic> _result = new ArrayList<Topic>(_cursor.getCount());
+          while(_cursor.moveToNext()) {
+            final Topic _item;
+            final int _tmpMId;
+            _tmpMId = _cursor.getInt(_cursorIndexOfMId);
+            final String _tmpMName;
+            if (_cursor.isNull(_cursorIndexOfMName)) {
+              _tmpMName = null;
+            } else {
+              _tmpMName = _cursor.getString(_cursorIndexOfMName);
+            }
+            final int _tmpMStart;
+            _tmpMStart = _cursor.getInt(_cursorIndexOfMStart);
+            final int _tmpMEnd;
+            _tmpMEnd = _cursor.getInt(_cursorIndexOfMEnd);
+            final boolean _tmpMAd;
+            final int _tmp;
+            _tmp = _cursor.getInt(_cursorIndexOfMAd);
+            _tmpMAd = _tmp != 0;
+            final boolean _tmpMCommunityContribution;
+            final int _tmp_1;
+            _tmp_1 = _cursor.getInt(_cursorIndexOfMCommunityContribution);
+            _tmpMCommunityContribution = _tmp_1 != 0;
+            final int _tmpMEpisode;
+            _tmpMEpisode = _cursor.getInt(_cursorIndexOfMEpisode);
+            _item = new Topic(_tmpMId,_tmpMName,_tmpMStart,_tmpMEnd,_tmpMAd,_tmpMCommunityContribution,_tmpMEpisode);
+            final boolean _tmpMHasSubtopics;
+            final int _tmp_2;
+            _tmp_2 = _cursor.getInt(_cursorIndexOfMHasSubtopics);
+            _tmpMHasSubtopics = _tmp_2 != 0;
+            _item.setHasSubtopics(_tmpMHasSubtopics);
             _result.add(_item);
           }
           return _result;

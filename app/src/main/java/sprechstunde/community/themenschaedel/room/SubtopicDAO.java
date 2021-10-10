@@ -33,4 +33,7 @@ public interface SubtopicDAO {
 
     @Query("SELECT * FROM subtopic_table WHERE topic_id = :topic")
     LiveData<List<Subtopic>> getAllSubtopicsFrom(int topic);
+
+    @Query("SELECT * FROM subtopic_table WHERE subtopic_table.name LIKE '%' || :query || '%'")
+    LiveData<List<Subtopic>> search(String query);
 }

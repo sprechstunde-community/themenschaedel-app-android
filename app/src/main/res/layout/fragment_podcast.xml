@@ -50,20 +50,6 @@
                 app:chipIconVisible="true"
                 app:textStartPadding="0dp" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/filter_user"
-                style="@style/Chip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/filter_user" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/filter_state"
-                style="@style/Chip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/filter_state"
-                android:textAlignment="center" />
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 

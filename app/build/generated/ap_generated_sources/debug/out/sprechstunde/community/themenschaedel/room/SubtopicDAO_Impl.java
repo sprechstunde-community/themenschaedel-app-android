@@ -224,6 +224,53 @@ public final class SubtopicDAO_Impl implements SubtopicDAO {
     });
   }
 
+  @Override
+  public LiveData<List<Subtopic>> search(final String query) {
+    final String _sql = "SELECT * FROM subtopic_table WHERE subtopic_table.name LIKE '%' || ? || '%'";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    if (query == null) {
+      _statement.bindNull(_argIndex);
+    } else {
+      _statement.bindString(_argIndex, query);
+    }
+    return __db.getInvalidationTracker().createLiveData(new String[]{"subtopic_table"}, false, new Callable<List<Subtopic>>() {
+      @Override
+      public List<Subtopic> call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfMId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfMName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+          final int _cursorIndexOfMTopicId = CursorUtil.getColumnIndexOrThrow(_cursor, "topic_id");
+          final List<Subtopic> _result = new ArrayList<Subtopic>(_cursor.getCount());
+          while(_cursor.moveToNext()) {
+            final Subtopic _item;
+            final int _tmpMId;
+            _tmpMId = _cursor.getInt(_cursorIndexOfMId);
+            final String _tmpMName;
+            if (_cursor.isNull(_cursorIndexOfMName)) {
+              _tmpMName = null;
+            } else {
+              _tmpMName = _cursor.getString(_cursorIndexOfMName);
+            }
+            final int _tmpMTopicId;
+            _tmpMTopicId = _cursor.getInt(_cursorIndexOfMTopicId);
+            _item = new Subtopic(_tmpMId,_tmpMName,_tmpMTopicId);
+            _result.add(_item);
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
   public static List<Class<?>> getRequiredConverters() {
     return Collections.emptyList();
   }

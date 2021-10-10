@@ -36,6 +36,6 @@ public interface EpisodeDAO {
     LiveData<List<Episode>> getAllEpisodes();
 
    //@Query(" SELECT * FROM episode_table JOIN episode_fts_table ON episode_table.id = episode_fts_table.id WHERE episode_fts_table.title MATCH :query")
-    @Query("SELECT * FROM episode_table WHERE episode_table.title LIKE '%' || :query || '%'")
+    @Query("SELECT * FROM episode_table WHERE (episode_table.title LIKE '%' || :query || '%') OR (episode_table.number LIKE '%' || :query || '%')")
     LiveData<List<Episode>> search(String query);
 }

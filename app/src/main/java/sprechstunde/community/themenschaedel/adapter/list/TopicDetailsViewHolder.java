@@ -44,7 +44,7 @@ public class TopicDetailsViewHolder extends RecyclerView.ViewHolder {
         String number = itemView.getContext().getString(R.string.list_item_topic_number) + " " + topic.getEpisode();
         getNumber().setText(number);
 
-        if(topic.getCommunityContribution() == 1) {
+        if(topic.getCommunityContribution()) {
             mIcon.setBackground(mCommunity);
         } else {
             mIcon.setBackground(mBoys);

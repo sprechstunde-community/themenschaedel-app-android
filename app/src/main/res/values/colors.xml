@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="primaryColor">#5fdb54</color>
-    <color name="primaryColor_Alpha60">#995FDB54</color>
-    <color name="primaryColor_Alpha40">#665FDB54</color>
-    <color name="primaryColor_Alpha26">#425FDB54</color>
-    <color name="primaryColor_Alpha0">#005FDB54</color>
+    <color name="primaryColor">#2EB67F</color>
+    <color name="primaryColor_Alpha60">#992EB67F</color>
+    <color name="primaryColor_Alpha40">#662EB67F</color>
+    <color name="primaryColor_Alpha26">#422EB67F</color>
+    <color name="primaryColor_Alpha0">#002EB67F</color>
 
-    <color name="primaryLightColor">#ACF44F</color>
-    <color name="primaryDarkColor">#2EB67F</color>
+    <color name="primaryLightColor">#A2FAC5</color>
+    <color name="primaryDarkColor">#13775F</color>
 
-    <color name="secondaryColor">#FFAFE7</color>
-    <color name="secondaryColor_Alpha60">#99FFAFE7</color>
-    <color name="secondaryColor_Alpha40">#66FFAFE7</color>
-    <color name="secondaryColor_Alpha0">#00FFAFE7</color>
+    <color name="secondaryColor">#48C0A3</color>
+    <color name="secondaryColor_Alpha60">#9948C0A3</color>
+    <color name="secondaryColor_Alpha40">#6648C0A3</color>
+    <color name="secondaryColor_Alpha0">#0048C0A3</color>
 
     <color name="secondaryDarkColor">#FF79D7</color>
 

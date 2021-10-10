@@ -29,12 +29,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import sprechstunde.community.themenschaedel.MainActivity;
 import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.adapter.list.TopicAdapter;
 import sprechstunde.community.themenschaedel.databinding.FragmentListBinding;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
 import sprechstunde.community.themenschaedel.model.Topic;
-import sprechstunde.community.themenschaedel.model.ViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 import sprechstunde.community.themenschaedel.view.CustomPopupWindow;
 
 public class ListFragment extends Fragment implements View.OnClickListener {
@@ -42,9 +43,13 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     private FragmentListBinding mBinding;
     private SharedPreferences mSharedPref;
     private int mPreSelectedChipId;
-
+    private TopicAdapter mAdapter;
     public ListFragment() {
         // Required empty public constructor
+    }
+
+    public TopicAdapter getAdapter() {
+        return mAdapter;
     }
 
     @Override
@@ -59,11 +64,11 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         mBinding = FragmentListBinding.inflate(inflater, container, false);
         View view = mBinding.getRoot();
 
-        ViewModel mViewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
+        TopicViewModel mViewModel = new ViewModelProvider(requireActivity()).get(TopicViewModel.class);
         mViewModel.getAllTopics().observe(getViewLifecycleOwner(), topics -> {
             Collections.sort(topics, (a, b) -> a.getName().compareTo(b.getName()));
-            TopicAdapter adapter = new TopicAdapter(topics, getContext());
-            Objects.requireNonNull(mBinding.fragmentListRecylerview).setAdapter(adapter);
+            mAdapter = new TopicAdapter(topics, (MainActivity) requireActivity());
+            Objects.requireNonNull(mBinding.fragmentListRecylerview).setAdapter(mAdapter);
             mBinding.fragmentListRecylerview.setLayoutManager(new LinearLayoutManager(getContext()));
 
             mSharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);

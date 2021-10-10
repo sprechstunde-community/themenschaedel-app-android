@@ -6,16 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import sprechstunde.community.themenschaedel.MainActivity;
 import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.model.Topic;
-import sprechstunde.community.themenschaedel.model.ViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 
 public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -24,29 +24,28 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private static final int TYPE_TOPIC_WITH_SUBTOPICS = 3;
     private static final int TYPE_TOPIC_WITH_SUBTOPICS_AND_DETAILS = 4;
 
-    private final Context mContext;
-    private final List<Topic> mTopics;
-    private ViewModel mViewModel;
+    private final MainActivity mMainActivity;
+    private List<Topic> mTopics;
+    private TopicViewModel mViewModel;
 
-    public TopicAdapter(List<Topic> topics, Context context) {
+    public TopicAdapter(List<Topic> topics, MainActivity mainActivity) {
         mTopics = topics;
-        mContext = context;
+        mMainActivity = mainActivity;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view;
-
         switch (viewType) {
             case TYPE_TOPIC_WITH_DETAILS:
-            case TYPE_TOPIC_WITH_SUBTOPICS_AND_DETAILS:{
-                    view = LayoutInflater.from(mContext).inflate(R.layout.list_item_suggested_topic_details, viewGroup, false);
-                    return new TopicDetailsViewHolder(view);
-                }
+            case TYPE_TOPIC_WITH_SUBTOPICS_AND_DETAILS: {
+                view = LayoutInflater.from(mMainActivity).inflate(R.layout.list_item_suggested_topic_details, viewGroup, false);
+                return new TopicDetailsViewHolder(view);
+            }
             case TYPE_TOPIC_WITH_SUBTOPICS:
-            default:{
-                view = LayoutInflater.from(mContext).inflate(R.layout.list_item_suggested_topic, viewGroup, false);
+            default: {
+                view = LayoutInflater.from(mMainActivity).inflate(R.layout.list_item_suggested_topic, viewGroup, false);
                 return new TopicViewHolder(view);
             }
         }
@@ -55,8 +54,8 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-        if(mViewModel == null){
-            mViewModel = new ViewModelProvider((ViewModelStoreOwner) recyclerView.getContext()).get(ViewModel.class);
+        if (mViewModel == null) {
+            mViewModel = new ViewModelProvider((ViewModelStoreOwner) recyclerView.getContext()).get(TopicViewModel.class);
         }
     }
 
@@ -71,8 +70,7 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
-
-        mViewModel.getAllSubtopicsFromTopic(mTopics.get(position).getId()).observe((LifecycleOwner) mContext, subtopics -> {
+        mViewModel.getAllSubtopicsFromTopic(mTopics.get(position).getId()).observe(mMainActivity, subtopics -> {
             switch (getItemViewType(position)) {
                 case TYPE_TOPIC_WITH_DETAILS:
                 case TYPE_TOPIC_WITH_SUBTOPICS_AND_DETAILS: {
@@ -89,17 +87,16 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 }
                 case TYPE_TOPIC_WITH_SUBTOPICS:
                 case TYPE_TOPIC:
-                default:
-                 {
+                default: {
                     ((TopicViewHolder) viewHolder).setTopicValues(subtopics, mTopics.get(position));
-                     ((TopicViewHolder) viewHolder).itemView.setOnClickListener(v -> {
-                         RecyclerView recyclerView = ((TopicViewHolder) viewHolder).getRecyclerView();
-                         if (recyclerView.getVisibility() == View.VISIBLE) {
-                             recyclerView.setVisibility(View.GONE);
-                         } else if (subtopics != null && subtopics.size() > 0) {
-                             recyclerView.setVisibility(View.VISIBLE);
-                         }
-                     });
+                    ((TopicViewHolder) viewHolder).itemView.setOnClickListener(v -> {
+                        RecyclerView recyclerView = ((TopicViewHolder) viewHolder).getRecyclerView();
+                        if (recyclerView.getVisibility() == View.VISIBLE) {
+                            recyclerView.setVisibility(View.GONE);
+                        } else if (subtopics != null && subtopics.size() > 0) {
+                            recyclerView.setVisibility(View.VISIBLE);
+                        }
+                    });
                     break;
                 }
             }
@@ -114,4 +111,9 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public List<Topic> getTopics() {
         return mTopics;
     }
+
+    public void setTopics(List<Topic> topics) {
+        mTopics = topics;
+    }
+
 }

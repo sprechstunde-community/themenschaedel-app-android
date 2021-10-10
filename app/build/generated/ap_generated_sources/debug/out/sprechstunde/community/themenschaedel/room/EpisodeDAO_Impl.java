@@ -428,9 +428,15 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
 
   @Override
   public LiveData<List<Episode>> search(final String query) {
-    final String _sql = "SELECT * FROM episode_table WHERE episode_table.title LIKE '%' || ? || '%'";
-    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    final String _sql = "SELECT * FROM episode_table WHERE (episode_table.title LIKE '%' || ? || '%') OR (episode_table.number LIKE '%' || ? || '%')";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
     int _argIndex = 1;
+    if (query == null) {
+      _statement.bindNull(_argIndex);
+    } else {
+      _statement.bindString(_argIndex, query);
+    }
+    _argIndex = 2;
     if (query == null) {
       _statement.bindNull(_argIndex);
     } else {

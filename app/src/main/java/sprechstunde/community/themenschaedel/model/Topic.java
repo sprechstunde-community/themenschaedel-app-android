@@ -7,11 +7,13 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 @Entity(tableName = "topic_table")
 public class Topic {
 
     @PrimaryKey
-    @ColumnInfo(name="id")
+    @ColumnInfo(name = "id")
     @SerializedName("id")
     private int mId;
 
@@ -29,20 +31,24 @@ public class Topic {
 
     @ColumnInfo(name = "ad")
     @SerializedName("ad")
-    int mAd;
+    boolean mAd;
 
     @ColumnInfo(name = "community_contribution")
     @SerializedName("community_contribution")
-    int mCommunityContribution;
+    boolean mCommunityContribution;
 
     @Ignore
-    boolean mSubtopics;
+    @SerializedName("subtopics")
+    List<Subtopic> mSubtopics;
+
+    @ColumnInfo(name = "hasSubTopics")
+    boolean mHasSubtopics;
 
     @ColumnInfo(name = "episode_id")
     @SerializedName("episode_id")
     int mEpisode;
 
-    public Topic (int id, String name, int start, int end, int ad, int communityContribution, int episode) {
+    public Topic(int id, String name, int start, int end, boolean ad, boolean communityContribution, int episode) {
         mId = id;
         mName = name;
         mStart = start;
@@ -53,7 +59,7 @@ public class Topic {
     }
 
     @Ignore
-    public Topic (String name,int start, int end, int ad, int communityContribution, boolean subtopics, int episode) {
+    public Topic(String name, int start, int end, boolean ad, boolean communityContribution, List<Subtopic> subtopics, int episode) {
         mName = name;
         mStart = start;
         mEnd = end;
@@ -64,7 +70,7 @@ public class Topic {
     }
 
     @Ignore
-    public Topic (String name, int ad, int communityContribution, boolean subtopics, int episode) {
+    public Topic(String name, boolean ad, boolean communityContribution, List<Subtopic> subtopics, int episode) {
         mName = name;
         mAd = ad;
         mCommunityContribution = communityContribution;
@@ -104,28 +110,28 @@ public class Topic {
         mEnd = end;
     }
 
-    public int getAd() {
+    public boolean getAd() {
         return mAd;
     }
 
-    public void setAd(int ad) {
+    public void setAd(boolean ad) {
         mAd = ad;
     }
 
-    public int getCommunityContribution() {
+    public boolean getCommunityContribution() {
         return mCommunityContribution;
     }
 
-    public void setCommunityContribution(int communityContribution) {
+    public void setCommunityContribution(boolean communityContribution) {
         mCommunityContribution = communityContribution;
     }
 
-    public boolean hasSubtopics() {
-        return mSubtopics;
+    public void setSubtopics(List<Subtopic> subtopics) {
+        mSubtopics = subtopics;
     }
 
-    public void setSubtopics(boolean subtopics) {
-        mSubtopics = subtopics;
+    public List<Subtopic> getSubtopics() {
+        return mSubtopics;
     }
 
     public int getEpisode() {
@@ -134,5 +140,13 @@ public class Topic {
 
     public void setEpisode(int episode) {
         mEpisode = episode;
+    }
+
+    public boolean hasSubtopics() {
+        return mHasSubtopics;
+    }
+
+    public void setHasSubtopics(boolean hasSubtopics) {
+        mHasSubtopics = hasSubtopics;
     }
 }

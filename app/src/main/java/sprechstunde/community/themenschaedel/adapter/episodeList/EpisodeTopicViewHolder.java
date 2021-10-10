@@ -67,9 +67,9 @@ public class EpisodeTopicViewHolder extends RecyclerView.ViewHolder {
         String startTime = String.format(Locale.getDefault(), "%02d:%02d:%02d",hours, minutes, seconds);
         getTime().setText(startTime);
 
-        if(topic.getAd() == 1) {
+        if(topic.getAd()) {
             getIcon().setBackground(mAd);
-        } else if(topic.getCommunityContribution() == 1) {
+        } else if(topic.getCommunityContribution()) {
             getIcon().setBackground(mCommunity);
         } else {
             getIcon().setBackground(mBoys);

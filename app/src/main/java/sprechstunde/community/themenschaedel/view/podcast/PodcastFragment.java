@@ -28,7 +28,8 @@ import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.databinding.FragmentPodcastBinding;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
 import sprechstunde.community.themenschaedel.model.Episode;
-import sprechstunde.community.themenschaedel.model.ViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 
 public class PodcastFragment extends Fragment implements View.OnClickListener, SearchView.OnQueryTextListener {
 
@@ -73,14 +74,6 @@ public class PodcastFragment extends Fragment implements View.OnClickListener, S
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.menu_search) {
-            requireActivity().onSearchRequested();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -120,14 +113,21 @@ public class PodcastFragment extends Fragment implements View.OnClickListener, S
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+        onSearch(query);
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String query) {
-        ViewModel viewModel = new ViewModelProvider(this).get(ViewModel .class);
-        viewModel.search(query).observe(this, this::notifyFragmentsForSearch);
+        onSearch(query);
         return false;
+    }
+
+    private void onSearch(String query) {
+        EpisodeViewModel viewModel = new ViewModelProvider(this).get(EpisodeViewModel.class);
+        if(!query.equals("")) {
+            viewModel.searchForEpisodes(query).observe(this, this::notifyFragmentsForSearch);
+        }
     }
 
     private void fromASCToDESC(Chip chip, boolean wasAlreadySelected, ParentChildFragmentListener.SORTED_BY up, ParentChildFragmentListener.SORTED_BY down) {
