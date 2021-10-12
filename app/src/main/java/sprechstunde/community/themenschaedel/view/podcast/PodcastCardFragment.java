@@ -23,7 +23,8 @@ import sprechstunde.community.themenschaedel.adapter.podcast.PodcastCardAdapter;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
 import sprechstunde.community.themenschaedel.model.Episode;
 import sprechstunde.community.themenschaedel.databinding.FragmentPodcastCardBinding;
-import sprechstunde.community.themenschaedel.model.ViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 
 public class PodcastCardFragment extends Fragment implements ParentChildFragmentListener {
 
@@ -44,8 +45,8 @@ public class PodcastCardFragment extends Fragment implements ParentChildFragment
         mBinding = FragmentPodcastCardBinding.inflate(inflater, container, false);
         View view = mBinding.getRoot();
 
-        ViewModel mViewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
-        mViewModel.getAllEpisodes().observe(getViewLifecycleOwner(), episodes -> {
+        EpisodeViewModel viewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
+        viewModel.getAllEpisodes().observe(getViewLifecycleOwner(), episodes -> {
             Collections.sort(episodes, (a,b) -> Integer.compare(b.getNumber(), a.getNumber()));
             PodcastCardAdapter adapter = new PodcastCardAdapter(getContext(), episodes);
             Objects.requireNonNull(mBinding.fragmentCardGridview).setAdapter(adapter);
@@ -99,5 +100,12 @@ public class PodcastCardFragment extends Fragment implements ParentChildFragment
         }
 
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onSearch(List<Episode> episodeList) {
+        ((PodcastCardAdapter) mBinding.fragmentCardGridview.getAdapter()).setEpisodes(episodeList);
+        ((PodcastCardAdapter) mBinding.fragmentCardGridview.getAdapter()).notifyDataSetChanged();
+
     }
 }

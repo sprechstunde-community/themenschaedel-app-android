@@ -26,7 +26,6 @@ import com.google.android.material.chip.ChipGroup;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -34,13 +33,12 @@ import java.util.Objects;
 import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.adapter.episodeList.EpisodeHostAdapter;
 import sprechstunde.community.themenschaedel.adapter.episodeList.EpisodeTopicAdapter;
-import sprechstunde.community.themenschaedel.adapter.list.TopicAdapter;
-import sprechstunde.community.themenschaedel.adapter.podcast.PodcastCardAdapter;
 import sprechstunde.community.themenschaedel.databinding.FragmentEpisodeBinding;
-import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
+import sprechstunde.community.themenschaedel.model.Episode;
 import sprechstunde.community.themenschaedel.model.Host;
 import sprechstunde.community.themenschaedel.model.Topic;
-import sprechstunde.community.themenschaedel.model.ViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 
 public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChangeListener {
 
@@ -82,19 +80,10 @@ public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChan
         mBinding = FragmentEpisodeBinding.inflate(inflater, container, false);
         int id = EpisodeFragmentArgs.fromBundle(requireArguments()).getEpisodeId();
 
-        ViewModel mViewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
-        mViewModel.getAllTopicsFromEpisode(id).observe(getViewLifecycleOwner(), topics -> {
-            EpisodeTopicAdapter adapter = new EpisodeTopicAdapter(topics, getContext());
-            Objects.requireNonNull(mBinding.fragmentEpisodeRecyclerview).setAdapter(adapter);
-            mBinding.fragmentEpisodeRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+        EpisodeViewModel episodeViewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
+        TopicViewModel topicViewModel = new ViewModelProvider(requireActivity()).get(TopicViewModel.class);
 
-            if(topics == null || topics.size() == 0) {
-                mBinding.fragmentEpisodeNoTopics.setVisibility(View.VISIBLE);
-                mBinding.fragmentEpisodeNoTopicsBackground.setVisibility(View.VISIBLE);
-            }
-        });
-
-        mViewModel.getEpisode(id).observe(getViewLifecycleOwner(), episode -> {
+        episodeViewModel.getEpisode(id).observe(getViewLifecycleOwner(), episode -> {
             mBinding.fragmentEpisodeTitle.setText(episode.getTitle());
             String number =  getString(R.string.list_item_topic_number) + " " + episode.getNumber();
             mBinding.fragmentEpisodeNumber.setText(number);
@@ -108,6 +97,17 @@ public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChan
                     .load(episode.getImage())
                     .apply(requestOptions)
                     .into(mBinding.fragmentEpisodeImage);
+        });
+
+        topicViewModel.getAllTopicsFromEpisode(id).observe(getViewLifecycleOwner(), topics -> {
+            EpisodeTopicAdapter adapter = new EpisodeTopicAdapter(topics, getContext());
+            Objects.requireNonNull(mBinding.fragmentEpisodeRecyclerview).setAdapter(adapter);
+            mBinding.fragmentEpisodeRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+
+            if(topics == null || topics.size() == 0) {
+                mBinding.fragmentEpisodeNoTopics.setVisibility(View.VISIBLE);
+                mBinding.fragmentEpisodeNoTopicsBackground.setVisibility(View.VISIBLE);
+            }
         });
 
         List<Host> hosts = new ArrayList<>();

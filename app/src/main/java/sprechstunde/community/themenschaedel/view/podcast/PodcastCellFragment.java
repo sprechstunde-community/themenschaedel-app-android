@@ -24,7 +24,8 @@ import sprechstunde.community.themenschaedel.adapter.podcast.PodcastCellAdapter;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
 import sprechstunde.community.themenschaedel.model.Episode;
 import sprechstunde.community.themenschaedel.databinding.FragmentPodcastCellBinding;
-import sprechstunde.community.themenschaedel.model.ViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 
 public class PodcastCellFragment extends Fragment implements ParentChildFragmentListener{
 
@@ -46,7 +47,7 @@ public class PodcastCellFragment extends Fragment implements ParentChildFragment
         mBinding = FragmentPodcastCellBinding.inflate(inflater, container, false);
         View view = mBinding.getRoot();
 
-        ViewModel viewModel = new ViewModelProvider(requireActivity()).get(ViewModel .class);
+        EpisodeViewModel viewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
         viewModel.getAllEpisodes().observe(getViewLifecycleOwner(), episodes -> {
             Collections.sort(episodes, (a, b) -> Integer.compare(b.getNumber(), a.getNumber()));
             PodcastCellAdapter adapter = new PodcastCellAdapter(getContext(), episodes);
@@ -102,5 +103,12 @@ public class PodcastCellFragment extends Fragment implements ParentChildFragment
             } break;
         }
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onSearch(List<Episode> episodeList) {
+       ((PodcastCellAdapter) Objects.requireNonNull(mBinding.fragmentCellRecyclerview.getAdapter())).setEpisodes(episodeList);
+        mBinding.fragmentCellRecyclerview.getAdapter().notifyDataSetChanged();
+
     }
 }

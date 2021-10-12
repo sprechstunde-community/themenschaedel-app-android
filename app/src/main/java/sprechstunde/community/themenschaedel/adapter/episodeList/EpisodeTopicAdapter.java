@@ -1,7 +1,6 @@
 package sprechstunde.community.themenschaedel.adapter.episodeList;
 
 import android.content.Context;
-import android.opengl.Visibility;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

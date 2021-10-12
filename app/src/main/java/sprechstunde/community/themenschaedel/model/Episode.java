@@ -2,6 +2,7 @@ package sprechstunde.community.themenschaedel.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Fts4;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
@@ -110,7 +111,7 @@ public class Episode {
         return mImage;
     }
 
-    public void setImg(String img) {
+    public void setImage(String img) {
         mImage = img;
     }
 

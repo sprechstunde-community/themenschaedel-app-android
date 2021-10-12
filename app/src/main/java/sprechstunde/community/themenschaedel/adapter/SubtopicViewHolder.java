@@ -32,6 +32,7 @@ public class SubtopicViewHolder extends RecyclerView.ViewHolder {
 
 
     public void setTopicValues(Subtopic topic) {
+        topic.setName(topic.getName().replace("&amp;","&"));
         getTitle().setText(topic.getName());
     }
 

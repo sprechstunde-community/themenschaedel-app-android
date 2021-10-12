@@ -10,7 +10,9 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import sprechstunde.community.themenschaedel.model.Episode;
 import sprechstunde.community.themenschaedel.model.Topic;
+import sprechstunde.community.themenschaedel.model.TopicWithSubtopic;
 
 @Dao
 public interface TopicDAO {
@@ -27,9 +29,19 @@ public interface TopicDAO {
     @Query("DELETE FROM topic_table")
     void deleteAllTopics();
 
+    @Query("SELECT * FROM topic_table WHERE id = :topicId")
+    LiveData<Topic> getTopicById(int topicId);
+
     @Query("SELECT * FROM topic_table ORDER BY name ASC")
     LiveData<List<Topic>> getAllTopics();
 
+    @Query("SELECT * FROM topic_table ORDER BY name ASC")
+    LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopics();
+
     @Query("SELECT * FROM topic_table WHERE episode_id = :episode")
     LiveData<List<Topic>> getAllTopicsFrom(int episode);
+
+    @Query("SELECT * FROM topic_table WHERE topic_table.name LIKE '%' || :query || '%'")
+    LiveData<List<Topic>> search(String query);
+
 }
