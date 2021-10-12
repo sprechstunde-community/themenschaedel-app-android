@@ -11,14 +11,16 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/fragment_topic_tab_layout"
-        app:tabRippleColor="@color/primaryColor_Alpha60"
+        app:tabRippleColor="@color/secondaryColor_Alpha60"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tabIndicatorColor="@color/primaryColor"
-        app:tabSelectedTextColor="@color/primaryColor">
+        app:tabIndicatorColor="@color/secondaryColor"
+        app:tabSelectedTextColor="@color/secondaryColor"
+        app:tabTextColor="@color/white"
+        android:background="@color/primaryColor">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

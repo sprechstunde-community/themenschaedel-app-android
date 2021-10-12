@@ -14,7 +14,7 @@
     <style name="Chip" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="chipBackgroundColor">@color/chip_background_color</item>
         <item name="chipIconTint">@color/chip_text_color</item>
-        <item name="chipStrokeColor">@color/primaryColor</item>
+        <item name="chipStrokeColor">@color/chip_border_color</item>
         <item name="chipStrokeWidth">2dp</item>
         <item name="rippleColor">@color/primaryColor_Alpha26</item>
         <item name="android:textColor">@color/chip_text_color</item>
@@ -72,7 +72,7 @@
     <style name="Drawer"/>
 
     <style name="Drawer.Header_1">
-        <item name="android:textColor">@color/onSurface</item>
+        <item name="android:textColor">@color/onPrimary</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
     </style>

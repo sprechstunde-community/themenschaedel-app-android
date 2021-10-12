@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/surface">
+    android:background="@color/primaryColor">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/drawer_image_mask_user"
