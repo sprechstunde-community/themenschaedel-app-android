@@ -1,6 +1,6 @@
 package sprechstunde.community.themenschaedel.adapter.list;
 
-import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +14,9 @@ import java.util.List;
 
 import sprechstunde.community.themenschaedel.MainActivity;
 import sprechstunde.community.themenschaedel.R;
-import sprechstunde.community.themenschaedel.model.Topic;
+import sprechstunde.community.themenschaedel.model.Subtopic;
 import sprechstunde.community.themenschaedel.model.TopicWithSubtopic;
+import sprechstunde.community.themenschaedel.view.topic.BottomSheetDialogFilterFragment;
 import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 
 public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -28,10 +29,19 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private final MainActivity mMainActivity;
     private List<TopicWithSubtopic> mTopics;
     private TopicViewModel mViewModel;
+    private boolean mShowDetails;
 
     public TopicAdapter(List<TopicWithSubtopic> topics, MainActivity mainActivity) {
         mTopics = topics;
         mMainActivity = mainActivity;
+    }
+
+    public boolean isShowDetails() {
+        return mShowDetails;
+    }
+
+    public void setShowDetails(boolean showDetails) {
+        mShowDetails = showDetails;
     }
 
     @NonNull
@@ -62,44 +72,46 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        if (mTopics.get(position).getSubtopics() != null && mTopics.get(position).getSubtopics().size() < 0) {
-            return TYPE_TOPIC_WITH_SUBTOPICS;
+        List<Subtopic> subtopics = mTopics.get(position).getSubtopics();
+
+        if (subtopics != null && subtopics.size() > 0) {
+            return mShowDetails ? TYPE_TOPIC_WITH_SUBTOPICS_AND_DETAILS : TYPE_TOPIC_WITH_SUBTOPICS;
         } else {
-            return TYPE_TOPIC;
+            return mShowDetails ? TYPE_TOPIC_WITH_DETAILS : TYPE_TOPIC;
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
-            switch (getItemViewType(position)) {
-                case TYPE_TOPIC_WITH_DETAILS:
-                case TYPE_TOPIC_WITH_SUBTOPICS_AND_DETAILS: {
-                    ((TopicDetailsViewHolder) viewHolder).setTopicValues(mTopics.get(position).getSubtopics(), mTopics.get(position).getTopic());
-                    ((TopicDetailsViewHolder) viewHolder).itemView.setOnClickListener(v -> {
-                        RecyclerView recyclerView = ((TopicDetailsViewHolder) viewHolder).getRecyclerView();
-                        if (recyclerView.getVisibility() == View.VISIBLE) {
-                            recyclerView.setVisibility(View.GONE);
-                        } else if (mTopics.get(position).getSubtopics() != null && mTopics.get(position).getSubtopics().size() > 0) {
-                            recyclerView.setVisibility(View.VISIBLE);
-                        }
-                    });
-                    break;
-                }
-                case TYPE_TOPIC_WITH_SUBTOPICS:
-                case TYPE_TOPIC:
-                default: {
-                    ((TopicViewHolder) viewHolder).setTopicValues(mTopics.get(position).getSubtopics(), mTopics.get(position).getTopic());
-                    ((TopicViewHolder) viewHolder).itemView.setOnClickListener(v -> {
-                        RecyclerView recyclerView = ((TopicViewHolder) viewHolder).getRecyclerView();
-                        if (recyclerView.getVisibility() == View.VISIBLE) {
-                            recyclerView.setVisibility(View.GONE);
-                        } else if (mTopics.get(position).getSubtopics() != null && mTopics.get(position).getSubtopics().size() > 0) {
-                            recyclerView.setVisibility(View.VISIBLE);
-                        }
-                    });
-                    break;
-                }
+        switch (getItemViewType(position)) {
+            case TYPE_TOPIC_WITH_DETAILS:
+            case TYPE_TOPIC_WITH_SUBTOPICS_AND_DETAILS: {
+                ((TopicDetailsViewHolder) viewHolder).setTopicValues(mTopics.get(position).getSubtopics(), mTopics.get(position).getTopic());
+                ((TopicDetailsViewHolder) viewHolder).itemView.setOnClickListener(v -> {
+                    RecyclerView recyclerView = ((TopicDetailsViewHolder) viewHolder).getRecyclerView();
+                    if (recyclerView.getVisibility() == View.VISIBLE) {
+                        recyclerView.setVisibility(View.GONE);
+                    } else if (mTopics.get(position).getSubtopics() != null && mTopics.get(position).getSubtopics().size() > 0) {
+                        recyclerView.setVisibility(View.VISIBLE);
+                    }
+                });
+                break;
             }
+            case TYPE_TOPIC_WITH_SUBTOPICS:
+            case TYPE_TOPIC:
+            default: {
+                ((TopicViewHolder) viewHolder).setTopicValues(mTopics.get(position).getSubtopics(), mTopics.get(position).getTopic());
+                ((TopicViewHolder) viewHolder).itemView.setOnClickListener(v -> {
+                    RecyclerView recyclerView = ((TopicViewHolder) viewHolder).getRecyclerView();
+                    if (recyclerView.getVisibility() == View.VISIBLE) {
+                        recyclerView.setVisibility(View.GONE);
+                    } else if (mTopics.get(position).getSubtopics() != null && mTopics.get(position).getSubtopics().size() > 0) {
+                        recyclerView.setVisibility(View.VISIBLE);
+                    }
+                });
+                break;
+            }
+        }
     }
 
     @Override
@@ -114,5 +126,4 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void setTopics(List<TopicWithSubtopic> topics) {
         mTopics = topics;
     }
-
 }

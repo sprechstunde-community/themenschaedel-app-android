@@ -39,7 +39,7 @@ import sprechstunde.community.themenschaedel.model.TopicWithSubtopic;
 import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 import sprechstunde.community.themenschaedel.view.CustomPopupWindow;
 
-public class ListFragment extends Fragment implements View.OnClickListener {
+public class ListFragment extends Fragment implements View.OnClickListener, BottomSheetDialogFilterFragment.ProcessFilter {
 
     private FragmentListBinding mBinding;
     private SharedPreferences mSharedPref;
@@ -143,7 +143,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v == mBinding.fragmentListDetails) {
-            final BottomSheetDialogFilterFragment bottomSheetDialog = new BottomSheetDialogFilterFragment();
+            final BottomSheetDialogFilterFragment bottomSheetDialog = new BottomSheetDialogFilterFragment(this, mAdapter);
             bottomSheetDialog.show(getChildFragmentManager(), "OpenFilterBottomSheet");
         } else if (mBinding.filterNumber == v) {
             fromASCToDESC(mBinding.filterNumber, v.getId() == mPreSelectedChipId, ParentChildFragmentListener.SORTED_BY.NUMBER_UP, ParentChildFragmentListener.SORTED_BY.NUMBER_DOWN);
@@ -182,5 +182,11 @@ public class ListFragment extends Fragment implements View.OnClickListener {
             } break;
         }
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onProcessFilter(boolean showDetails) {
+        mAdapter.setShowDetails(showDetails);
+        mAdapter.notifyDataSetChanged();
     }
 }

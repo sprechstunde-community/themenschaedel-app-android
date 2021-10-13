@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,7 @@ public class TopicDetailsViewHolder extends RecyclerView.ViewHolder {
 
     private final TextView mName;
     private final TextView mNumber;
+    private final ImageView mArrow;
     private final ImageView mIcon;
     private final RecyclerView mRecyclerView;
 
@@ -31,19 +33,22 @@ public class TopicDetailsViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         mName = itemView.findViewById(R.id.list_item_sugg_details_title);
         mNumber = itemView.findViewById(R.id.list_item_sugg_details_number);
+        mArrow = itemView.findViewById(R.id.list_item_sugg_details_arrow);
         mIcon = itemView.findViewById(R.id.list_item_sugg_details_icon);
         mRecyclerView = itemView.findViewById(R.id.list_item_sugg_details_recyclerview);
         mRecyclerView.setVisibility(View.GONE);
+        mArrow.setVisibility(View.GONE);
         mCommunity = ResourcesCompat.getDrawable(itemView.getResources(), R.drawable.ic_community, null);
         mBoys = ResourcesCompat.getDrawable(itemView.getResources(), R.drawable.ic_boys, null);
     }
 
     public void setTopicValues(List<Subtopic> subtopics, Topic topic) {
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) mName.getLayoutParams();
         getName().setText(topic.getName());
         getName().setTypeface(null, Typeface.NORMAL);
         String number = itemView.getContext().getString(R.string.list_item_topic_number) + " " + topic.getEpisode();
         getNumber().setText(number);
-
+        params.leftMargin = 50;
         if(topic.getCommunityContribution()) {
             mIcon.setBackground(mCommunity);
         } else {
@@ -51,11 +56,11 @@ public class TopicDetailsViewHolder extends RecyclerView.ViewHolder {
         }
 
         if(subtopics != null && subtopics.size() > 0) {
-            getName().setTypeface(null, Typeface.ITALIC);
+            params.leftMargin = 0;
+            mArrow.setVisibility(View.VISIBLE);
             SubtopicAdapter adapter = new SubtopicAdapter(subtopics);
             mRecyclerView.setAdapter(adapter);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
-            mRecyclerView.setVisibility(View.VISIBLE);
         }
     }
 

@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.SavedStateHandle;
 
 import java.util.List;
 
@@ -15,7 +15,6 @@ import sprechstunde.community.themenschaedel.model.TopicWithSubtopic;
 import sprechstunde.community.themenschaedel.room.Repository;
 
 public class TopicViewModel extends AndroidViewModel {
-
     private final Repository mRepository;
     private int mCurrentPage = 1;
 
