@@ -39,6 +39,9 @@ public interface TopicDAO {
     LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopics();
 
     @Query("SELECT * FROM topic_table WHERE episode_id = :episode")
+    LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsFrom(int episode);
+
+    @Query("SELECT * FROM topic_table WHERE episode_id = :episode")
     LiveData<List<Topic>> getAllTopicsFrom(int episode);
 
     @Query("SELECT * FROM topic_table WHERE topic_table.name LIKE '%' || :query || '%'")

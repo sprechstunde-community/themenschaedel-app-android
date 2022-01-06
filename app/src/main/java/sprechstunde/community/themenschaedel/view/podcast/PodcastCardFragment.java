@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -68,6 +69,15 @@ public class PodcastCardFragment extends Fragment implements ParentChildFragment
         int defaultValue = ParentChildFragmentListener.SORTED_BY.DATE_DOWN.ordinal();
         int displayType = mSharedPref.getInt(getString(R.string.saved_filter_type_podcast), defaultValue);
         onSortChanged(ParentChildFragmentListener.SORTED_BY.values()[displayType]);
+    }
+
+    @Override
+    public boolean onScrollBackToTop() {
+        if(mBinding.fragmentCardGridview.getFirstVisiblePosition() != 0){
+            mBinding.fragmentCardGridview.smoothScrollToPosition(0);
+        }
+
+        return mBinding.fragmentCardGridview.getFirstVisiblePosition() == 0;
     }
 
     @Override

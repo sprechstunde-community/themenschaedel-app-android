@@ -22,6 +22,7 @@ public interface ParentChildFragmentListener {
             ",J<k,K<l,L<m,M<n,N<o,O<p,P<q,Q<r,R<s, S & SS,ß<t,T& TH, Þ &TH,"+
             "þ <u,U<v,V<w,W<x,X<y,Y<z,Z&AE,Æ&AE,æ&OE,Œ&OE,œ";
 
+    boolean onScrollBackToTop();
     void onSortChanged(SORTED_BY sortedBy);
     void onSearch(List<Episode> episodeList);
 }

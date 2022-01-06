@@ -8,11 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
@@ -29,19 +29,19 @@ public class PodcastCellAdapter extends RecyclerView.Adapter<PodcastCellAdapter.
     private List<Episode> mEpisodes;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView date;
+        private final TextView number;
         private final TextView title;
         private final ImageView image;
 
         public ViewHolder(View view) {
             super(view);
-            date = view.findViewById(R.id.cell_date);
+            number = view.findViewById(R.id.cell_number);
             title = view.findViewById(R.id.cell_title);
             image = view.findViewById(R.id.cell_image);
         }
 
-        public TextView getDate() {
-            return date;
+        public TextView getNumber() {
+            return number;
         }
 
         public TextView getTitle() {
@@ -69,15 +69,17 @@ public class PodcastCellAdapter extends RecyclerView.Adapter<PodcastCellAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.getDate().setText(mEpisodes.get(position).getDate());
+        String episode = context.getResources().getString(R.string.podcast_episode) + " " + mEpisodes.get(position).getNumber();
+        viewHolder.getNumber().setText(episode);
         viewHolder.getTitle().setText(mEpisodes.get(position).getTitle());
 
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
 
-        Glide.with(context)
+        Glide.with(context).asBitmap()
                 .load(mEpisodes.get(position).getImage())
                 .apply(requestOptions)
+                .transition(BitmapTransitionOptions.withCrossFade())
                 .error(R.drawable.podcast_defauft_image)
                 .into(viewHolder.getImage());
         viewHolder.itemView.setOnClickListener(v -> {

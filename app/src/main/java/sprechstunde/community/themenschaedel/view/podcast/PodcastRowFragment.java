@@ -105,6 +105,16 @@ public class PodcastRowFragment extends Fragment implements ParentChildFragmentL
     }
 
     @Override
+    public boolean onScrollBackToTop() {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) mBinding.fragmentRowRecyclerview.getLayoutManager();
+        if(Objects.requireNonNull(layoutManager).findFirstCompletelyVisibleItemPosition()!=0){
+            mBinding.fragmentRowRecyclerview.smoothScrollToPosition(0);
+        }
+
+        return Objects.requireNonNull(layoutManager).findFirstCompletelyVisibleItemPosition()==0;
+    }
+
+    @Override
     public void onSearch(List<Episode> episodeList) {
         ((PodcastRowAdapter) Objects.requireNonNull(mBinding.fragmentRowRecyclerview.getAdapter())).setEpisodes(episodeList);
         mBinding.fragmentRowRecyclerview.getAdapter().notifyDataSetChanged();

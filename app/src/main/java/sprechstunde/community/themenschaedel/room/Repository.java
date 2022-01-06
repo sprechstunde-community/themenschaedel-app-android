@@ -127,6 +127,9 @@ public class Repository {
         return mSubtopicDAO.search(query);
     }
 
+    public LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsFromEpisode(int number) {
+        return mTopicDAO.getAllTopicsWithSubtopicsFrom(number);
+    }
 
     private static class InsertTopicAsyncTask extends AsyncTask<Topic, Void, Void> {
         private final TopicDAO mTopicDAO;

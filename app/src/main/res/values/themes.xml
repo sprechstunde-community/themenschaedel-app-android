@@ -20,6 +20,19 @@
         <item name="android:textColor">@color/chip_text_color</item>
     </style>
 
+    <style name="Chip_List" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/chip_list_background_color</item>
+        <item name="chipIconTint">@color/chip_list_text_color</item>
+        <item name="chipStrokeColor">@color/chip_border_color</item>
+        <item name="chipStrokeWidth">2dp</item>
+        <item name="rippleColor">@color/primaryColor_Alpha26</item>
+        <item name="android:textColor">@color/chip_list_text_color</item>
+    </style>
+
+    <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">@color/primaryColor</item>
+    </style>
+
     <style name="Card" parent="CardView"/>
 
     <style name="Card.Title">

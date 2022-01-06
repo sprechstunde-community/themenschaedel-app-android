@@ -3,6 +3,7 @@ package sprechstunde.community.themenschaedel.adapter.list;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +23,7 @@ public class TopicDetailsViewHolder extends RecyclerView.ViewHolder {
 
     private final TextView mName;
     private final TextView mNumber;
-    private final ImageView mArrow;
+    private final ImageButton mArrow;
     private final ImageView mIcon;
     private final RecyclerView mRecyclerView;
 
@@ -54,6 +55,15 @@ public class TopicDetailsViewHolder extends RecyclerView.ViewHolder {
         } else {
             mIcon.setBackground(mBoys);
         }
+
+        mArrow.setOnClickListener(v -> {
+            mArrow.animate().rotation(180).start();
+            if (mRecyclerView.getVisibility() == View.VISIBLE) {
+                mRecyclerView.setVisibility(View.GONE);
+            } else if (subtopics != null && subtopics.size() > 0) {
+                mRecyclerView.setVisibility(View.VISIBLE);
+            }
+        });
 
         if(subtopics != null && subtopics.size() > 0) {
             params.leftMargin = 0;

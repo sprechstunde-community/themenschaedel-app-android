@@ -21,6 +21,7 @@ import android.text.style.StyleSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -106,9 +107,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (item.getItemId() == R.id.nav_topic) {
             mBinding.activityMainToolbar.setBackgroundColor(getColor(R.color.primaryColor));
             mNavController.navigate(R.id.nav_topic);
-        } else if (item.getItemId() == R.id.nav_wiki) {
-            mBinding.activityMainToolbar.setBackgroundColor(getColor(R.color.primaryColor));
-            mNavController.navigate(R.id.nav_wiki);
         } else if (item.getItemId() == R.id.nav_login) {
             mBinding.activityMainToolbar.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.toolbar_gradient_register, getTheme()));
             mNavController.navigate(R.id.nav_login);

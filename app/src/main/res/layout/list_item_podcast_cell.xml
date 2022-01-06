@@ -39,7 +39,7 @@
         android:maxLines="3"
         android:text="@string/podcast_title_dummy"
         app:layout_constraintBottom_toBottomOf="@+id/cell_image"
-        app:layout_constraintEnd_toEndOf="@+id/cell_date"
+        app:layout_constraintEnd_toEndOf="@+id/cell_number"
         app:layout_constraintStart_toEndOf="@+id/cell_image"
         app:layout_constraintTop_toTopOf="@+id/cell_image"
         app:layout_constraintVertical_bias="0.0" />
@@ -52,13 +52,13 @@
         android:backgroundTint="@color/background"
         android:scaleX="1.3"
         android:scaleY="1.3"
-        app:layout_constraintBottom_toBottomOf="@+id/cell_date"
-        app:layout_constraintEnd_toEndOf="@+id/cell_date"
-        app:layout_constraintStart_toStartOf="@+id/cell_date"
-        app:layout_constraintTop_toTopOf="@+id/cell_date" />
+        app:layout_constraintBottom_toBottomOf="@+id/cell_number"
+        app:layout_constraintEnd_toEndOf="@+id/cell_number"
+        app:layout_constraintStart_toStartOf="@+id/cell_number"
+        app:layout_constraintTop_toTopOf="@+id/cell_number" />
 
     <TextView
-        android:id="@+id/cell_date"
+        android:id="@+id/cell_number"
         style="@style/Cell.Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

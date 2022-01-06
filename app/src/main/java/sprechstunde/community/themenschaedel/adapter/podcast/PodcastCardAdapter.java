@@ -1,5 +1,8 @@
 package sprechstunde.community.themenschaedel.adapter.podcast;
 
+import static com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions.with;
+import static com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions.withCrossFade;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,8 @@ import android.widget.TextView;
 import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.MemoryCategory;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
@@ -72,9 +77,11 @@ public class PodcastCardAdapter extends BaseAdapter {
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transform(new CenterCrop());
 
-        Glide.with(context)
+        Glide.get(context).setMemoryCategory(MemoryCategory.LOW);
+        Glide.with(context).asBitmap()
                 .load(mEpisodes.get(position).getImage())
                 .fitCenter()
+                .transition(BitmapTransitionOptions.withCrossFade())
                 .apply(requestOptions)
                 .into(imageView);
 

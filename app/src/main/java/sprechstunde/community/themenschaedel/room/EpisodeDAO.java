@@ -11,6 +11,7 @@ import androidx.room.Update;
 import java.util.List;
 
 import sprechstunde.community.themenschaedel.model.Episode;
+import sprechstunde.community.themenschaedel.model.Topic;
 
 @Dao
 public interface EpisodeDAO {
@@ -36,6 +37,6 @@ public interface EpisodeDAO {
     LiveData<List<Episode>> getAllEpisodes();
 
    //@Query(" SELECT * FROM episode_table JOIN episode_fts_table ON episode_table.id = episode_fts_table.id WHERE episode_fts_table.title MATCH :query")
-    @Query("SELECT * FROM episode_table WHERE (episode_table.title LIKE '%' || :query || '%') OR (episode_table.number LIKE '%' || :query || '%')")
+    @Query("SELECT * FROM episode_table WHERE (episode_table.title LIKE '%' || :query || '%') OR (episode_table.number LIKE '%' || :query || '%') ORDER BY episode_table.number DESC")
     LiveData<List<Episode>> search(String query);
 }

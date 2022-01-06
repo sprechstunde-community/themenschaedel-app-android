@@ -29,7 +29,7 @@
     <color name="onBackgroundSecondaryLight">#EAEAEA</color>
 
     <color name="onSurface">#FF000000</color>
-    <color name="onSurfaceSecondary">#979797</color>
+    <color name="onSurfaceSecondary">#636363</color>
 
     <color name="onError">#FFFFFFFF</color>
     <color name="black">#FF000000</color>

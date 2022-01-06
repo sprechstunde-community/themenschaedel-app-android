@@ -15,7 +15,6 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import sprechstunde.community.themenschaedel.R;
-import sprechstunde.community.themenschaedel.adapter.list.SubtopicAdapter;
 import sprechstunde.community.themenschaedel.model.Subtopic;
 import sprechstunde.community.themenschaedel.model.Topic;
 
@@ -24,37 +23,30 @@ public class EpisodeTopicViewHolder extends RecyclerView.ViewHolder {
     private final TextView mTitle;
     private final TextView mTime;
     private final ImageView mIcon;
+    private final ImageView mSubtopics;
     private final RecyclerView mRecyclerView;
-    private boolean mHasSubtopics;
 
     protected Drawable mAd;
     protected Drawable mCommunity;
     protected Drawable mBoys;
-
-    public EpisodeTopicViewHolder(@NonNull View itemView, List<Subtopic> subtopics) {
-        this(itemView);
-        mHasSubtopics = true;
-
-        SubtopicAdapter adapter = new SubtopicAdapter(subtopics);
-        mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
-    }
 
     public EpisodeTopicViewHolder(@NonNull View itemView) {
         super(itemView);
         mTitle = itemView.findViewById(R.id.list_item_episode_topic_title);
         mTime = itemView.findViewById(R.id.list_item_episode_topic_time);
         mIcon = itemView.findViewById(R.id.list_item_episode_topic_type);
+        mSubtopics = itemView.findViewById(R.id.list_item_episode_topic_subtopics);
+
         mRecyclerView = itemView.findViewById(R.id.list_item_episode_topic_recyclerView);
         mRecyclerView.setVisibility(View.GONE);
-        mHasSubtopics = false;
+        mSubtopics.setVisibility(View.GONE);
 
         mAd = ResourcesCompat.getDrawable(itemView.getResources(), R.drawable.ic_ad, null);
         mCommunity = ResourcesCompat.getDrawable(itemView.getResources(), R.drawable.ic_community, null);
         mBoys = ResourcesCompat.getDrawable(itemView.getResources(), R.drawable.ic_boys, null);
     }
 
-    public void setTopicValues(Topic topic) {
+    public void setTopicValues(List<Subtopic> subtopics, Topic topic) {
         getTitle().setText(topic.getName());
 
         long time = topic.getStart();
@@ -74,6 +66,14 @@ public class EpisodeTopicViewHolder extends RecyclerView.ViewHolder {
         } else {
             getIcon().setBackground(mBoys);
         }
+
+        if (subtopics != null && subtopics.size() > 0) {
+            mSubtopics.setVisibility(View.VISIBLE);
+
+            EpisodeSubtopicAdapter adapter = new EpisodeSubtopicAdapter(subtopics);
+            mRecyclerView.setAdapter(adapter);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
+        }
     }
 
     public TextView getTitle() {
@@ -87,8 +87,5 @@ public class EpisodeTopicViewHolder extends RecyclerView.ViewHolder {
     }
     public RecyclerView getRecyclerView() {
         return mRecyclerView;
-    }
-    public boolean hasSubtopics() {
-        return mHasSubtopics;
     }
 }

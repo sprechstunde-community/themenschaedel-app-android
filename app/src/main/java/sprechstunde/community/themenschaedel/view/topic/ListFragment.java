@@ -39,7 +39,7 @@ import sprechstunde.community.themenschaedel.model.TopicWithSubtopic;
 import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 import sprechstunde.community.themenschaedel.view.CustomPopupWindow;
 
-public class ListFragment extends Fragment implements View.OnClickListener, BottomSheetDialogFilterFragment.ProcessFilter {
+public class  ListFragment extends Fragment implements View.OnClickListener, BottomSheetDialogFilterFragment.ProcessFilter {
 
     private FragmentListBinding mBinding;
     private SharedPreferences mSharedPref;

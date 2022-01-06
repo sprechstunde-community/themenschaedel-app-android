@@ -231,7 +231,7 @@ public final class SubtopicDAO_Impl implements SubtopicDAO {
 
   @Override
   public LiveData<List<TopicWithSubtopic>> search(final String query) {
-    final String _sql = "SELECT topic_table.id, topic_table.name, topic_table.episode_id FROM topic_table LEFT JOIN subtopic_table on topic_table.id = subtopic_table.topic_id WHERE topic_table.name LIKE '%' || ? || '%' OR subtopic_table.name LIKE '%' || ? || '%'";
+    final String _sql = "SELECT DISTINCT topic_table.id, topic_table.name, topic_table.episode_id FROM topic_table LEFT JOIN subtopic_table on topic_table.id = subtopic_table.topic_id WHERE topic_table.name LIKE '%' || ? || '%' OR subtopic_table.name LIKE '%' || ? || '%'";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
     int _argIndex = 1;
     if (query == null) {

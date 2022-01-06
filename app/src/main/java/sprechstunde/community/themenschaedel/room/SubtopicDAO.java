@@ -37,6 +37,6 @@ public interface SubtopicDAO {
     LiveData<List<Subtopic>> getAllSubtopicsFrom(int topic);
 
     @Transaction
-    @Query("SELECT topic_table.id, topic_table.name, topic_table.episode_id FROM topic_table LEFT JOIN subtopic_table on topic_table.id = subtopic_table.topic_id WHERE topic_table.name LIKE '%' || :query || '%' OR subtopic_table.name LIKE '%' || :query || '%'")
+    @Query("SELECT DISTINCT topic_table.id, topic_table.name, topic_table.episode_id FROM topic_table LEFT JOIN subtopic_table on topic_table.id = subtopic_table.topic_id WHERE topic_table.name LIKE '%' || :query || '%' OR subtopic_table.name LIKE '%' || :query || '%'")
     LiveData<List<TopicWithSubtopic>> search(String query);
 }

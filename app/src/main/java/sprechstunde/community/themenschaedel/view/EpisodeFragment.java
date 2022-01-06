@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
@@ -37,6 +38,7 @@ import sprechstunde.community.themenschaedel.databinding.FragmentEpisodeBinding;
 import sprechstunde.community.themenschaedel.model.Episode;
 import sprechstunde.community.themenschaedel.model.Host;
 import sprechstunde.community.themenschaedel.model.Topic;
+import sprechstunde.community.themenschaedel.model.TopicWithSubtopic;
 import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
 import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 
@@ -93,13 +95,14 @@ public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChan
             RequestOptions requestOptions = new RequestOptions();
             requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(40));
 
-            Glide.with(this)
+            Glide.with(this).asBitmap()
                     .load(episode.getImage())
+                    .transition(BitmapTransitionOptions.withCrossFade())
                     .apply(requestOptions)
                     .into(mBinding.fragmentEpisodeImage);
         });
 
-        topicViewModel.getAllTopicsFromEpisode(id).observe(getViewLifecycleOwner(), topics -> {
+        topicViewModel.getAllTopicsWithSubtopicsFromEpisode(id).observe(getViewLifecycleOwner(), topics -> {
             EpisodeTopicAdapter adapter = new EpisodeTopicAdapter(topics, getContext());
             Objects.requireNonNull(mBinding.fragmentEpisodeRecyclerview).setAdapter(adapter);
             mBinding.fragmentEpisodeRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -107,6 +110,10 @@ public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChan
             if(topics == null || topics.size() == 0) {
                 mBinding.fragmentEpisodeNoTopics.setVisibility(View.VISIBLE);
                 mBinding.fragmentEpisodeNoTopicsBackground.setVisibility(View.VISIBLE);
+                mBinding.fragmentEpisodeMotionlayout.getTransition(R.id.motionlayout_episode).setEnabled(false);
+            } else {
+                mBinding.fragmentEpisodeNoTopics.setVisibility(View.GONE);
+                mBinding.fragmentEpisodeNoTopicsBackground.setVisibility(View.GONE);
             }
         });
 
@@ -126,15 +133,15 @@ public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChan
     @Override
     public void onCheckedChanged(ChipGroup group, int checkedId) {
         EpisodeTopicAdapter adapter = (EpisodeTopicAdapter) mBinding.fragmentEpisodeRecyclerview.getAdapter();
-        List<Topic> topics = Objects.requireNonNull(adapter).getTopics();
+        List<TopicWithSubtopic> topics = Objects.requireNonNull(adapter).getTopics();
 
         if(checkedId == R.id.filter_episode_time) {
-            Collections.sort(topics, (a,b) -> Integer.compare(a.getStart(), b.getStart()));
+            Collections.sort(topics, (a,b) -> Integer.compare(a.getTopic().getStart(), b.getTopic().getStart()));
         } else {
             Collections.sort(topics, (a,b) -> {
                 Collator germanCollator = Collator.getInstance(Locale.GERMAN);
                 germanCollator.setStrength(Collator.PRIMARY);
-                return germanCollator.compare(a.getName(), b.getName());
+                return germanCollator.compare(a.getTopic().getName(), b.getTopic().getName());
             });
         }
         adapter.notifyDataSetChanged();

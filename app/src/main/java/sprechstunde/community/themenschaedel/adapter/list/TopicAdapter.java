@@ -4,12 +4,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import sprechstunde.community.themenschaedel.MainActivity;
@@ -83,32 +85,18 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
+        List<Subtopic> subtopics =  mTopics.get(position).getSubtopics();
         switch (getItemViewType(position)) {
             case TYPE_TOPIC_WITH_DETAILS:
             case TYPE_TOPIC_WITH_SUBTOPICS_AND_DETAILS: {
                 ((TopicDetailsViewHolder) viewHolder).setTopicValues(mTopics.get(position).getSubtopics(), mTopics.get(position).getTopic());
-                ((TopicDetailsViewHolder) viewHolder).itemView.setOnClickListener(v -> {
-                    RecyclerView recyclerView = ((TopicDetailsViewHolder) viewHolder).getRecyclerView();
-                    if (recyclerView.getVisibility() == View.VISIBLE) {
-                        recyclerView.setVisibility(View.GONE);
-                    } else if (mTopics.get(position).getSubtopics() != null && mTopics.get(position).getSubtopics().size() > 0) {
-                        recyclerView.setVisibility(View.VISIBLE);
-                    }
-                });
                 break;
             }
             case TYPE_TOPIC_WITH_SUBTOPICS:
             case TYPE_TOPIC:
             default: {
                 ((TopicViewHolder) viewHolder).setTopicValues(mTopics.get(position).getSubtopics(), mTopics.get(position).getTopic());
-                ((TopicViewHolder) viewHolder).itemView.setOnClickListener(v -> {
-                    RecyclerView recyclerView = ((TopicViewHolder) viewHolder).getRecyclerView();
-                    if (recyclerView.getVisibility() == View.VISIBLE) {
-                        recyclerView.setVisibility(View.GONE);
-                    } else if (mTopics.get(position).getSubtopics() != null && mTopics.get(position).getSubtopics().size() > 0) {
-                        recyclerView.setVisibility(View.VISIBLE);
-                    }
-                });
+
                 break;
             }
         }

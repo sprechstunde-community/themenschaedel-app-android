@@ -1,34 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:layoutDescription="@xml/list_item_suggested_topic_details_scene">
 
     <ImageView
         android:id="@+id/list_item_sugg_details_icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="2dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/ic_boys"
+        android:background="@drawable/ic_community"
         android:contentDescription="@string/contentDescription_list_item_icon"
         app:layout_constraintBottom_toBottomOf="@+id/list_item_sugg_details_number"
-        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/list_item_sugg_details_number" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/list_item_sugg_details_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:backgroundTint="@android:color/transparent"
+        android:paddingStart="16dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="16dp"
+        android:src="@drawable/ic_arrow_down"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/list_item_sugg_details_title"
+        android:contentDescription="@string/contentDescription_arrow_right"
+        app:layout_constraintBottom_toBottomOf="@+id/list_item_sugg_topic_number"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/list_item_sugg_details_title"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_arrow_right"
+        app:layout_constraintTop_toTopOf="@+id/list_item_sugg_topic_number"
         tools:visibility="visible" />
 
     <TextView
@@ -36,14 +40,12 @@
         style="@style/ListItem.Title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
         android:layout_marginTop="14dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="14dp"
         android:text="@string/list_item_topic_title_dummy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/list_item_sugg_details_guideline"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/list_item_sugg_details_arrow"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
@@ -53,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.78" />
 
     <TextView
         android:id="@+id/list_item_sugg_details_number"
@@ -64,6 +66,7 @@
         android:text="@string/list_item_sugg_topic_number_dummy"
         app:layout_constraintBaseline_toBaselineOf="@+id/list_item_sugg_details_title"
         app:layout_constraintEnd_toStartOf="@+id/list_item_sugg_details_icon"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/list_item_sugg_details_guideline" />
 
     <ImageView
@@ -88,4 +91,4 @@
         app:layout_constraintTop_toBottomOf="@+id/list_item_sugg_details_title"
         tools:visibility="gone" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

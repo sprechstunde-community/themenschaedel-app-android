@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -110,5 +111,15 @@ public class PodcastCellFragment extends Fragment implements ParentChildFragment
        ((PodcastCellAdapter) Objects.requireNonNull(mBinding.fragmentCellRecyclerview.getAdapter())).setEpisodes(episodeList);
         mBinding.fragmentCellRecyclerview.getAdapter().notifyDataSetChanged();
 
+    }
+
+    @Override
+    public boolean onScrollBackToTop() {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) mBinding.fragmentCellRecyclerview.getLayoutManager();
+        if(Objects.requireNonNull(layoutManager).findFirstCompletelyVisibleItemPosition()!=0){
+            mBinding.fragmentCellRecyclerview.smoothScrollToPosition(0);
+        }
+
+        return Objects.requireNonNull(layoutManager).findFirstCompletelyVisibleItemPosition()==0;
     }
 }

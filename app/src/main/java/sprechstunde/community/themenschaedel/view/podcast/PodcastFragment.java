@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.SearchView;
@@ -29,7 +30,6 @@ import sprechstunde.community.themenschaedel.databinding.FragmentPodcastBinding;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
 import sprechstunde.community.themenschaedel.model.Episode;
 import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
-import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 
 public class PodcastFragment extends Fragment implements View.OnClickListener, SearchView.OnQueryTextListener {
 
@@ -46,6 +46,16 @@ public class PodcastFragment extends Fragment implements View.OnClickListener, S
 
     public PodcastFragment() {
         // Required empty public constructor
+    }
+
+    private boolean notifyFragmentsForScrollBackToTop() {
+        List<Fragment> fragments = getParentFragmentManager().getFragments();
+        boolean gotScrolledUp = false;
+        for (Fragment f : fragments) {
+            if(f != this)
+                gotScrolledUp = ((ParentChildFragmentListener) f).onScrollBackToTop();
+        }
+        return gotScrolledUp;
     }
 
     private void notifyFragmentsForSort(ParentChildFragmentListener.SORTED_BY sortedBy) {
@@ -93,6 +103,17 @@ public class PodcastFragment extends Fragment implements View.OnClickListener, S
 
         changeDisplayFragment(true);
         setHasOptionsMenu(true);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if(notifyFragmentsForScrollBackToTop()) {
+                    setEnabled(false);
+                    requireActivity().onBackPressed();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
         return view;
     }
@@ -189,19 +210,19 @@ public class PodcastFragment extends Fragment implements View.OnClickListener, S
 
     private void changeToCards(Drawable card, FragmentTransaction transaction) {
         mCurrentDisplay = Display.CARDS;
-        mBinding.fragmentPodcastDisplay.setBackground(card);
+        mBinding.fragmentPodcastDisplay.setImageDrawable(card);
         transaction.replace(R.id.fragment_podcast_container, PodcastCardFragment.class, null);
     }
 
     private void changeToCells(Drawable cell, FragmentTransaction transaction) {
         mCurrentDisplay = Display.CELLS;
-        mBinding.fragmentPodcastDisplay.setBackground(cell);
+        mBinding.fragmentPodcastDisplay.setImageDrawable(cell);
         transaction.replace(R.id.fragment_podcast_container, PodcastCellFragment.class, null);
     }
 
     private void changeToRows(Drawable row, FragmentTransaction transaction) {
         mCurrentDisplay = Display.ROWS;
-        mBinding.fragmentPodcastDisplay.setBackground(row);
+        mBinding.fragmentPodcastDisplay.setImageDrawable(row);
         transaction.replace(R.id.fragment_podcast_container, PodcastRowFragment.class, null);
     }
 

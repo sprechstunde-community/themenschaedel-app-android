@@ -14,10 +14,6 @@
             android:id="@+id/nav_topic"
             android:icon="@drawable/ic_topic"
             android:title="@string/topic" />
-        <item
-            android:id="@+id/nav_wiki"
-            android:icon="@drawable/ic_wiki"
-            android:title="@string/wiki" />
     </group>
 
     <group

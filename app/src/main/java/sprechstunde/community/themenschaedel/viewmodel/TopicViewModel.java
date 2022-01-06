@@ -83,4 +83,8 @@ public class TopicViewModel extends AndroidViewModel {
         return mRepository.searchForSubtopics(name);
     }
 
+    public LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsFromEpisode(int number) {
+        return mRepository.getAllTopicsWithSubtopicsFromEpisode(number);
+    }
+
 }
