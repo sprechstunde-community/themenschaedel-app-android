@@ -3,9 +3,6 @@ package sprechstunde.community.themenschaedel.view.topic;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +12,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import sprechstunde.community.themenschaedel.adapter.list.TopicAdapter;
 import sprechstunde.community.themenschaedel.databinding.FragmentBottomSheetDialogFilterBinding;
-import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 
 public class BottomSheetDialogFilterFragment extends BottomSheetDialogFragment implements CompoundButton.OnCheckedChangeListener {
 
@@ -64,6 +60,4 @@ public class BottomSheetDialogFilterFragment extends BottomSheetDialogFragment i
         super.onDestroyView();
         mBinding = null;
     }
-
-
 }

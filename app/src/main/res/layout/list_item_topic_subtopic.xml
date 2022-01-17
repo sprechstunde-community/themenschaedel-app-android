@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/background">
 
     <TextView
         android:id="@+id/list_item_subtopic_title"
@@ -24,8 +25,8 @@
         android:layout_width="1dp"
         android:layout_height="0dp"
         android:layout_marginStart="42dp"
-        android:backgroundTint="@color/primaryColor"
         android:background="@drawable/ic_line"
+        android:backgroundTint="@color/primaryColor"
         android:contentDescription="@string/contentDescription_line"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -94,7 +94,7 @@
 
 
     // Dialog Go-To-Episode
-    <string name="dialog_to_episode_text">Zur Folge</string>
+    <string name="dialog_to_episode_text">zur Folge</string>
 
 
     // Dialog Info
@@ -157,5 +157,6 @@
     <string name="search_hint">Suche nach Folgen</string>
     <string name="saved_first_start">saved_first_start</string>
     <string name="toast">Saved meta - this should be displayed once</string>
+    <string name="refresh">Refresh</string>
 
 </resources>

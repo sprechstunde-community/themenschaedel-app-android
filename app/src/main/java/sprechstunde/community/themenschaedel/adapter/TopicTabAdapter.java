@@ -11,38 +11,38 @@ import sprechstunde.community.themenschaedel.view.topic.ListFragment;
 
 public class TopicTabAdapter extends FragmentStateAdapter {
 
-    private final ListFragment mListFragment = new ListFragment();
-    private final DrawFragment mDrawFragment = new DrawFragment();
+  private final ListFragment mListFragment = new ListFragment();
+  private final DrawFragment mDrawFragment = new DrawFragment();
 
-    public TopicTabAdapter(@NonNull Fragment fragment) {
-        super(fragment);
-    }
+  public TopicTabAdapter(@NonNull Fragment fragment) {
+    super(fragment);
+  }
 
-    public ListFragment getListFragment() {
-        return mListFragment;
-    }
+  public ListFragment getListFragment() {
+    return mListFragment;
+  }
 
-    public DrawFragment getDrawFragment() {
-        return mDrawFragment;
-    }
+  public DrawFragment getDrawFragment() {
+    return mDrawFragment;
+  }
 
-    @NonNull
-    @Override
-    public Fragment createFragment(int position) {
-        Fragment fragment = null;
-        switch (position) {
-            case 0:
-                fragment = mListFragment;
-                break;
-            case 1:
-                fragment = mDrawFragment;
-                break;
-        }
-        return Objects.requireNonNull(fragment);
+  @NonNull
+  @Override
+  public Fragment createFragment(int position) {
+    Fragment fragment = null;
+    switch (position) {
+      case 0:
+        fragment = mListFragment;
+        break;
+      case 1:
+        fragment = mDrawFragment;
+        break;
     }
+    return Objects.requireNonNull(fragment);
+  }
 
-    @Override
-    public int getItemCount() {
-        return 2;
-    }
+  @Override
+  public int getItemCount() {
+    return 2;
+  }
 }

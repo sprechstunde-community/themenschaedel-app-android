@@ -312,7 +312,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/arrow_right/baseline_arrow_right_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/manage_search/baseline_manage_search_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -322,8 +322,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_arrow_right" />
-                            <entry key="sourceFile" value="C:\Users\edery\Documents\Sprechstunde\Icons\ic_view_split.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_filter_details" />
+                            <entry key="sourceFile" value="C:\Users\edery\Documents\Sprechstunde\Icons\ic_filter.svg" />
                           </map>
                         </option>
                       </PersistentState>

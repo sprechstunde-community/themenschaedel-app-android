@@ -1,18 +1,30 @@
 package sprechstunde.community.themenschaedel.view.topic;
 
+import static androidx.recyclerview.widget.ItemTouchHelper.RIGHT;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,17 +46,19 @@ import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.adapter.list.TopicAdapter;
 import sprechstunde.community.themenschaedel.databinding.FragmentListBinding;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
-import sprechstunde.community.themenschaedel.model.Topic;
 import sprechstunde.community.themenschaedel.model.TopicWithSubtopic;
+import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
 import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 import sprechstunde.community.themenschaedel.view.CustomPopupWindow;
 
-public class  ListFragment extends Fragment implements View.OnClickListener, BottomSheetDialogFilterFragment.ProcessFilter {
+public class  ListFragment extends Fragment implements View.OnClickListener, BottomSheetDialogFilterFragment.ProcessFilter, SearchView.OnQueryTextListener  {
 
     private FragmentListBinding mBinding;
     private SharedPreferences mSharedPref;
     private int mPreSelectedChipId;
     private TopicAdapter mAdapter;
+    private TopicViewModel mTopicViewModel;
+
     public ListFragment() {
         // Required empty public constructor
     }
@@ -65,8 +79,11 @@ public class  ListFragment extends Fragment implements View.OnClickListener, Bot
         mBinding = FragmentListBinding.inflate(inflater, container, false);
         View view = mBinding.getRoot();
 
-        TopicViewModel mViewModel = new ViewModelProvider(requireActivity()).get(TopicViewModel.class);
-        mViewModel.getAllTopicsWithSubtopics().observe(getViewLifecycleOwner(), topics -> {
+        DividerItemDecoration decoration = new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL);
+        mBinding.fragmentListRecylerview.addItemDecoration(decoration);
+
+        mTopicViewModel = new ViewModelProvider(requireActivity()).get(TopicViewModel.class);
+        mTopicViewModel.getAllTopicsWithSubtopics().observe(getViewLifecycleOwner(), topics -> {
             Collections.sort(topics, (a, b) -> a.getTopic().getName().compareTo(b.getTopic().getName()));
             mAdapter = new TopicAdapter(topics, (MainActivity) requireActivity());
             Objects.requireNonNull(mBinding.fragmentListRecylerview).setAdapter(mAdapter);
@@ -81,14 +98,84 @@ public class  ListFragment extends Fragment implements View.OnClickListener, Bot
         mBinding.filterNumber.setOnClickListener(this);
         mPreSelectedChipId = mBinding.filterNumber.getId();
 
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+
+                int episodeId = mAdapter.getTopics().get(position).getTopic().getEpisode();
+                TopicFragmentDirections.ActionNavTopicToNavEpisode action = TopicFragmentDirections.actionNavTopicToNavEpisode();
+                action.setEpisodeId(episodeId);
+                Navigation.findNavController(viewHolder.itemView).navigate(action);
+            }
+
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX,
+                        dY, actionState, isCurrentlyActive);
+                View itemView = viewHolder.itemView;
+                int backgroundCornerOffset = 20;
+                ColorDrawable background =  new ColorDrawable(getResources().getColor(R.color.primaryColor, requireContext().getTheme()));
+
+                if (dX > 0) { // Swiping to the right
+                    background.setBounds(itemView.getLeft(), itemView.getTop(),
+                            itemView.getLeft() + ((int) dX) + backgroundCornerOffset,
+                            itemView.getBottom());
+                } else { // view is unSwiped
+                    background.setBounds(0, 0, 0, 0);
+                }
+                background.draw(c);
+                drawText(getString(R.string.dialog_to_episode_text), c, background);
+            }
+
+            private void drawText(String text, Canvas c, ColorDrawable background) {
+                Paint p = new Paint();
+                float textSize = 40;
+                p.setColor(Color.WHITE);
+                p.setAntiAlias(true);
+                p.setTextSize(textSize);
+
+                float textWidth = p.measureText(text);
+                c.drawText(text, background.getBounds().centerX() - (textWidth / 2), background.getBounds().centerY() + (textSize / 2), p);
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(mBinding.fragmentListRecylerview);
+
         return view;
     }
+
+
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.menu_search_info, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        requireActivity().getMenuInflater().inflate(R.menu.menu_search_info, menu);
+        MenuItem searchItem = menu.findItem(R.id.menu_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(this);
+        /* searchView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+
+            @Override
+            public void onViewDetachedFromWindow(View arg0) {
+                mTopicViewModel.getAllTopicsWithSubtopics().observe(getViewLifecycleOwner(), topics -> {
+                    mAdapter.setTopics(topics);
+                    mAdapter.notifyDataSetChanged();
+                });
+            }
+
+            @Override
+            public void onViewAttachedToWindow(View arg0) {
+                // search was opened
+            }
+        }); */
     }
 
     @Override
@@ -102,6 +189,28 @@ public class  ListFragment extends Fragment implements View.OnClickListener, Bot
         NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_main);
         NavController nvController = Objects.requireNonNull(navHostFragment).getNavController();
         return  NavigationUI.onNavDestinationSelected(item, nvController);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        onSearch(query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        onSearch(query);
+        return false;
+    }
+
+    private void onSearch(String query) {
+        if(!query.equals("")) {
+            mTopicViewModel.searchForSubtopics(query).observe(this, topicWithSubtopics -> {
+                mAdapter.setTopics(topicWithSubtopics);
+                mAdapter.notifyDataSetChanged();
+
+            });
+        }
     }
 
     private void fromASCToDESC(Chip chip, boolean wasAlreadySelected, ParentChildFragmentListener.SORTED_BY up, ParentChildFragmentListener.SORTED_BY down) {

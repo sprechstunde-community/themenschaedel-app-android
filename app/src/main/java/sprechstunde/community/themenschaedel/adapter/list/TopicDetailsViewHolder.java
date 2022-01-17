@@ -43,12 +43,13 @@ public class TopicDetailsViewHolder extends RecyclerView.ViewHolder {
         mBoys = ResourcesCompat.getDrawable(itemView.getResources(), R.drawable.ic_boys, null);
     }
 
-    public void setTopicValues(List<Subtopic> subtopics, Topic topic) {
+    public void setTopicValues(List<Subtopic> subtopics, Topic topic, int episodeNumber) {
         ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) mName.getLayoutParams();
         getName().setText(topic.getName());
         getName().setTypeface(null, Typeface.NORMAL);
-        String number = itemView.getContext().getString(R.string.list_item_topic_number) + " " + topic.getEpisode();
+        String number = itemView.getContext().getString(R.string.list_item_topic_number) + " " + episodeNumber;
         getNumber().setText(number);
+
         params.leftMargin = 50;
         if(topic.getCommunityContribution()) {
             mIcon.setBackground(mCommunity);

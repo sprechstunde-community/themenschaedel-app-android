@@ -27,6 +27,4 @@ public class ResponseEpisode {
     public void setMeta(ResponseMeta responseMetas) {
         mResponseMetas = responseMetas;
     }
-
-
 }

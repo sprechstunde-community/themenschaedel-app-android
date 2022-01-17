@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,16 +21,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.material.chip.Chip;
 
 import java.util.List;
 
 import sprechstunde.community.themenschaedel.R;
+import sprechstunde.community.themenschaedel.api.ApiClient;
 import sprechstunde.community.themenschaedel.databinding.FragmentPodcastBinding;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
 import sprechstunde.community.themenschaedel.model.Episode;
 import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 
 public class PodcastFragment extends Fragment implements View.OnClickListener, SearchView.OnQueryTextListener {
 

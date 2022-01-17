@@ -5,6 +5,7 @@
     android:id="@+id/fragment_episode_motionlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     app:layoutDescription="@xml/fragment_episode_scene"
     tools:context=".view.EpisodeFragment">
 
@@ -56,7 +57,6 @@
 
     <TextView
         android:id="@+id/fragment_episode_state_text"
-        style="@style/Episode.Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -102,10 +102,9 @@
         app:layout_constraintTop_toBottomOf="@+id/fragment_episode_gridview" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/fragment_episode_host"
+        android:id="@+id/fragment_episode_editer"
         android:layout_width="30dp"
         android:layout_height="0dp"
-        android:layout_centerHorizontal="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="2dp"
         app:cardCornerRadius="15dp"
@@ -126,7 +125,6 @@
 
     <TextView
         android:id="@+id/fragment_episode_number"
-        style="@style/Episode.Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -137,7 +135,6 @@
 
     <TextView
         android:id="@+id/fragment_episode_date"
-        style="@style/Episode.Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -147,7 +144,6 @@
 
     <TextView
         android:id="@+id/fragment_episode_length"
-        style="@style/Episode.Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -195,10 +191,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:ellipsize="end"
         android:maxLines="7"
         android:text="@string/podcast_title_dummy"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/fragment_episode_image_container"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/fragment_episode_guideline2"
         app:layout_constraintTop_toBottomOf="@+id/fragment_episode_image_container"
         app:layout_constraintVertical_chainStyle="packed" />
 
@@ -206,7 +204,7 @@
         android:id="@+id/fragment_episode_filter_background"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/primaryColor"
+        android:background="@color/background"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_episode_filter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -218,7 +216,6 @@
         android:layout_height="0dp"
         android:background="@drawable/img_default_profile"
         android:backgroundTint="@color/onBackgroundSecondaryLight"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -235,7 +232,6 @@
         android:textAlignment="center"
         android:textColor="@color/onSurfaceSecondary"
         android:textStyle="italic"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -281,5 +277,12 @@
         app:layout_constraintTop_toBottomOf="@+id/fragment_episode_filter">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_episode_guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

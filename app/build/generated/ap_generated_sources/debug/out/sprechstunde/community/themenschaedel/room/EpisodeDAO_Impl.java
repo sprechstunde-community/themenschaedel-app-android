@@ -351,6 +351,84 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
   }
 
   @Override
+  public LiveData<Episode> getEpisodeByNumber(final int number) {
+    final String _sql = "SELECT * FROM episode_table WHERE number = ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, number);
+    return __db.getInvalidationTracker().createLiveData(new String[]{"episode_table"}, false, new Callable<Episode>() {
+      @Override
+      public Episode call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfMId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfMTitle = CursorUtil.getColumnIndexOrThrow(_cursor, "title");
+          final int _cursorIndexOfMSubtitle = CursorUtil.getColumnIndexOrThrow(_cursor, "subtitle");
+          final int _cursorIndexOfMDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "description");
+          final int _cursorIndexOfMDate = CursorUtil.getColumnIndexOrThrow(_cursor, "date");
+          final int _cursorIndexOfMNumber = CursorUtil.getColumnIndexOrThrow(_cursor, "number");
+          final int _cursorIndexOfMImage = CursorUtil.getColumnIndexOrThrow(_cursor, "image");
+          final int _cursorIndexOfMDuration = CursorUtil.getColumnIndexOrThrow(_cursor, "duration");
+          final Episode _result;
+          if(_cursor.moveToFirst()) {
+            final int _tmpMId;
+            _tmpMId = _cursor.getInt(_cursorIndexOfMId);
+            final String _tmpMTitle;
+            if (_cursor.isNull(_cursorIndexOfMTitle)) {
+              _tmpMTitle = null;
+            } else {
+              _tmpMTitle = _cursor.getString(_cursorIndexOfMTitle);
+            }
+            final String _tmpMSubtitle;
+            if (_cursor.isNull(_cursorIndexOfMSubtitle)) {
+              _tmpMSubtitle = null;
+            } else {
+              _tmpMSubtitle = _cursor.getString(_cursorIndexOfMSubtitle);
+            }
+            final String _tmpMDescription;
+            if (_cursor.isNull(_cursorIndexOfMDescription)) {
+              _tmpMDescription = null;
+            } else {
+              _tmpMDescription = _cursor.getString(_cursorIndexOfMDescription);
+            }
+            final String _tmpMDate;
+            if (_cursor.isNull(_cursorIndexOfMDate)) {
+              _tmpMDate = null;
+            } else {
+              _tmpMDate = _cursor.getString(_cursorIndexOfMDate);
+            }
+            final int _tmpMNumber;
+            _tmpMNumber = _cursor.getInt(_cursorIndexOfMNumber);
+            final String _tmpMImage;
+            if (_cursor.isNull(_cursorIndexOfMImage)) {
+              _tmpMImage = null;
+            } else {
+              _tmpMImage = _cursor.getString(_cursorIndexOfMImage);
+            }
+            final String _tmpMDuration;
+            if (_cursor.isNull(_cursorIndexOfMDuration)) {
+              _tmpMDuration = null;
+            } else {
+              _tmpMDuration = _cursor.getString(_cursorIndexOfMDuration);
+            }
+            _result = new Episode(_tmpMId,_tmpMTitle,_tmpMSubtitle,_tmpMDescription,_tmpMDate,_tmpMNumber,_tmpMImage,_tmpMDuration);
+          } else {
+            _result = null;
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
   public LiveData<List<Episode>> getAllEpisodes() {
     final String _sql = "SELECT * FROM episode_table ORDER BY title ASC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);

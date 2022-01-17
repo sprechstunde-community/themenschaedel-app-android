@@ -111,8 +111,12 @@ public class Repository {
         return mEpisodeDAO.getEpisode(name);
     }
 
-    public LiveData<Episode> getEpisode(int number) {
-        return mEpisodeDAO.getEpisode(number);
+    public LiveData<Episode> getEpisode(int id) {
+        return mEpisodeDAO.getEpisode(id);
+    }
+
+    public LiveData<Episode> getEpisodeByNumber (int number) {
+        return mEpisodeDAO.getEpisodeByNumber(number);
     }
 
     public LiveData<List<Episode>> searchForEpisodes(String query) {

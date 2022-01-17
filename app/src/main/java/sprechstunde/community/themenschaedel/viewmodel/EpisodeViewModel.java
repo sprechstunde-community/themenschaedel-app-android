@@ -61,8 +61,12 @@ public class EpisodeViewModel extends AndroidViewModel {
         return mRepository.getAllEpisodes();
     }
 
-    public LiveData<Episode> getEpisode(int number) {
-        return mRepository.getEpisode(number);
+    public LiveData<Episode> getEpisode(int id) {
+        return mRepository.getEpisode(id);
+    }
+
+    public LiveData<Episode> getEpisodeByNumber (int number) {
+        return mRepository.getEpisodeByNumber(number);
     }
 
     public LiveData<Episode> getEpisode(String title) {

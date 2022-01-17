@@ -1,24 +1,27 @@
 package sprechstunde.community.themenschaedel.adapter.list;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.List;
 
 import sprechstunde.community.themenschaedel.MainActivity;
 import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.model.Subtopic;
 import sprechstunde.community.themenschaedel.model.TopicWithSubtopic;
-import sprechstunde.community.themenschaedel.view.topic.BottomSheetDialogFilterFragment;
+import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
 import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 
 public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -30,7 +33,8 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private final MainActivity mMainActivity;
     private List<TopicWithSubtopic> mTopics;
-    private TopicViewModel mViewModel;
+    private TopicViewModel mTopicViewModel;
+    private EpisodeViewModel mEpisodeViewModel;
     private boolean mShowDetails;
 
     public TopicAdapter(List<TopicWithSubtopic> topics, MainActivity mainActivity) {
@@ -67,8 +71,11 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-        if (mViewModel == null) {
-            mViewModel = new ViewModelProvider((ViewModelStoreOwner) recyclerView.getContext()).get(TopicViewModel.class);
+        if (mTopicViewModel == null) {
+            mTopicViewModel = new ViewModelProvider((ViewModelStoreOwner) recyclerView.getContext()).get(TopicViewModel.class);
+        }
+        if(mEpisodeViewModel == null) {
+            mEpisodeViewModel = new ViewModelProvider((ViewModelStoreOwner) recyclerView.getContext()).get(EpisodeViewModel.class);
         }
     }
 
@@ -85,21 +92,24 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
-        List<Subtopic> subtopics =  mTopics.get(position).getSubtopics();
+
+        mEpisodeViewModel.getEpisode(mTopics.get(position).getTopic().getEpisode()).observe(mMainActivity, episode -> {
+
         switch (getItemViewType(position)) {
             case TYPE_TOPIC_WITH_DETAILS:
             case TYPE_TOPIC_WITH_SUBTOPICS_AND_DETAILS: {
-                ((TopicDetailsViewHolder) viewHolder).setTopicValues(mTopics.get(position).getSubtopics(), mTopics.get(position).getTopic());
+                ((TopicDetailsViewHolder) viewHolder).setTopicValues(mTopics.get(position).getSubtopics(), mTopics.get(position).getTopic(), episode.getNumber());
                 break;
             }
             case TYPE_TOPIC_WITH_SUBTOPICS:
             case TYPE_TOPIC:
             default: {
-                ((TopicViewHolder) viewHolder).setTopicValues(mTopics.get(position).getSubtopics(), mTopics.get(position).getTopic());
+                ((TopicViewHolder) viewHolder).setTopicValues(mTopics.get(position).getSubtopics(), mTopics.get(position).getTopic(), episode.getNumber());
 
                 break;
             }
         }
+        });
     }
 
     @Override

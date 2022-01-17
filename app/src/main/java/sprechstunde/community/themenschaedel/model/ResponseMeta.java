@@ -5,8 +5,6 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 @Entity(tableName = "data_remote_keys")
 public class ResponseMeta {
 

@@ -8,10 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.text.Collator;
 import java.util.Collections;
@@ -27,7 +29,7 @@ import sprechstunde.community.themenschaedel.databinding.FragmentPodcastCardBind
 import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
 import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 
-public class PodcastCardFragment extends Fragment implements ParentChildFragmentListener {
+public class PodcastCardFragment extends Fragment implements ParentChildFragmentListener, SwipeRefreshLayout.OnRefreshListener  {
 
     private FragmentPodcastCardBinding mBinding;
     private SharedPreferences mSharedPref;
@@ -45,6 +47,7 @@ public class PodcastCardFragment extends Fragment implements ParentChildFragment
     public View onCreateView (@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = FragmentPodcastCardBinding.inflate(inflater, container, false);
         View view = mBinding.getRoot();
+        mBinding.fragmentPodcastSwipeUp.setOnRefreshListener(this);
 
         EpisodeViewModel viewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
         viewModel.getAllEpisodes().observe(getViewLifecycleOwner(), episodes -> {
@@ -78,6 +81,14 @@ public class PodcastCardFragment extends Fragment implements ParentChildFragment
         }
 
         return mBinding.fragmentCardGridview.getFirstVisiblePosition() == 0;
+    }
+
+    @Override
+    public void onRefresh() {
+        Toast.makeText(getContext(), "REFRESHED", Toast.LENGTH_SHORT).show();
+        // ApiClient.getInstance(requireActivity()).saveEpisodesToDB(new ViewModelProvider(this).get(EpisodeViewModel.class));
+        // ApiClient.getInstance(requireActivity()).saveTopicsToDB(new ViewModelProvider(this).get(TopicViewModel.class));
+        mBinding.fragmentPodcastSwipeUp.setRefreshing(false);
     }
 
     @Override

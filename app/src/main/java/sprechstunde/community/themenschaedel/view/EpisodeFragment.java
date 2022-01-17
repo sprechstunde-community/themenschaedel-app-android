@@ -107,13 +107,17 @@ public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChan
             Objects.requireNonNull(mBinding.fragmentEpisodeRecyclerview).setAdapter(adapter);
             mBinding.fragmentEpisodeRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
 
+
             if(topics == null || topics.size() == 0) {
                 mBinding.fragmentEpisodeNoTopics.setVisibility(View.VISIBLE);
                 mBinding.fragmentEpisodeNoTopicsBackground.setVisibility(View.VISIBLE);
                 mBinding.fragmentEpisodeMotionlayout.getTransition(R.id.motionlayout_episode).setEnabled(false);
+                mBinding.fragmentEpisodeRecyclerview.setVisibility(View.GONE);
             } else {
                 mBinding.fragmentEpisodeNoTopics.setVisibility(View.GONE);
                 mBinding.fragmentEpisodeNoTopicsBackground.setVisibility(View.GONE);
+                mBinding.fragmentEpisodeMotionlayout.getTransition(R.id.motionlayout_episode).setEnabled(true);
+                mBinding.fragmentEpisodeRecyclerview.setVisibility(View.VISIBLE);
             }
         });
 
