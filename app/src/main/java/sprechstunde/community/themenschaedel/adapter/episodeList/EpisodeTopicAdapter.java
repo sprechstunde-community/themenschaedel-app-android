@@ -1,7 +1,6 @@
 package sprechstunde.community.themenschaedel.adapter.episodeList;
 
 import android.content.Context;
-import android.opengl.Visibility;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import sprechstunde.community.themenschaedel.R;
-import sprechstunde.community.themenschaedel.model.Subtopic;
-import sprechstunde.community.themenschaedel.model.Topic;
+import sprechstunde.community.themenschaedel.model.topic.Subtopic;
+import sprechstunde.community.themenschaedel.model.topic.TopicWithSubtopic;
 
 public class EpisodeTopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -22,9 +20,9 @@ public class EpisodeTopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private static final int TYPE_TOPIC_WITH_SUBTOPICS = 2;
 
     private final Context mContext;
-    private final List<Topic> mTopics;
+    private final List<TopicWithSubtopic> mTopics;
 
-    public EpisodeTopicAdapter(List<Topic> topics, Context context) {
+    public EpisodeTopicAdapter(List<TopicWithSubtopic> topics, Context context) {
         mTopics = topics;
         mContext = context;
     }
@@ -33,21 +31,13 @@ public class EpisodeTopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_episode_topic, viewGroup, false);
-        if(viewType == TYPE_TOPIC_WITH_SUBTOPICS) {
-            List<Subtopic> subtopics = new LinkedList<>();
-            subtopics.add(new Subtopic("Subtopic 1"));
-            subtopics.add(new Subtopic("Subtopic 2"));
-            subtopics.add(new Subtopic("Subtopic 3"));
+        return new EpisodeTopicViewHolder(view);
 
-            return new EpisodeTopicViewHolder(view, subtopics);
-        } else {
-            return new EpisodeTopicViewHolder(view);
-        }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (mTopics.get(position).hasSubtopics()) {
+        if (mTopics.get(position).getTopic().getSubtopics() != null && mTopics.get(position).getTopic().getSubtopics().size() > 0) {
             return TYPE_TOPIC_WITH_SUBTOPICS;
         } else {
             return TYPE_TOPIC;
@@ -56,16 +46,16 @@ public class EpisodeTopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
-        ((EpisodeTopicViewHolder) viewHolder).setTopicValues(mTopics.get(position));
+        List<Subtopic> subtopics =  mTopics.get(position).getSubtopics();
+        ((EpisodeTopicViewHolder) viewHolder).setTopicValues(mTopics.get(position).getSubtopics(), mTopics.get(position).getTopic());
         viewHolder.itemView.setOnClickListener(v -> {
             RecyclerView recyclerView = ((EpisodeTopicViewHolder) viewHolder).getRecyclerView();
             if (recyclerView.getVisibility() == View.VISIBLE) {
                 recyclerView.setVisibility(View.GONE);
-            } else if (((EpisodeTopicViewHolder) viewHolder).hasSubtopics()) {
+            } else if (subtopics != null && subtopics.size() > 0) {
                 recyclerView.setVisibility(View.VISIBLE);
             }
         });
-
     }
 
     @Override
@@ -73,7 +63,7 @@ public class EpisodeTopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return mTopics.size();
     }
 
-    public List<Topic> getTopics() {
+    public List<TopicWithSubtopic> getTopics() {
         return mTopics;
     }
 }

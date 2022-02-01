@@ -11,7 +11,7 @@ import java.util.List;
 
 import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.adapter.SubtopicViewHolder;
-import sprechstunde.community.themenschaedel.model.Subtopic;
+import sprechstunde.community.themenschaedel.model.topic.Subtopic;
 
 public class SubtopicAdapter extends RecyclerView.Adapter<SubtopicViewHolder> {
 
@@ -25,7 +25,7 @@ public class SubtopicAdapter extends RecyclerView.Adapter<SubtopicViewHolder> {
     @Override
     public SubtopicViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.list_item_topic_subtopic, viewGroup, false);
+                .inflate(R.layout.list_item_subtopic, viewGroup, false);
         return new SubtopicViewHolder(view);
     }
 

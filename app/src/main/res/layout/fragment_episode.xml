@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_episode_motionlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
+    app:layoutDescription="@xml/fragment_episode_scene"
     tools:context=".view.EpisodeFragment">
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/fragment_episode_image_container"
@@ -24,9 +28,10 @@
             android:id="@+id/fragment_episode_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:adjustViewBounds="true"
             android:background="@drawable/podcast_defauft_image"
             android:contentDescription="@string/contentDescription_podcast_image"
-            android:scaleType="center"
+            android:scaleType="fitCenter"
             android:scaleX="1.05"
             android:scaleY="1.05" />
     </androidx.cardview.widget.CardView>
@@ -52,18 +57,14 @@
 
     <TextView
         android:id="@+id/fragment_episode_state_text"
-        style="@style/Episode.Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:text="@string/state_closed"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_episode_state"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/fragment_episode_guideline"
         app:layout_constraintTop_toTopOf="@+id/fragment_episode_state" />
 
@@ -101,10 +102,9 @@
         app:layout_constraintTop_toBottomOf="@+id/fragment_episode_gridview" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/fragment_episode_host"
+        android:id="@+id/fragment_episode_editer"
         android:layout_width="30dp"
         android:layout_height="0dp"
-        android:layout_centerHorizontal="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="2dp"
         app:cardCornerRadius="15dp"
@@ -124,30 +124,17 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/fragment_episode_title"
-        style="@style/Episode.Title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/podcast_title_dummy"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/fragment_episode_image_container"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_episode_image_container" />
-
-    <TextView
         android:id="@+id/fragment_episode_number"
-        style="@style/Episode.Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/podcast_number_dummy"
         app:layout_constraintStart_toStartOf="@+id/fragment_episode_title"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_episode_title" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_episode_title"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/fragment_episode_date"
-        style="@style/Episode.Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -157,7 +144,6 @@
 
     <TextView
         android:id="@+id/fragment_episode_length"
-        style="@style/Episode.Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -189,14 +175,69 @@
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:contentDescription="@string/contentDescription_point"
         android:layout_marginBottom="7dp"
         android:background="@drawable/ic_circle"
         android:backgroundTint="@color/onBackground"
+        android:contentDescription="@string/contentDescription_point"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_episode_date"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toEndOf="@+id/fragment_episode_date"
         app:layout_constraintTop_toTopOf="@+id/fragment_episode_date" />
+
+    <TextView
+        android:id="@+id/fragment_episode_title"
+        style="@style/Episode.Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:maxLines="7"
+        android:text="@string/podcast_title_dummy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/fragment_episode_guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_episode_image_container"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <View
+        android:id="@+id/fragment_episode_filter_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/background"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_episode_filter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fragment_episode_filter" />
+
+    <ImageView
+        android:id="@+id/fragment_episode_no_topics_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/img_default_profile"
+        android:backgroundTint="@color/onBackgroundSecondaryLight"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_episode_filter"
+        tools:visibility="gone" />
+
+    <TextView
+        android:id="@+id/fragment_episode_no_topics"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/episode_no_topics"
+        android:textAlignment="center"
+        android:textColor="@color/onSurfaceSecondary"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fragment_episode_no_topics_background"
+        tools:visibility="gone" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/fragment_episode_filter"
@@ -235,35 +276,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_episode_filter" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_episode_filter">
 
-    <ImageView
-        android:id="@+id/fragment_episode_no_topics_background"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/img_default_profile"
-        android:backgroundTint="@color/onBackgroundSecondaryLight"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_episode_filter" />
+    </androidx.recyclerview.widget.RecyclerView>
 
-    <TextView
-        android:id="@+id/fragment_episode_no_topics"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_episode_guideline2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/episode_no_topics"
-        android:textAlignment="center"
-        android:textColor="@color/onSurfaceSecondary"
-        android:textStyle="italic"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fragment_episode_no_topics_background" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

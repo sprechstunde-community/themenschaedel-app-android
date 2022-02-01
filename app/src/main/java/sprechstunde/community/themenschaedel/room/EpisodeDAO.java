@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import java.util.List;
@@ -16,9 +17,6 @@ import sprechstunde.community.themenschaedel.model.Episode;
 public interface EpisodeDAO {
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     void insert(Episode episode);
-
-    @Insert (onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Episode> episodes);
 
     @Update
     void update(Episode episode);
@@ -32,9 +30,16 @@ public interface EpisodeDAO {
     @Query("SELECT * FROM episode_table WHERE title = :title")
     LiveData<Episode> getEpisode(String title);
 
-    @Query("SELECT * FROM episode_table WHERE id = :id")
+    @Query("SELECT * FROM episode_table WHERE episode_id = :id")
     LiveData<Episode> getEpisode(int id);
+
+    @Query("SELECT * FROM episode_table WHERE number = :number")
+    LiveData<Episode> getEpisodeByNumber(int number);
 
     @Query("SELECT * FROM episode_table ORDER BY title ASC")
     LiveData<List<Episode>> getAllEpisodes();
+
+   //@Query(" SELECT * FROM episode_table JOIN episode_fts_table ON episode_table.id = episode_fts_table.id WHERE episode_fts_table.title MATCH :query")
+    @Query("SELECT * FROM episode_table WHERE (episode_table.title LIKE '%' || :query || '%') OR (episode_table.number LIKE '%' || :query || '%') ORDER BY episode_table.number DESC")
+    LiveData<List<Episode>> search(String query);
 }

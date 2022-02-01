@@ -24,7 +24,7 @@ import sprechstunde.community.themenschaedel.adapter.podcast.PodcastCellAdapter;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
 import sprechstunde.community.themenschaedel.model.Episode;
 import sprechstunde.community.themenschaedel.databinding.FragmentPodcastCellBinding;
-import sprechstunde.community.themenschaedel.model.ViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
 
 public class PodcastCellFragment extends Fragment implements ParentChildFragmentListener{
 
@@ -46,7 +46,7 @@ public class PodcastCellFragment extends Fragment implements ParentChildFragment
         mBinding = FragmentPodcastCellBinding.inflate(inflater, container, false);
         View view = mBinding.getRoot();
 
-        ViewModel viewModel = new ViewModelProvider(requireActivity()).get(ViewModel .class);
+        EpisodeViewModel viewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
         viewModel.getAllEpisodes().observe(getViewLifecycleOwner(), episodes -> {
             Collections.sort(episodes, (a, b) -> Integer.compare(b.getNumber(), a.getNumber()));
             PodcastCellAdapter adapter = new PodcastCellAdapter(getContext(), episodes);
@@ -68,13 +68,13 @@ public class PodcastCellFragment extends Fragment implements ParentChildFragment
     }
 
     private void getFilterTypeFromSharedPreferences() {
-        int defaultValue = ParentChildFragmentListener.SORTED_BY.DATE_DOWN.ordinal();
+        int defaultValue = SORTED_BY.DATE_DOWN.ordinal();
         int displayType = mSharedPref.getInt(getString(R.string.saved_filter_type_podcast), defaultValue);
-        onSortChanged(ParentChildFragmentListener.SORTED_BY.values()[displayType]);
+        onSortChanged(SORTED_BY.values()[displayType]);
     }
 
     @Override
-    public void onSortChanged(ParentChildFragmentListener.SORTED_BY sortedBy) {
+    public void onSortChanged(SORTED_BY sortedBy) {
         PodcastCellAdapter adapter = (PodcastCellAdapter) mBinding.fragmentCellRecyclerview.getAdapter();
         List<Episode> episodes = Objects.requireNonNull(adapter).getEpisodes();
 
@@ -102,5 +102,22 @@ public class PodcastCellFragment extends Fragment implements ParentChildFragment
             } break;
         }
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onSearch(List<Episode> episodeList) {
+       ((PodcastCellAdapter) Objects.requireNonNull(mBinding.fragmentCellRecyclerview.getAdapter())).setEpisodes(episodeList);
+        mBinding.fragmentCellRecyclerview.getAdapter().notifyDataSetChanged();
+
+    }
+
+    @Override
+    public boolean onScrollBackToTop() {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) mBinding.fragmentCellRecyclerview.getLayoutManager();
+        if(Objects.requireNonNull(layoutManager).findFirstCompletelyVisibleItemPosition()!=0){
+            mBinding.fragmentCellRecyclerview.smoothScrollToPosition(0);
+        }
+
+        return Objects.requireNonNull(layoutManager).findFirstCompletelyVisibleItemPosition()==0;
     }
 }

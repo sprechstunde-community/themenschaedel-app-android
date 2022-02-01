@@ -8,10 +8,11 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import sprechstunde.community.themenschaedel.model.Episode;
-import sprechstunde.community.themenschaedel.model.Subtopic;
-import sprechstunde.community.themenschaedel.model.Topic;
+import sprechstunde.community.themenschaedel.model.Host;
+import sprechstunde.community.themenschaedel.model.topic.Subtopic;
+import sprechstunde.community.themenschaedel.model.topic.Topic;
 
-@androidx.room.Database(entities = {Episode.class, Topic.class, Subtopic.class}, version = 1, exportSchema = false)
+@androidx.room.Database(entities = {Episode.class, Topic.class, Subtopic.class, Host.class}, version = 1, exportSchema = false)
 abstract public class Database extends RoomDatabase {
 
     private static Database mInstance;
@@ -19,6 +20,7 @@ abstract public class Database extends RoomDatabase {
     public abstract EpisodeDAO episodes();
     public abstract TopicDAO topics();
     public abstract SubtopicDAO subtopics();
+    public abstract HostDAO hosts();
 
     /**
      * Create the database. Only one instance possible.
@@ -44,7 +46,7 @@ abstract public class Database extends RoomDatabase {
     /**
      * Populate the database with data right when created.
      */
-    private static final RoomDatabase.Callback mRoomCallBack = new RoomDatabase.Callback(){
+    private static final Callback mRoomCallBack = new Callback(){
 
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {

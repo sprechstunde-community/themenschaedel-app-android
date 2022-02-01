@@ -1,4 +1,4 @@
-package sprechstunde.community.themenschaedel.model;
+package sprechstunde.community.themenschaedel.model.topic;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -6,6 +6,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
+
 @Entity(tableName = "subtopic_table")
 public class Subtopic {
 

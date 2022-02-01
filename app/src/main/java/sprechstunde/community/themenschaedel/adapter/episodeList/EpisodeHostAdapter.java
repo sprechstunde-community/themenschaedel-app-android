@@ -16,45 +16,45 @@ import sprechstunde.community.themenschaedel.model.Host;
 
 public class EpisodeHostAdapter extends BaseAdapter {
 
-    private final Context context;
-    List<Host> mHosts;
-    LayoutInflater mInflater;
+  private final Context context;
+  List<Host> mHosts;
+  LayoutInflater mInflater;
 
-    public EpisodeHostAdapter(Context context, List<Host> hosts)
-    {
-        this.context = context;
-        mHosts = hosts;
+  public EpisodeHostAdapter(Context context, List<Host> hosts)
+  {
+    this.context = context;
+    mHosts = hosts;
+  }
+
+  @Override
+  public int getCount() {
+    return mHosts.size();
+  }
+
+  @Override
+  public Object getItem(int position) {
+    return null;
+  }
+
+  @Override
+  public long getItemId(int position) {
+    return 0;
+  }
+
+  @Override
+  public View getView(int position, View convertView, ViewGroup parent) {
+
+    if(mInflater == null) {
+      mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    @Override
-    public int getCount() {
-        return mHosts.size();
+    if(convertView == null) {
+      convertView = mInflater.inflate(R.layout.list_item_episode_host, null);
     }
 
-    @Override
-    public Object getItem(int position) {
-        return null;
-    }
+    ImageView imageView = convertView.findViewById(R.id.list_item_host_image);
+    imageView.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.img_default_profile));
 
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        if(mInflater == null) {
-            mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-        if(convertView == null) {
-            convertView = mInflater.inflate(R.layout.list_item_episode_host, null);
-        }
-
-        ImageView imageView = convertView.findViewById(R.id.list_item_host_image);
-        imageView.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.img_default_profile));
-
-        return convertView;
-    }
+    return convertView;
+  }
 }

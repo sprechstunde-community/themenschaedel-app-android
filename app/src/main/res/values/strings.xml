@@ -48,6 +48,7 @@
     <string name="contentDescription_line">Eine vertikale Linie</string>
     <string name="contentDescription_undeline">Eine Unterstrich</string>
     <string name="contentDescription_list_item_icon">Ein Symbol das entweder eine Person zeigt und dafür steht, dass dieses Thema von den Jungs kam, oder 2 Personen hintereinander, was dafür steht, dass das Thema von der Community vorgeschlagen wurde.</string>
+    <string name="contentDescription_arrow_right">Ein Pfeil der nach rechts zeigt, durch Klicken öffnen sich die Sub-Themen, falls vorhanden.</string>
 
     // Podcast Card, Cell, Row
     <string name="podcast_number_dummy">Folge 220</string>
@@ -89,6 +90,13 @@
 
     // SharedPreferences
     <string name="saved_display_type">saved_display_type</string>
+    <string name="saved_episodeCount">saved_episodeCount</string>
+    <string name="saved_topicCount">saved_episodeCount</string>
+
+
+    // Dialog Go-To-Episode
+    <string name="dialog_to_episode_text">zur Folge</string>
+
 
     // Dialog Info
     <string name="dialog_info_community">Community</string>
@@ -122,7 +130,7 @@
     // List item
     <string name="list_item_topic_title_dummy">Schwert oder Axt</string>
     <string name="list_item_topic_time_dummy">00:04:50</string>
-    <string name="list_item_sugg_topic_number_dummy">Nr. 120</string>
+    <string name="list_item_topic_number_dummy">Nr. 120</string>
     <string name="list_item_topic_number">Nr.</string>
 
     // Episode Fragment
@@ -147,5 +155,9 @@
     <string name="login_mail_hint">Gib deine E-Mail Adresse ein</string>
     <string name="saved_filter_type_podcast">saved_filter_type_podcast</string>
     <string name="saved_filter_type_list">saved_filter_type_list</string>
+    <string name="search_hint">Suche nach Folgen</string>
+    <string name="saved_first_start">saved_first_start</string>
+    <string name="toast">Saved meta - this should be displayed once</string>
+    <string name="refresh">Refresh</string>
 
 </resources>

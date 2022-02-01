@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list_item_topic_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layoutDescription="@xml/list_item_topic_scene">
+
+    <View
+        android:id="@+id/list_item_topic_with_subtopic_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/list_item_topic_with_subtopic_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
+        android:contentDescription="@string/contentDescription_arrow_right"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="16dp"
+        android:src="@drawable/ic_arrow_down"
+        app:tint="@color/black"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/list_item_topic_with_subtopic_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/list_item_topic_with_subtopic_number"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/list_item_topic_with_subtopic_title"
+        style="@style/ListItem.Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="14dp"
+        android:text="@string/list_item_topic_title_dummy"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/list_item_topic_with_subtopic_guideline"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/list_item_topic_with_subtopic_arrow"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/list_item_topic_with_subtopic_number"
+        style="@style/ListItem.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/list_item_topic_number_dummy"
+        app:layout_constraintBaseline_toBaselineOf="@+id/list_item_topic_with_subtopic_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/list_item_topic_with_subtopic_guideline" />
+
+    <ImageView
+        android:id="@+id/list_item_topic_with_subtopic_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/ic_line"
+        android:backgroundTint="@color/onBackgroundSecondary"
+        android:contentDescription="@string/contentDescription_divider"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_item_topic_with_subtopic_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/list_item_topic_with_subtopic_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_item_topic_with_subtopic_title"
+        tools:visibility="gone" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/list_item_topic_with_subtopic_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

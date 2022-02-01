@@ -12,7 +12,7 @@ public class Episode {
 
     @PrimaryKey
     @SerializedName("id")
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "episode_id")
     private int mId;
 
     @SerializedName("title")

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class ResponseData {
+public class ResponseEpisode {
 
     @SerializedName("data")
     private List<Episode> mData;
@@ -27,6 +27,4 @@ public class ResponseData {
     public void setMeta(ResponseMeta responseMetas) {
         mResponseMetas = responseMetas;
     }
-
-
 }

@@ -7,6 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".view.podcast.PodcastCardFragment">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/fragment_podcast_swipe_up"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
     <GridView
         android:id="@+id/fragment_card_gridview"
         android:layout_width="0dp"
@@ -24,4 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

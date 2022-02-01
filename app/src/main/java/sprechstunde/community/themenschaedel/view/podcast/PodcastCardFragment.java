@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,14 +19,19 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import sprechstunde.community.themenschaedel.MainActivity;
 import sprechstunde.community.themenschaedel.R;
+import sprechstunde.community.themenschaedel.UsedSharedPreferences;
 import sprechstunde.community.themenschaedel.adapter.podcast.PodcastCardAdapter;
+import sprechstunde.community.themenschaedel.api.ApiClient;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
 import sprechstunde.community.themenschaedel.model.Episode;
 import sprechstunde.community.themenschaedel.databinding.FragmentPodcastCardBinding;
-import sprechstunde.community.themenschaedel.model.ViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.HostViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 
-public class PodcastCardFragment extends Fragment implements ParentChildFragmentListener {
+public class PodcastCardFragment extends Fragment implements ParentChildFragmentListener, SwipeRefreshLayout.OnRefreshListener  {
 
     private FragmentPodcastCardBinding mBinding;
     private SharedPreferences mSharedPref;
@@ -43,9 +49,10 @@ public class PodcastCardFragment extends Fragment implements ParentChildFragment
     public View onCreateView (@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = FragmentPodcastCardBinding.inflate(inflater, container, false);
         View view = mBinding.getRoot();
+        mBinding.fragmentPodcastSwipeUp.setOnRefreshListener(this);
 
-        ViewModel mViewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
-        mViewModel.getAllEpisodes().observe(getViewLifecycleOwner(), episodes -> {
+        EpisodeViewModel viewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
+        viewModel.getAllEpisodes().observe(getViewLifecycleOwner(), episodes -> {
             Collections.sort(episodes, (a,b) -> Integer.compare(b.getNumber(), a.getNumber()));
             PodcastCardAdapter adapter = new PodcastCardAdapter(getContext(), episodes);
             Objects.requireNonNull(mBinding.fragmentCardGridview).setAdapter(adapter);
@@ -64,9 +71,39 @@ public class PodcastCardFragment extends Fragment implements ParentChildFragment
     }
 
     private void getFilterTypeFromSharedPreferences() {
-        int defaultValue = ParentChildFragmentListener.SORTED_BY.DATE_DOWN.ordinal();
+        int defaultValue = SORTED_BY.DATE_DOWN.ordinal();
         int displayType = mSharedPref.getInt(getString(R.string.saved_filter_type_podcast), defaultValue);
-        onSortChanged(ParentChildFragmentListener.SORTED_BY.values()[displayType]);
+        onSortChanged(SORTED_BY.values()[displayType]);
+    }
+
+    @Override
+    public boolean onScrollBackToTop() {
+        if(mBinding.fragmentCardGridview.getFirstVisiblePosition() != 0){
+            mBinding.fragmentCardGridview.smoothScrollToPosition(0);
+        }
+
+        return mBinding.fragmentCardGridview.getFirstVisiblePosition() == 0;
+    }
+
+    @Override
+    public void onRefresh() {
+        new Thread(() -> {
+            try {
+                EpisodeViewModel episodeViewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
+                TopicViewModel topicViewModel = new ViewModelProvider(requireActivity()).get(TopicViewModel.class);
+                HostViewModel hostViewModel = new ViewModelProvider(requireActivity()).get(HostViewModel.class);
+                MainActivity mainActivity = (MainActivity) requireActivity();
+
+                UsedSharedPreferences.getInstance(mainActivity).saveTopicCountToSharedPreferences(0);
+                UsedSharedPreferences.getInstance(mainActivity).saveEpisodeCountToSharedPreferences(0);
+                ApiClient.getInstance(mainActivity).saveEpisodesToDB(episodeViewModel, hostViewModel, true, mBinding.fragmentPodcastSwipeUp);
+                ApiClient.getInstance(mainActivity).saveTopicsToDB(topicViewModel, true);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+
     }
 
     @Override
@@ -99,5 +136,12 @@ public class PodcastCardFragment extends Fragment implements ParentChildFragment
         }
 
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onSearch(List<Episode> episodeList) {
+        ((PodcastCardAdapter) mBinding.fragmentCardGridview.getAdapter()).setEpisodes(episodeList);
+        ((PodcastCardAdapter) mBinding.fragmentCardGridview.getAdapter()).notifyDataSetChanged();
+
     }
 }

@@ -17,54 +17,54 @@ import sprechstunde.community.themenschaedel.view.podcast.PodcastFragmentDirecti
 
 public class PodcastRowAdapter extends RecyclerView.Adapter<PodcastRowAdapter.ViewHolder> {
 
-    private List<Episode> mEpisodes;
+  private List<Episode> mEpisodes;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView title;
+  public static class ViewHolder extends RecyclerView.ViewHolder {
+    private final TextView title;
 
-        public ViewHolder(View view) {
-            super(view);
-            title = view.findViewById(R.id.row_title);
-        }
-
-        public TextView getTitle() {
-            return title;
-        }
+    public ViewHolder(View view) {
+      super(view);
+      title = view.findViewById(R.id.row_title);
     }
 
-    public PodcastRowAdapter(List<Episode> episodes) {
-        mEpisodes = episodes;
+    public TextView getTitle() {
+      return title;
     }
+  }
 
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.list_item_podcast_row, viewGroup, false);
-        return new ViewHolder(view);
-    }
+  public PodcastRowAdapter(List<Episode> episodes) {
+    mEpisodes = episodes;
+  }
 
-    @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.getTitle().setText(mEpisodes.get(position).getTitle());
-        viewHolder.itemView.setOnClickListener(v -> {
-            PodcastFragmentDirections.ActionPodcastToEpisode action = PodcastFragmentDirections.actionPodcastToEpisode();
-            action.setEpisodeId(mEpisodes.get(position).getId());
-            Navigation.findNavController(v).navigate(action);
-        });
-    }
+  @NonNull
+  @Override
+  public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    View view = LayoutInflater.from(viewGroup.getContext())
+            .inflate(R.layout.list_item_podcast_row, viewGroup, false);
+    return new ViewHolder(view);
+  }
 
-    public List<Episode> getEpisodes() {
-        return mEpisodes;
-    }
+  @Override
+  public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+    viewHolder.getTitle().setText(mEpisodes.get(position).getTitle());
+    viewHolder.itemView.setOnClickListener(v -> {
+      PodcastFragmentDirections.ActionPodcastToEpisode action = PodcastFragmentDirections.actionPodcastToEpisode();
+      action.setEpisodeId(mEpisodes.get(position).getId());
+      Navigation.findNavController(v).navigate(action);
+    });
+  }
 
-    public void setEpisodes(List<Episode> episodes) {
-        mEpisodes = episodes;
-    }
+  public List<Episode> getEpisodes() {
+    return mEpisodes;
+  }
+
+  public void setEpisodes(List<Episode> episodes) {
+    mEpisodes = episodes;
+  }
 
 
-    @Override
-    public int getItemCount() {
-        return mEpisodes.size();
-    }
+  @Override
+  public int getItemCount() {
+    return mEpisodes.size();
+  }
 }

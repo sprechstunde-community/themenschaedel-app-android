@@ -24,7 +24,7 @@ import sprechstunde.community.themenschaedel.adapter.podcast.PodcastRowAdapter;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
 import sprechstunde.community.themenschaedel.model.Episode;
 import sprechstunde.community.themenschaedel.databinding.FragmentPodcastRowBinding;
-import sprechstunde.community.themenschaedel.model.ViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
 
 public class PodcastRowFragment extends Fragment implements ParentChildFragmentListener{
 
@@ -46,7 +46,7 @@ public class PodcastRowFragment extends Fragment implements ParentChildFragmentL
         mBinding = FragmentPodcastRowBinding.inflate(inflater, container, false);
         View view = mBinding.getRoot();
 
-        ViewModel viewModel = new ViewModelProvider(requireActivity()).get(ViewModel .class);
+        EpisodeViewModel viewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
         viewModel.getAllEpisodes().observe(getViewLifecycleOwner(), episodes -> {
             Collections.sort(episodes, (a, b) -> Integer.compare(b.getNumber(), a.getNumber()));
             PodcastRowAdapter adapter = new PodcastRowAdapter(episodes);
@@ -67,13 +67,13 @@ public class PodcastRowFragment extends Fragment implements ParentChildFragmentL
     }
 
     private void getFilterTypeFromSharedPreferences() {
-        int defaultValue = ParentChildFragmentListener.SORTED_BY.DATE_DOWN.ordinal();
+        int defaultValue = SORTED_BY.DATE_DOWN.ordinal();
         int displayType = mSharedPref.getInt(getString(R.string.saved_filter_type_podcast), defaultValue);
-        onSortChanged(ParentChildFragmentListener.SORTED_BY.values()[displayType]);
+        onSortChanged(SORTED_BY.values()[displayType]);
     }
 
     @Override
-    public void onSortChanged(ParentChildFragmentListener.SORTED_BY sortedBy) {
+    public void onSortChanged(SORTED_BY sortedBy) {
         PodcastRowAdapter adapter = (PodcastRowAdapter) mBinding.fragmentRowRecyclerview.getAdapter();
         List<Episode> episodes = Objects.requireNonNull(adapter).getEpisodes();
 
@@ -101,5 +101,21 @@ public class PodcastRowFragment extends Fragment implements ParentChildFragmentL
             } break;
         }
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onScrollBackToTop() {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) mBinding.fragmentRowRecyclerview.getLayoutManager();
+        if(Objects.requireNonNull(layoutManager).findFirstCompletelyVisibleItemPosition()!=0){
+            mBinding.fragmentRowRecyclerview.smoothScrollToPosition(0);
+        }
+
+        return Objects.requireNonNull(layoutManager).findFirstCompletelyVisibleItemPosition()==0;
+    }
+
+    @Override
+    public void onSearch(List<Episode> episodeList) {
+        ((PodcastRowAdapter) Objects.requireNonNull(mBinding.fragmentRowRecyclerview.getAdapter())).setEpisodes(episodeList);
+        mBinding.fragmentRowRecyclerview.getAdapter().notifyDataSetChanged();
     }
 }

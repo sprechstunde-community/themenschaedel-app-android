@@ -5,13 +5,19 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -22,8 +28,10 @@ import java.util.List;
 import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.databinding.FragmentPodcastBinding;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
+import sprechstunde.community.themenschaedel.model.Episode;
+import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
 
-public class PodcastFragment extends Fragment implements View.OnClickListener {
+public class PodcastFragment extends Fragment implements View.OnClickListener, SearchView.OnQueryTextListener {
 
     private FragmentPodcastBinding mBinding;
     private Display mCurrentDisplay;
@@ -40,12 +48,39 @@ public class PodcastFragment extends Fragment implements View.OnClickListener {
         // Required empty public constructor
     }
 
-    private void notifyFragments(ParentChildFragmentListener.SORTED_BY sortedBy) {
+    private boolean notifyFragmentsForScrollBackToTop() {
+        List<Fragment> fragments = getParentFragmentManager().getFragments();
+        boolean gotScrolledUp = false;
+        for (Fragment f : fragments) {
+            if(f != this)
+                gotScrolledUp = ((ParentChildFragmentListener) f).onScrollBackToTop();
+        }
+        return gotScrolledUp;
+    }
+
+    private void notifyFragmentsForSort(ParentChildFragmentListener.SORTED_BY sortedBy) {
         List<Fragment> fragments = getParentFragmentManager().getFragments();
         for (Fragment f : fragments) {
             if(f != this)
                 ((ParentChildFragmentListener) f).onSortChanged(sortedBy);
         }
+    }
+
+    private void notifyFragmentsForSearch(List<Episode> episodes) {
+        List<Fragment> fragments = getParentFragmentManager().getFragments();
+        for (Fragment f : fragments) {
+            if(f != this)
+                ((ParentChildFragmentListener) f).onSearch(episodes);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_search_settings, menu);
+        MenuItem searchItem = menu.findItem(R.id.menu_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(this);
     }
 
     @Override
@@ -67,6 +102,18 @@ public class PodcastFragment extends Fragment implements View.OnClickListener {
         mPreSelectedChipId = mBinding.filterDate.getId();
 
         changeDisplayFragment(true);
+        setHasOptionsMenu(true);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if(notifyFragmentsForScrollBackToTop()) {
+                    setEnabled(false);
+                    requireActivity().onBackPressed();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
         return view;
     }
@@ -85,18 +132,37 @@ public class PodcastFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        onSearch(query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        onSearch(query);
+        return false;
+    }
+
+    private void onSearch(String query) {
+        EpisodeViewModel viewModel = new ViewModelProvider(this).get(EpisodeViewModel.class);
+        if(!query.equals("")) {
+            viewModel.searchForEpisodes(query).observe(this, this::notifyFragmentsForSearch);
+        }
+    }
+
     private void fromASCToDESC(Chip chip, boolean wasAlreadySelected, ParentChildFragmentListener.SORTED_BY up, ParentChildFragmentListener.SORTED_BY down) {
         String tag = (String) chip.getTag();
         Drawable upIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_up);
         Drawable downIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_down);
 
         if (tag.equals("ASC") && wasAlreadySelected || (tag.equals("DESC") && !wasAlreadySelected)) { // if already selected -> make ASC to DESC or if was not selected and is DESC
-            notifyFragments(down);
+            notifyFragmentsForSort(down);
             chip.setTag("DESC");
             chip.setChipIcon(downIcon);
             saveFilterTypeToSharedPreferences(down);
         } else if (tag.equals("DESC") || tag.equals("ASC"))  { // if already selected -> make DESC to ASC or if was not selected and is ASC
-            notifyFragments(up);
+            notifyFragmentsForSort(up);
             chip.setTag("ASC");
             chip.setChipIcon(upIcon);
             saveFilterTypeToSharedPreferences(up);
@@ -144,19 +210,19 @@ public class PodcastFragment extends Fragment implements View.OnClickListener {
 
     private void changeToCards(Drawable card, FragmentTransaction transaction) {
         mCurrentDisplay = Display.CARDS;
-        mBinding.fragmentPodcastDisplay.setBackground(card);
+        mBinding.fragmentPodcastDisplay.setImageDrawable(card);
         transaction.replace(R.id.fragment_podcast_container, PodcastCardFragment.class, null);
     }
 
     private void changeToCells(Drawable cell, FragmentTransaction transaction) {
         mCurrentDisplay = Display.CELLS;
-        mBinding.fragmentPodcastDisplay.setBackground(cell);
+        mBinding.fragmentPodcastDisplay.setImageDrawable(cell);
         transaction.replace(R.id.fragment_podcast_container, PodcastCellFragment.class, null);
     }
 
     private void changeToRows(Drawable row, FragmentTransaction transaction) {
         mCurrentDisplay = Display.ROWS;
-        mBinding.fragmentPodcastDisplay.setBackground(row);
+        mBinding.fragmentPodcastDisplay.setImageDrawable(row);
         transaction.replace(R.id.fragment_podcast_container, PodcastRowFragment.class, null);
     }
 

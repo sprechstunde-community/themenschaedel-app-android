@@ -7,13 +7,12 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-
 @Entity(tableName = "host_table")
 public class Host {
 
     @PrimaryKey
     @SerializedName("id")
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "host_id")
     private int mId;
 
     @SerializedName("name")
@@ -27,6 +26,10 @@ public class Host {
     @SerializedName("profile_picture")
     @ColumnInfo(name = "profile_picture")
     private String mImage;
+
+    @SerializedName("main")
+    @ColumnInfo(name = "main")
+    private boolean mMain;
 
     public Host(int id, String name, String description, String image) {
         mId = id;
@@ -70,5 +73,13 @@ public class Host {
 
     public void setImage(String image) {
         mImage = image;
+    }
+
+    public boolean isMain() {
+        return mMain;
+    }
+
+    public void setMain(boolean main) {
+        mMain = main;
     }
 }
