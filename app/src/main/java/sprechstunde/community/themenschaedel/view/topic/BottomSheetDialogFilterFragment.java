@@ -11,11 +11,11 @@ import android.widget.CompoundButton;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import sprechstunde.community.themenschaedel.adapter.list.TopicAdapter;
-import sprechstunde.community.themenschaedel.databinding.FragmentBottomSheetDialogFilterBinding;
+import sprechstunde.community.themenschaedel.databinding.BottomSheetFilterTopicsBinding;
 
 public class BottomSheetDialogFilterFragment extends BottomSheetDialogFragment implements CompoundButton.OnCheckedChangeListener {
 
-    private FragmentBottomSheetDialogFilterBinding mBinding;
+    private BottomSheetFilterTopicsBinding mBinding;
     private TopicAdapter mTopicAdapter;
     private ProcessFilter mCallback;
 
@@ -40,10 +40,12 @@ public class BottomSheetDialogFilterFragment extends BottomSheetDialogFragment i
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mBinding = FragmentBottomSheetDialogFilterBinding.inflate(inflater, container, false);
+        mBinding = BottomSheetFilterTopicsBinding.inflate(inflater, container, false);
         mBinding.filterBoys.setChecked(true);
         mBinding.filterCommunity.setChecked(true);
         mBinding.fragmentFilterSwitch.setOnCheckedChangeListener(this);
+
+        if(mTopicAdapter != null)
         mBinding.fragmentFilterSwitch.setChecked(mTopicAdapter.isShowDetails());
         return mBinding.getRoot();
     }

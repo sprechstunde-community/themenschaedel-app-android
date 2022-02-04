@@ -29,6 +29,7 @@ import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.databinding.FragmentPodcastBinding;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
 import sprechstunde.community.themenschaedel.model.Episode;
+import sprechstunde.community.themenschaedel.view.topic.BottomSheetDialogFilterFragment;
 import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
 
 public class PodcastFragment extends Fragment implements View.OnClickListener, SearchView.OnQueryTextListener {
@@ -81,7 +82,15 @@ public class PodcastFragment extends Fragment implements View.OnClickListener, S
         MenuItem searchItem = menu.findItem(R.id.menu_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(this);
+
+        MenuItem filterItem = menu.findItem(R.id.menu_filter);
+        filterItem.setOnMenuItemClickListener(item -> {
+            final BottomSheetDialogFilterFragment bottomSheetDialog = new BottomSheetDialogFilterFragment();
+            bottomSheetDialog.show(getChildFragmentManager(), "OpenFilterBottomSheet");
+            return true;
+        });
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

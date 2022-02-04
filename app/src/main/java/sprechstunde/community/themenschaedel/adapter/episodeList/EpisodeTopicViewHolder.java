@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,9 +15,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import sprechstunde.community.themenschaedel.MainActivity;
 import sprechstunde.community.themenschaedel.R;
+import sprechstunde.community.themenschaedel.model.Episode;
 import sprechstunde.community.themenschaedel.model.topic.Subtopic;
 import sprechstunde.community.themenschaedel.model.topic.Topic;
+import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
 
 public class EpisodeTopicViewHolder extends RecyclerView.ViewHolder {
 
@@ -25,6 +29,7 @@ public class EpisodeTopicViewHolder extends RecyclerView.ViewHolder {
     private final ImageView mIcon;
     private final ImageView mSubtopics;
     private final RecyclerView mRecyclerView;
+    private final ImageView mPlayButton;
 
     protected Drawable mAd;
     protected Drawable mCommunity;
@@ -35,6 +40,7 @@ public class EpisodeTopicViewHolder extends RecyclerView.ViewHolder {
         mTitle = itemView.findViewById(R.id.list_item_episode_topic_title);
         mTime = itemView.findViewById(R.id.list_item_episode_topic_time);
         mIcon = itemView.findViewById(R.id.list_item_episode_topic_type);
+        mPlayButton = itemView.findViewById(R.id.list_item_episode_topic_play);
         mSubtopics = itemView.findViewById(R.id.list_item_episode_topic_subtopics);
 
         mRecyclerView = itemView.findViewById(R.id.list_item_episode_topic_recyclerView);
@@ -46,7 +52,7 @@ public class EpisodeTopicViewHolder extends RecyclerView.ViewHolder {
         mBoys = ResourcesCompat.getDrawable(itemView.getResources(), R.drawable.ic_boys, null);
     }
 
-    public void setTopicValues(List<Subtopic> subtopics, Topic topic) {
+    public void setTopicValues(List<Subtopic> subtopics, Topic topic, MainActivity activity) {
         getTitle().setText(topic.getName());
 
         long time = topic.getStart();
@@ -74,6 +80,14 @@ public class EpisodeTopicViewHolder extends RecyclerView.ViewHolder {
             mRecyclerView.setAdapter(adapter);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
         }
+
+        mPlayButton.setOnClickListener(view -> {
+            EpisodeViewModel episodeViewModel = new ViewModelProvider(activity).get(EpisodeViewModel.class);
+            episodeViewModel.getEpisode(topic.getEpisode()).observe(activity, episode -> {
+
+                activity.startPlayingEpisodeAt("7uV1nodGQuj4EeVZSCNCpz", topic.getStart() * 1000L);
+            });
+        });
     }
 
     public TextView getTitle() {

@@ -1,2 +1,3 @@
 include ':app'
 rootProject.name = "Themenschaedel"
+include ':app-remote-lib'

@@ -30,10 +30,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import sprechstunde.community.themenschaedel.MainActivity;
 import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.adapter.episodeList.EpisodeHostAdapter;
 import sprechstunde.community.themenschaedel.adapter.episodeList.EpisodeTopicAdapter;
 import sprechstunde.community.themenschaedel.databinding.FragmentEpisodeBinding;
+import sprechstunde.community.themenschaedel.model.Episode;
+import sprechstunde.community.themenschaedel.model.topic.Topic;
 import sprechstunde.community.themenschaedel.model.topic.TopicWithSubtopic;
 import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
 import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
@@ -99,10 +102,9 @@ public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChan
         });
 
         topicViewModel.getAllTopicsWithSubtopicsFromEpisode(id).observe(getViewLifecycleOwner(), topics -> {
-            EpisodeTopicAdapter adapter = new EpisodeTopicAdapter(topics, getContext());
+            EpisodeTopicAdapter adapter = new EpisodeTopicAdapter(topics, (MainActivity) requireActivity());
             Objects.requireNonNull(mBinding.fragmentEpisodeRecyclerview).setAdapter(adapter);
             mBinding.fragmentEpisodeRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-
 
             if(topics == null || topics.size() == 0) {
                 mBinding.fragmentEpisodeNoTopics.setVisibility(View.VISIBLE);

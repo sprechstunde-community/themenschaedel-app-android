@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import sprechstunde.community.themenschaedel.MainActivity;
 import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.model.topic.Subtopic;
 import sprechstunde.community.themenschaedel.model.topic.TopicWithSubtopic;
@@ -19,18 +20,18 @@ public class EpisodeTopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private static final int TYPE_TOPIC = 1;
     private static final int TYPE_TOPIC_WITH_SUBTOPICS = 2;
 
-    private final Context mContext;
+    private final MainActivity mActivity;
     private final List<TopicWithSubtopic> mTopics;
 
-    public EpisodeTopicAdapter(List<TopicWithSubtopic> topics, Context context) {
+    public EpisodeTopicAdapter(List<TopicWithSubtopic> topics, MainActivity context) {
         mTopics = topics;
-        mContext = context;
+        mActivity = context;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_episode_topic, viewGroup, false);
+        View view = LayoutInflater.from(mActivity).inflate(R.layout.list_item_episode_topic, viewGroup, false);
         return new EpisodeTopicViewHolder(view);
 
     }
@@ -47,7 +48,7 @@ public class EpisodeTopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
         List<Subtopic> subtopics =  mTopics.get(position).getSubtopics();
-        ((EpisodeTopicViewHolder) viewHolder).setTopicValues(mTopics.get(position).getSubtopics(), mTopics.get(position).getTopic());
+        ((EpisodeTopicViewHolder) viewHolder).setTopicValues(mTopics.get(position).getSubtopics(), mTopics.get(position).getTopic(), mActivity);
         viewHolder.itemView.setOnClickListener(v -> {
             RecyclerView recyclerView = ((EpisodeTopicViewHolder) viewHolder).getRecyclerView();
             if (recyclerView.getVisibility() == View.VISIBLE) {

@@ -9,6 +9,11 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView" />
     <item
+        android:id="@+id/menu_filter"
+        android:icon="@drawable/ic_filter_details"
+        android:title="@string/filter"
+        app:showAsAction="ifRoom|collapseActionView" />
+    <item
         android:id="@+id/menu_refresh"
         android:icon="@drawable/ic_refresh"
         android:title="@string/refresh"

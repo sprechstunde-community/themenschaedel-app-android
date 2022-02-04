@@ -159,5 +159,8 @@
     <string name="saved_first_start">saved_first_start</string>
     <string name="toast">Saved meta - this should be displayed once</string>
     <string name="refresh">Refresh</string>
+    <string name="filter_persons">Person</string>
+    <string name="filter">Filtern</string>
+    <string name="persons_in_episode">Personen in einer Folge</string>
 
 </resources>

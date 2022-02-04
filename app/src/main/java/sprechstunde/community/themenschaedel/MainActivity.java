@@ -17,28 +17,49 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
+import com.spotify.android.appremote.api.ConnectionParams;
+import com.spotify.android.appremote.api.Connector;
+import com.spotify.android.appremote.api.SpotifyAppRemote;
+import com.spotify.protocol.client.CallResult;
+import com.spotify.protocol.types.Empty;
 
 import java.util.Objects;
 
 import sprechstunde.community.themenschaedel.api.ApiClient;
 import sprechstunde.community.themenschaedel.databinding.ActivityMainBinding;
+import sprechstunde.community.themenschaedel.listener.ActivityToFragmentListener;
 import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
 import sprechstunde.community.themenschaedel.viewmodel.HostViewModel;
 import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 import sprechstunde.community.themenschaedel.view.CustomPopupWindow;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, ActivityToFragmentListener {
 
     private ActivityMainBinding mBinding;
     private NavController mNavController;
     private AppBarConfiguration mAppBarConfiguration;
     private CustomPopupWindow mPopupWindow;
+
+    private static final String CLIENT_ID = "18aeb0670f3e4097a91bc63ce3f77e11";
+    private static final String REDIRECT_URI = "http://sprechstunde.community.themenschaedel/callback";
+    private SpotifyAppRemote mSpotifyAppRemote;
+    private  ConnectionParams mConnectionParams;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mConnectionParams =
+                new ConnectionParams.Builder(CLIENT_ID)
+                        .setRedirectUri(REDIRECT_URI)
+                        .showAuthView(true)
+                        .build();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,5 +174,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         mBinding.drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    public void startPlayingEpisodeAt(String uri, long offset) {
+        SpotifyAppRemote.connect(this, mConnectionParams,
+                new Connector.ConnectionListener() {
+
+                    @Override
+                    public void onConnected(SpotifyAppRemote spotifyAppRemote) {
+                        mSpotifyAppRemote = spotifyAppRemote;
+                        Log.d("MainActivity", "Connected! Yay!"+ offset);
+
+                        // Now you can start interacting with App Remote
+                        mSpotifyAppRemote.getPlayerApi().pause();
+                        mSpotifyAppRemote.getPlayerApi().play("spotify:episode:" + uri).setResultCallback(data -> mSpotifyAppRemote.getPlayerApi().seekTo(offset));
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        Log.e("MainActivity", throwable.getMessage(), throwable);
+
+                        // Something went wrong when attempting to connect! Handle errors here
+                    }
+                });
     }
 }
