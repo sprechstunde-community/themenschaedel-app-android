@@ -2,8 +2,6 @@ package sprechstunde.community.themenschaedel.view.topic;
 
 import static androidx.recyclerview.widget.ItemTouchHelper.RIGHT;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -35,27 +33,35 @@ import android.view.ViewGroup;
 import com.google.android.material.chip.Chip;
 
 import java.text.Collator;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
+import sprechstunde.community.themenschaedel.Enums;
 import sprechstunde.community.themenschaedel.MainActivity;
 import sprechstunde.community.themenschaedel.R;
+import sprechstunde.community.themenschaedel.UsedSharedPreferences;
 import sprechstunde.community.themenschaedel.adapter.list.TopicAdapter;
 import sprechstunde.community.themenschaedel.databinding.FragmentListBinding;
-import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
 import sprechstunde.community.themenschaedel.model.topic.TopicWithSubtopic;
 import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 import sprechstunde.community.themenschaedel.view.CustomPopupWindow;
 
-public class  ListFragment extends Fragment implements View.OnClickListener, BottomSheetDialogFilterFragment.ProcessFilter, SearchView.OnQueryTextListener  {
+public class  ListFragment extends Fragment implements View.OnClickListener, BottomSheetDialogTopicFilterFragment.ProcessFilter, SearchView.OnQueryTextListener  {
 
     private FragmentListBinding mBinding;
-    private SharedPreferences mSharedPref;
     private int mPreSelectedChipId;
     private TopicAdapter mAdapter;
     private TopicViewModel mTopicViewModel;
+
+    private Enums.SORTED_BY mCurrentSort;
+    private final boolean[] mCurrentFilers = new boolean[] {true, true, false};
 
     public ListFragment() {
         // Required empty public constructor
@@ -82,13 +88,14 @@ public class  ListFragment extends Fragment implements View.OnClickListener, Bot
 
         mTopicViewModel = new ViewModelProvider(requireActivity()).get(TopicViewModel.class);
         mTopicViewModel.getAllTopicsWithSubtopics().observe(getViewLifecycleOwner(), topics -> {
-            Collections.sort(topics, (a, b) -> a.getTopic().getName().compareTo(b.getTopic().getName()));
+            topics.sort(Comparator.comparing(a -> a.getTopic().getName()));
             mAdapter = new TopicAdapter(topics, (MainActivity) requireActivity());
             Objects.requireNonNull(mBinding.fragmentListRecylerview).setAdapter(mAdapter);
             mBinding.fragmentListRecylerview.setLayoutManager(new LinearLayoutManager(getContext()));
 
-            mSharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);
-            getFilterTypeFromSharedPreferences();
+            mCurrentSort =  UsedSharedPreferences.getInstance((MainActivity) requireActivity()).getFilterTypeFromSharedPreferences();
+            sortList();
+            filterList();
         });
 
         mBinding.fragmentListDetails.setOnClickListener(this);
@@ -159,21 +166,6 @@ public class  ListFragment extends Fragment implements View.OnClickListener, Bot
         MenuItem searchItem = menu.findItem(R.id.menu_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(this);
-        /* searchView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-
-            @Override
-            public void onViewDetachedFromWindow(View arg0) {
-                mTopicViewModel.getAllTopicsWithSubtopics().observe(getViewLifecycleOwner(), topics -> {
-                    mAdapter.setTopics(topics);
-                    mAdapter.notifyDataSetChanged();
-                });
-            }
-
-            @Override
-            public void onViewAttachedToWindow(View arg0) {
-                // search was opened
-            }
-        }); */
     }
 
     @Override
@@ -181,7 +173,7 @@ public class  ListFragment extends Fragment implements View.OnClickListener, Bot
         super.onOptionsItemSelected(item);
         if(item.getItemId() == R.id.menu_info) {
             CustomPopupWindow popupWindow = new CustomPopupWindow();
-            popupWindow.showSortPopup(R.id.dialog_info_topic_layout, R.layout.dialog_info_episode_types, requireActivity());
+            popupWindow.showSortPopup(R.id.dialog_info_topic_layout, R.layout.dialog_info_topic_types, requireActivity());
         }
 
         NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_main);
@@ -211,34 +203,24 @@ public class  ListFragment extends Fragment implements View.OnClickListener, Bot
         }
     }
 
-    private void fromASCToDESC(Chip chip, boolean wasAlreadySelected, ParentChildFragmentListener.SORTED_BY up, ParentChildFragmentListener.SORTED_BY down) {
+    private void fromASCToDESC(Chip chip, boolean wasAlreadySelected, Enums.SORTED_BY up, Enums.SORTED_BY down) {
         String tag = (String) chip.getTag();
         Drawable upIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_up);
         Drawable downIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_down);
 
         if (tag.equals("ASC") && wasAlreadySelected || (tag.equals("DESC") && !wasAlreadySelected)) { // if already selected -> make ASC to DESC or if was not selected and is DESC
-            sortList(down);
+            mCurrentSort = down;
+            sortList();
             chip.setTag("DESC");
             chip.setChipIcon(downIcon);
-            saveFilterTypeToSharedPreferences(down);
+            UsedSharedPreferences.getInstance((MainActivity) requireActivity()).saveFilterTypeToSharedPreferences(down);
         } else if (tag.equals("DESC") || tag.equals("ASC"))  { // if already selected -> make DESC to ASC or if was not selected and is ASC
-            sortList(up);
+            mCurrentSort = up;
+            sortList();
             chip.setTag("ASC");
             chip.setChipIcon(upIcon);
-            saveFilterTypeToSharedPreferences(up);
+            UsedSharedPreferences.getInstance((MainActivity) requireActivity()).saveFilterTypeToSharedPreferences(up);
         }
-    }
-
-    private void saveFilterTypeToSharedPreferences(ParentChildFragmentListener.SORTED_BY filter) {
-        SharedPreferences.Editor editor = mSharedPref.edit();
-        editor.putInt(getString(R.string.saved_filter_type_list), filter.ordinal());
-        editor.apply();
-    }
-
-    private void getFilterTypeFromSharedPreferences() {
-        int defaultValue = ParentChildFragmentListener.SORTED_BY.NUMBER_DOWN.ordinal();
-        int displayType = mSharedPref.getInt(getString(R.string.saved_filter_type_list), defaultValue);
-        sortList(ParentChildFragmentListener.SORTED_BY.values()[displayType]);
     }
 
     @Override
@@ -250,38 +232,38 @@ public class  ListFragment extends Fragment implements View.OnClickListener, Bot
     @Override
     public void onClick(View v) {
         if(v == mBinding.fragmentListDetails) {
-            final BottomSheetDialogFilterFragment bottomSheetDialog = new BottomSheetDialogFilterFragment(this, mAdapter);
+            final BottomSheetDialogTopicFilterFragment bottomSheetDialog = new BottomSheetDialogTopicFilterFragment(this, mAdapter);
             bottomSheetDialog.show(getChildFragmentManager(), "OpenFilterBottomSheet");
         } else if (mBinding.filterNumber == v) {
-            fromASCToDESC(mBinding.filterNumber, v.getId() == mPreSelectedChipId, ParentChildFragmentListener.SORTED_BY.NUMBER_UP, ParentChildFragmentListener.SORTED_BY.NUMBER_DOWN);
+            fromASCToDESC(mBinding.filterNumber, v.getId() == mPreSelectedChipId,  Enums.SORTED_BY.NUMBER_UP,  Enums.SORTED_BY.NUMBER_DOWN);
             mPreSelectedChipId = mBinding.filterNumber.getId();
         } else if (mBinding.filterName == v) {
-            fromASCToDESC(mBinding.filterName, v.getId() == mPreSelectedChipId, ParentChildFragmentListener.SORTED_BY.TITLE_UP, ParentChildFragmentListener.SORTED_BY.TITLE_DOWN);
+            fromASCToDESC(mBinding.filterName, v.getId() == mPreSelectedChipId,  Enums.SORTED_BY.TITLE_UP, Enums.SORTED_BY.TITLE_DOWN);
             mPreSelectedChipId = mBinding.filterName.getId();
         }
     }
 
-    private void sortList(ParentChildFragmentListener.SORTED_BY sortedBy) {
+    private void sortList() {
         TopicAdapter adapter = (TopicAdapter) mBinding.fragmentListRecylerview.getAdapter();
         List<TopicWithSubtopic> topics = Objects.requireNonNull(adapter).getTopics();
 
-        switch (sortedBy) {
+        switch (mCurrentSort) {
             case NUMBER_UP:
             default: {
-                Collections.sort(topics, (a,b) -> Integer.compare(a.getTopic().getEpisode(), b.getTopic().getEpisode()));
+                topics.sort(Comparator.comparingInt(a -> a.getTopic().getEpisode()));
             } break;
             case NUMBER_DOWN: {
-                Collections.sort(topics, (a,b) -> Integer.compare(b.getTopic().getEpisode(), a.getTopic().getEpisode()));
+                topics.sort((a, b) -> Integer.compare(b.getTopic().getEpisode(), a.getTopic().getEpisode()));
             } break;
             case TITLE_UP: {
-                Collections.sort(topics, (a,b) -> {
+                topics.sort((a, b) -> {
                     Collator germanCollator = Collator.getInstance(Locale.GERMAN);
                     germanCollator.setStrength(Collator.PRIMARY);
                     return germanCollator.compare(a.getTopic().getName(), b.getTopic().getName());
                 });
             } break;
             case TITLE_DOWN: {
-                Collections.sort(topics, (a,b) -> {
+                topics.sort((a, b) -> {
                     Collator germanCollator = Collator.getInstance(Locale.GERMAN);
                     germanCollator.setStrength(Collator.PRIMARY);
                     return germanCollator.compare(b.getTopic().getName(), a.getTopic().getName());
@@ -291,9 +273,48 @@ public class  ListFragment extends Fragment implements View.OnClickListener, Bot
         adapter.notifyDataSetChanged();
     }
 
+
+    private void filterList() {
+        boolean allWithoutAds = mCurrentFilers[0] && mCurrentFilers[1] && !mCurrentFilers[2];
+        boolean communityWithoutAds = mCurrentFilers[0] && !mCurrentFilers[1] && !mCurrentFilers[2];
+        boolean boysWithoutAds = !mCurrentFilers[0] && mCurrentFilers[1] && !mCurrentFilers[2];
+
+        boolean communityWithAds = mCurrentFilers[0] && !mCurrentFilers[1] && mCurrentFilers[2];
+        boolean boysWithAds = !mCurrentFilers[0] && mCurrentFilers[1] && mCurrentFilers[2];
+
+        boolean onlyCommunityOrBoys = !mCurrentFilers[2];
+        boolean onlyAds = !mCurrentFilers[0] && !mCurrentFilers[1] && mCurrentFilers[2];
+        int community = mCurrentFilers[0] ? 1 : 0;
+
+        if(allWithoutAds) {
+            mTopicViewModel.getAllTopicsWithSubtopicsAllWithoutAds().observe(getViewLifecycleOwner(), this::setAdapter);
+        } else if(communityWithoutAds || boysWithoutAds) {
+            mTopicViewModel.getAllTopicsWithSubtopicsCommunityAndAds(community, 0).observe(getViewLifecycleOwner(), this::setAdapter);
+        } else if(communityWithAds || boysWithAds) {
+            mTopicViewModel.getAllTopicsWithSubtopicsCommunityAndAds(community, 1).observe(getViewLifecycleOwner(), this::setAdapter);
+        } else if(onlyCommunityOrBoys) {
+            mTopicViewModel.getAllTopicsWithSubtopicsCommunity(community).observe(getViewLifecycleOwner(), this::setAdapter);
+        } else if(onlyAds) {
+            mTopicViewModel.getAllTopicsWithSubtopicsOnlyAds().observe(getViewLifecycleOwner(), this::setAdapter);
+        }
+    }
+
+    private void setAdapter(List<TopicWithSubtopic> topicsWithSubtopics) {
+        TopicAdapter adapter = (TopicAdapter) mBinding.fragmentListRecylerview.getAdapter();
+        if(adapter != null) {
+            adapter.setTopics(topicsWithSubtopics);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
-    public void onProcessFilter(boolean showDetails) {
+    public void onProcessFilter(boolean showDetails, boolean fromCommunity, boolean fromBoys, boolean ad) {
         mAdapter.setShowDetails(showDetails);
-        mAdapter.notifyDataSetChanged();
+        if(mCurrentFilers[0] != fromCommunity || mCurrentFilers[1] != fromBoys || mCurrentFilers[2] != ad) {
+            mCurrentFilers[0] = fromCommunity;
+            mCurrentFilers[1] = fromBoys;
+            mCurrentFilers[2] = ad;
+            filterList();
+        }
     }
 }

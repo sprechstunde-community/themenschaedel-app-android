@@ -12,7 +12,7 @@ public class TopicWithSubtopic {
 
     @Relation(
             parentColumn = "id",
-            entityColumn = "topic_id"
+            entityColumn = "id_topic"
     )
     private List<Subtopic> mSubtopics;
 

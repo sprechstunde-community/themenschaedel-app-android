@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 
 import sprechstunde.community.themenschaedel.MainActivity;
 import sprechstunde.community.themenschaedel.R;
-import sprechstunde.community.themenschaedel.model.Episode;
 import sprechstunde.community.themenschaedel.model.topic.Subtopic;
 import sprechstunde.community.themenschaedel.model.topic.Topic;
 import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
@@ -85,7 +84,7 @@ public class EpisodeTopicViewHolder extends RecyclerView.ViewHolder {
             EpisodeViewModel episodeViewModel = new ViewModelProvider(activity).get(EpisodeViewModel.class);
             episodeViewModel.getEpisode(topic.getEpisode()).observe(activity, episode -> {
 
-                activity.startPlayingEpisodeAt("7uV1nodGQuj4EeVZSCNCpz", topic.getStart() * 1000L);
+                activity.startPlayingEpisodeAt("7uV1nodGQuj4EeVZSCNCpz", topic.getStart() * 100L);
             });
         });
     }

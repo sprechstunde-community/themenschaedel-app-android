@@ -19,7 +19,151 @@
     <string name="filter_name">Name</string>
     <string name="filter_time">Zeit</string>
     <string name="filter_sorted_by">Sortieren nach</string>
+    <string name="filter_filter_by">Filtern nach</string>
     <string name="filter_show_details">Details anzeigen</string>
+    <string name="filter_show_state">Episodenstatus anzeigen</string>
+    <string name="persons_in_episode">Personen in einer Folge</string>
+    <string name="state_of_episode">Folgen mit dem Status</string>
+
+    // Podcast Card, Cell, Row
+    <string name="podcast_no_episodes">Keine Folgen gefunden</string>
+    <string name="podcast_number_dummy">Folge 220</string>
+    <string name="podcast_length_dummy">1h 5min</string>
+    <string name="podcast_date_dummy">9. Mai 2021</string>
+    <string name="podcast_vote_dummy">0</string>
+    <string name="podcast_title_dummy">Flos biodesintegrierender China-Rollrasen des Todes!</string>
+    <string name="podcast_episode">Folge</string>
+
+    // Menu, Drawer
+    <string name="podcast">Podcast</string>
+    <string name="topic">Themen</string>
+    <string name="wiki">Wiki</string>
+    <string name="login_register">Login / Register</string>
+    <string name="logout">Logout</string>
+    <string name="open">Drawer öffnen</string>
+    <string name="close">Drawer schließen</string>
+    <string name="anonym">360er</string>
+
+    // Topic Fragment
+    <string name="list">Liste</string>
+    <string name="draw">Ziehen</string>
+
+    // Profile Fragment
+    <string name="profile_name_dummy">Username</string>
+    <string name="profile_email_dummy">user@gmail.com</string>
+
+    <string name="profile_name_autofill">Dein Benutzername</string>
+    <string name="profile_email_autofill">Deine E-Mail</string>
+    <string name="profile_password_autofill">Dein Passwort</string>
+
+    <string name="profile_name_hint">Benutzername</string>
+    <string name="profile_email_hint">E-Mail</string>
+    <string name="profile_password_hint">Passwort</string>
+
+    <string name="profile_role_user">User</string>
+    <string name="profile_role_mod">Moderator</string>
+    <string name="profile_role_admin">Admin</string>
+    <string name="profile_role_froid">Froid</string>
+
+    <string name="profile_platform">Bevorzugte Platform</string>
+    <string name="profile_hosts_in">muss fix dabei sein</string>
+    <string name="profile_hosts_out">soll nicht dabei sein</string>
+    <string name="profile_play_random">Zufällige Folge abspielen</string>
+
+    // SharedPreferences
+    <string name="saved_display_type">saved_display_type</string>
+    <string name="saved_episodeCount">saved_episodeCount</string>
+    <string name="saved_topicCount">saved_episodeCount</string>
+
+    // Dialog Go-To-Episode
+    <string name="dialog_to_episode_text">zur Folge</string>
+
+    // Dialog Info
+    <string name="dialog_info_community">Community</string>
+    <string name="dialog_info_community_subtitle">Ein Thema, welches von der Community vorgeschlagen wurde.</string>
+    <string name="dialog_info_boys_subtitle">Ein Thema, welches von einer (oder mehreren) der Jungs vorgeschlagen wurde</string>
+    <string name="dialog_info_ad_subtitle">Dies ist kein Thema, sondern eine Werbeeinblendung</string>
+
+    <string name="dialog_info_suggestion">Vorgeschlagen</string>
+    <string name="dialog_info_open">Offen</string>
+    <string name="dialog_info_discussed">Besprochen</string>
+    <string name="dialog_info_rejected">Abgelehnt</string>
+    <string name="dialog_info_suggestion_subtitle">Die Community hat das Thema eingereicht, es wurde jedoch noch nicht von den Jungs angenommen / abgelehnt</string>
+    <string name="dialog_info_open_subtitle">Ein angenommenes Thema, dass jedoch noch nicht von den Jungs gezogen wurde.</string>
+    <string name="dialog_info_discussed_subtitle">Ein Thema, dass bereits gezogen und von den Jungs besprochen wurde</string>
+    <string name="dialog_info_rejected_subtitle">Ein von der Community vorgeschlagenes Thema, welches die Jungs abgelehnt haben</string>
+
+    <string name="dialog_info_anonym">Anonym</string>
+    <string name="dialog_info_anonym_state">Du bist derzeit ein Betrachter.</string>
+    <string name="dialog_info_rights_title">Du kannst:</string>
+    <string name="dialog_info_rights_subtitle">Alles anschauen und lesen.</string>
+    <string name="dialog_info_no_rights_title_1">Du kannst</string>
+    <string name="dialog_info_no_rights_title_2">NICHT:</string>
+    <string name="dialog_info_no_rights_subtitle">Die Einstellungsmöglichkeiten in der App benutzen.</string>
+    <string name="dialog_info_user">User</string>
+
+    <string name="dialog_info_user_state">Du bist derzeit eingeloggt :)</string>
+    <string name="dialog_info_user_hello">Hallo</string>
+
+
+    <string name="dialog_info_anonym_subtitle">Kann alles anschauen und lesen</string>
+    <string name="dialog_info_user_subtitle">Hat mehrere Einstellungsmöglichkeiten in der App</string>
+    <string name="dialog_info_mod_subtitle">Können Themen verifizieren</string>
+    <string name="dialog_info_register_change">Du willst das ändern?</string>
+    <string name="dialog_info_register">Registiere dich hier</string>
+
+    // List item
+    <string name="list_item_topic_title_dummy">Schwert oder Axt</string>
+    <string name="list_item_topic_time_dummy">00:04:50</string>
+    <string name="list_item_topic_number_dummy">Nr. 120</string>
+    <string name="list_item_topic_number">Nr.</string>
+
+    // Episode Fragment
+    <string name="episode_hosts_and_guests">Hosts &amp; Gäste</string>
+    <string name="episode_edited_by">Bearbeitet von:</string>
+    <string name="state_closed">Abgeschlossen</string>
+    <string name="state_unverified">Unverified</string>
+    <string name="state_claimed">Claimed</string>
+    <string name="state_open">Offen</string>
+    <string name="episode_no_topics">Bei dieser Folge wurden noch keine Themen eingetragen.</string>
+    <string name="episode_favorite">Lieblingsfolge</string>
+
+    // Authentication
+    <string name="required_field">Pflichtfeld!</string>
+    <string name="password_length">Dein Passwort muss mindestens 6 Zeichen haben!</string>
+    <string name="successful_login">Erfolgreich eingeloggt :)</string>
+    <string name="successful_register">Erfolgreich registriert und eingeloggt :)</string>
+    <string name="authentification_error">Ups! Da ist was schief gelaufen. Überprüfe dein Passwort und deinen Benutzernamen</string>
+
+    // Login Fragment
+    <string name="login">Login</string>
+    <string name="login_register_1">Noch kein Konto?</string>
+    <string name="login_register_link">Hier</string>
+    <string name="login_register_2">registrieren</string>
+    <string name="login_hello">Hallo 360er!</string>
+    <string name="login_username_hint">Gib deinen Benutzername ein</string>
+    <string name="login_password_hint">Gib dein Passwort ein</string>
+    <string name="login_password_again_hint">Wiederhole dein Passwort</string>
+    <string name="login_choosen_platform">Bevorzugte Platform</string>
+    <string name="login_mail_hint">Gib deine E-Mail Adresse ein</string>
+
+    <string name="saved_filter_type_podcast">saved_filter_type_podcast</string>
+    <string name="saved_filter_type_list">saved_filter_type_list</string>
+    <string name="search_hint">Suche nach Folgen</string>
+    <string name="saved_first_start">saved_first_start</string>
+    <string name="saved_user_role">saved_user_role</string>
+    <string name="toast">Saved meta - this should be displayed once</string>
+    <string name="refresh">Refresh</string>
+    <string name="refresh_finished">Refresh abgeschlossen</string>
+    <string name="filter_persons">Person</string>
+    <string name="filter">Filtern</string>
+    <string name="subtopics">Subthemen</string>
+    <string name="dialog_info_list_subtitle">Ein Thema, welches Unterthemen besitzt</string>
+
+    // Register Fragment
+    <string name="register_login_1">Schon registriert?</string>
+    <string name="register_login_2">zum Login</string>
+
 
     // Content Description
     <string name="contentDescription_split">feiner Strich</string>
@@ -49,118 +193,11 @@
     <string name="contentDescription_undeline">Eine Unterstrich</string>
     <string name="contentDescription_list_item_icon">Ein Symbol das entweder eine Person zeigt und dafür steht, dass dieses Thema von den Jungs kam, oder 2 Personen hintereinander, was dafür steht, dass das Thema von der Community vorgeschlagen wurde.</string>
     <string name="contentDescription_arrow_right">Ein Pfeil der nach rechts zeigt, durch Klicken öffnen sich die Sub-Themen, falls vorhanden.</string>
-
-    // Podcast Card, Cell, Row
-    <string name="podcast_number_dummy">Folge 220</string>
-    <string name="podcast_length_dummy">1h 5min</string>
-    <string name="podcast_date_dummy">9. Mai 2021</string>
-    <string name="podcast_title_dummy">Flos biodesintegrierender China-Rollrasen des Todes!</string>
-    <string name="podcast_episode">Folge</string>
-
-    // Menu, Drawer
-    <string name="podcast">Podcast</string>
-    <string name="topic">Themen</string>
-    <string name="wiki">Wiki</string>
-    <string name="login_register">Login / Register</string>
-    <string name="logout">Logout</string>
-    <string name="open">Drawer öffnen</string>
-    <string name="close">Drawer schließen</string>
-    <string name="anonym">360er</string>
-    <string name="observer_now">Du bist derzeit ein Betrachter</string>
-
-    // Topic Fragment
-    <string name="list">Liste</string>
-    <string name="draw">Ziehen</string>
-
-    // Profile Fragment
-    <string name="profile_name_dummy">Mira M</string>
-    <string name="profile_email_dummy">mira.m12@gmail.com</string>
-    <string name="profile_password_dummy">*****</string>
-
-    <string name="profile_name_autofill">Dein Benutzername</string>
-    <string name="profile_email_autofill">Deine E-Mail</string>
-    <string name="profile_password_autofill">Dein Passwort</string>
-
-    <string name="profile_name_hint">Benutzername</string>
-    <string name="profile_email_hint">E-Mail</string>
-    <string name="profile_password_hint">Passwort</string>
-
-    <string name="profile_role_user">User</string>
-    <string name="profile_platform">Bevorzugte Plattform</string>
-
-    // SharedPreferences
-    <string name="saved_display_type">saved_display_type</string>
-    <string name="saved_episodeCount">saved_episodeCount</string>
-    <string name="saved_topicCount">saved_episodeCount</string>
-
-
-    // Dialog Go-To-Episode
-    <string name="dialog_to_episode_text">zur Folge</string>
-
-
-    // Dialog Info
-    <string name="dialog_info_community">Community</string>
-    <string name="dialog_info_community_subtitle">Ein Thema, welches von der Community vorgeschlagen wurde.</string>
-    <string name="dialog_info_boys_subtitle">Ein Thema, welches von einer (oder mehreren) der Jungs vorgeschlagen wurde</string>
-    <string name="dialog_info_ad_subtitle">Dies ist kein Thema, sondern eine Werbeeinblendung</string>
-
-    <string name="dialog_info_suggestion">Vorgeschlagen</string>
-    <string name="dialog_info_open">Offen</string>
-    <string name="dialog_info_discussed">Besprochen</string>
-    <string name="dialog_info_rejected">Abgelehnt</string>
-    <string name="dialog_info_suggestion_subtitle">Die Community hat das Thema eingereicht, es wurde jedoch noch nicht von den Jungs angenommen / abgelehnt</string>
-    <string name="dialog_info_open_subtitle">Ein angenommenes Thema, dass jedoch noch nicht von den Jungs gezogen wurde.</string>
-    <string name="dialog_info_discussed_subtitle">Ein Thema, dass bereits gezogen und von den Jungs besprochen wurde</string>
-    <string name="dialog_info_rejected_subtitle">Ein von der Community vorgeschlagenes Thema, welches die Jungs abgelehnt haben</string>
-
-    <string name="dialog_info_anonym">Anonym</string>
-    <string name="dialog_info_anonym_state">Du bist derzeit ein Betrachter.</string>
-    <string name="dialog_info_anonym_rigths_title">Du kannst:</string>
-    <string name="dialog_info_anonym_rigths_subtitle">Alles anschauen und lesen.</string>
-    <string name="dialog_info_anonym_no_rigths_title_1">Du kannst</string>
-    <string name="dialog_info_anonym_no_rigths_title_2">NICHT:</string>
-    <string name="dialog_info_anonym_no_rigths_subtitle">Die Einstellungsmöglichkeiten in der App benutzen.</string>
-    <string name="dialog_info_user">User</string>
-
-    <string name="dialog_info_anonym_subtitle">Kann alles anschauen und lesen</string>
-    <string name="dialog_info_user_subtitle">Hat mehrere Einstellungsmöglichkeiten in der App</string>
-    <string name="dialog_info_register_change">Du willst das ändern?</string>
-    <string name="dialog_info_register">Registiere dich hier</string>
-
-    // List item
-    <string name="list_item_topic_title_dummy">Schwert oder Axt</string>
-    <string name="list_item_topic_time_dummy">00:04:50</string>
-    <string name="list_item_topic_number_dummy">Nr. 120</string>
-    <string name="list_item_topic_number">Nr.</string>
-
-    // Episode Fragment
-    <string name="episode_hosts_and_guests">Hosts &amp; Gäste</string>
-    <string name="episode_edited_by">Bearbeitet von:</string>
-    <string name="state_closed">Abgeschlossen</string>
-    <string name="episode_no_topics">Bei dieser Folge wurden noch keine Themen eingetragen.</string>
-
-    // Login Fragment
-    <string name="login">Login</string>
-    <string name="login_register_1">Noch kein Konto?</string>
-    <string name="login_register_link">Hier</string>
-    <string name="login_register_2">registrieren</string>
-    <string name="login_hello">Hallo 360er!</string>
-    <string name="login_username_hint">Gib deinen Benutzername ein</string>
-    <string name="login_password_hint">Gib dein Passwort ein</string>
-    <string name="login_password_again_hint">Wiederhole dein Passwort</string>
-    <string name="login_choosen_platform">Bevorzugte Platform</string>
+    <string name="contentDescription_spotify">Spotify icon</string>
+    <string name="contentDescription_youtube">Youtube icon</string>
     <string name="contentDescription_play">Ein Symbol mit einem Play-Button</string>
     <string name="contentDescription_pill">Ein Rechteck mit stark abgerundeten Ecken</string>
     <string name="contentDescription_point">Ein kleiner Punkt, der nicht unten platziert ist sondern in der Mitte der Texthöhe</string>
-    <string name="login_mail_hint">Gib deine E-Mail Adresse ein</string>
-    <string name="saved_filter_type_podcast">saved_filter_type_podcast</string>
-    <string name="saved_filter_type_list">saved_filter_type_list</string>
-    <string name="search_hint">Suche nach Folgen</string>
-    <string name="saved_first_start">saved_first_start</string>
-    <string name="toast">Saved meta - this should be displayed once</string>
-    <string name="refresh">Refresh</string>
-    <string name="filter_persons">Person</string>
-    <string name="filter">Filtern</string>
-    <string name="persons_in_episode">Personen in einer Folge</string>
+    <string name="contentDescription_icon_list">Ein Symbol für eine Aufzählungsliste</string>
 
 </resources>

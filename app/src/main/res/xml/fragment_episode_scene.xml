@@ -5,7 +5,7 @@
 
     <Transition
         android:id="@+id/motionlayout_episode"
-        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetEnd="@+id/middle"
         motion:constraintSetStart="@id/start"
         motion:duration="1000">
        <KeyFrameSet>
@@ -54,64 +54,40 @@
                motion:framePosition="56"
                android:translationY="-100dp" />
            <KeyAttribute
-               motion:motionTarget="@+id/fragment_episode_state_text"
-               motion:framePosition="0"
-               android:alpha="100" />
-           <KeyAttribute
-               motion:motionTarget="@+id/fragment_episode_state_text"
-               motion:framePosition="3"
-               android:alpha="0" />
-           <KeyAttribute
-               motion:motionTarget="@+id/fragment_episode_state"
-               motion:framePosition="15"
-               android:alpha="1" />
-           <KeyAttribute
-               motion:motionTarget="@+id/fragment_episode_state"
-               motion:framePosition="90"
-               android:alpha="0" />
-           <KeyAttribute
-               motion:motionTarget="@+id/fragment_episode_state"
-               motion:framePosition="31"
-               android:alpha="0" />
-           <KeyAttribute
                motion:motionTarget="@id/fragment_episode_title"
                motion:framePosition="100"
                android:alpha="100" />
            <KeyAttribute
-               motion:motionTarget="@+id/fragment_episode_edited"
+               motion:motionTarget="@+id/fragment_episode_hosts"
                motion:framePosition="10"
                android:alpha="0" />
            <KeyAttribute
-               motion:motionTarget="@+id/fragment_episode_edited"
+               motion:motionTarget="@+id/fragment_episode_hosts"
                motion:framePosition="100"
                android:alpha="0" />
            <KeyAttribute
-               motion:motionTarget="@+id/fragment_episode_editer"
+               motion:motionTarget="@+id/fragment_episode_gridview"
                motion:framePosition="10"
                android:alpha="0" />
            <KeyAttribute
-               motion:motionTarget="@+id/fragment_episode_editer"
+               motion:motionTarget="@+id/fragment_episode_gridview"
                motion:framePosition="100"
                android:alpha="0" />
            <KeyAttribute
                motion:motionTarget="@+id/fragment_episode_state_text"
-               motion:framePosition="100"
+               motion:framePosition="0"
+               android:alpha="1" />
+           <KeyAttribute
+               motion:motionTarget="@+id/fragment_episode_state_text"
+               motion:framePosition="15"
                android:alpha="0" />
            <KeyAttribute
-               motion:motionTarget="@+id/fragment_episode_hosts"
-               motion:framePosition="10"
-               android:alpha="0" />
+               motion:motionTarget="@+id/fragment_episode_state_icon"
+               motion:framePosition="0"
+               android:alpha="1" />
            <KeyAttribute
-               motion:motionTarget="@+id/fragment_episode_hosts"
-               motion:framePosition="100"
-               android:alpha="0" />
-           <KeyAttribute
-               motion:motionTarget="@+id/fragment_episode_gridview"
-               motion:framePosition="10"
-               android:alpha="0" />
-           <KeyAttribute
-               motion:motionTarget="@+id/fragment_episode_gridview"
-               motion:framePosition="100"
+               motion:motionTarget="@+id/fragment_episode_state_icon"
+               motion:framePosition="15"
                android:alpha="0" />
        </KeyFrameSet>
         <OnSwipe motion:touchAnchorId="@+id/fragment_episode_recyclerview" />
@@ -144,29 +120,14 @@
             motion:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp" />
         <Constraint
-            android:id="@+id/fragment_episode_state"
-            motion:layout_constraintEnd_toEndOf="@+id/fragment_episode_state_text"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            motion:layout_constraintHorizontal_bias="0.0"
-            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_image_container"
-            motion:layout_constraintDimensionRatio="h,4:1"
-            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_state_text" />
-        <Constraint
-            android:id="@+id/fragment_episode_state_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_state"
-            android:layout_marginStart="16dp"
-            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_state"
-            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_guideline" />
-        <Constraint
             android:id="@+id/fragment_episode_hosts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            motion:layout_constraintTop_toBottomOf="@+id/fragment_episode_state"
-            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_state"
-            android:layout_marginTop="16dp" />
+            motion:layout_constraintTop_toBottomOf="@+id/fragment_episode_state_icon"
+            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_state_icon"
+            motion:visibilityMode="ignore"
+            android:layout_marginTop="8dp"
+            android:visibility="gone" />
         <Constraint
             android:id="@+id/fragment_episode_filter"
             android:layout_width="wrap_content"
@@ -175,24 +136,6 @@
             motion:layout_constraintStart_toStartOf="@+id/fragment_episode_number"
             android:layout_marginTop="16dp" />
         <Constraint
-            android:id="@+id/fragment_episode_edited"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:layout_constraintTop_toBottomOf="@+id/fragment_episode_gridview"
-            android:layout_marginStart="16dp"
-            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_guideline" />
-        <Constraint
-            android:id="@+id/fragment_episode_editer"
-            android:layout_width="30dp"
-            android:layout_height="0dp"
-            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_image_container"
-            motion:layout_constraintVertical_bias="0.0"
-            motion:layout_constraintTop_toBottomOf="@+id/fragment_episode_edited"
-            android:layout_marginStart="8dp"
-            motion:layout_constraintDimensionRatio="h,1:1"
-            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_edited"
-            android:layout_marginTop="2dp" />
-        <Constraint
             android:id="@+id/fragment_episode_gridview"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
@@ -200,7 +143,9 @@
             android:layout_marginEnd="16dp"
             motion:layout_constraintStart_toStartOf="@+id/fragment_episode_hosts"
             android:layout_marginTop="2dp"
-            motion:layout_constraintTop_toBottomOf="@+id/fragment_episode_hosts" />
+            motion:layout_constraintTop_toBottomOf="@+id/fragment_episode_hosts"
+            motion:visibilityMode="ignore"
+            android:visibility="gone" />
         <Constraint
             android:id="@+id/fragment_episode_no_topics"
             motion:layout_constraintEnd_toEndOf="parent"
@@ -208,11 +153,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
             android:layout_marginStart="32dp"
-            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_no_topics_background"
             motion:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp"
             motion:layout_constraintHorizontal_bias="0.498"
-            motion:visibilityMode="ignore" />
+            motion:visibilityMode="ignore"
+            motion:layout_constraintTop_toBottomOf="@+id/fragment_episode_no_topics_ill"
+            android:layout_marginTop="8dp" />
         <Constraint
             android:id="@+id/fragment_episode_no_topics_background"
             motion:layout_constraintEnd_toEndOf="parent"
@@ -258,9 +203,104 @@
             motion:layout_constraintTop_toBottomOf="@+id/fragment_episode_filter"
             motion:layout_constraintStart_toStartOf="parent"
             motion:visibilityMode="ignore" />
+        <Constraint
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_filter"
+            android:layout_marginEnd="16dp"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_filter"
+            motion:layout_constraintDimensionRatio="1:1"
+            android:id="@+id/fragment_episode_play_background"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="4dp" />
+        <Constraint
+            motion:layout_constraintEnd_toEndOf="@+id/fragment_episode_play_background"
+            motion:layout_constraintStart_toEndOf="@+id/fragment_episode_play_youtube"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_play_background"
+            android:layout_marginEnd="3dp"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_play_background"
+            motion:layout_constraintDimensionRatio="h,1:1"
+            android:id="@+id/fragment_episode_play_spotify"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp" />
+        <Constraint
+            motion:layout_constraintEnd_toStartOf="@+id/fragment_episode_play_spotify"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_play_spotify"
+            android:layout_marginStart="3dp"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_play_spotify"
+            motion:layout_constraintDimensionRatio="1:1"
+            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_play_background"
+            android:id="@+id/fragment_episode_play_youtube"
+            android:layout_marginEnd="3dp"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@+id/fragment_episode_state_text"
+            motion:layout_constraintStart_toEndOf="@+id/fragment_episode_state_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_image_container" />
+        <Constraint
+            android:id="@+id/fragment_episode_state_icon"
+            motion:layout_constraintStart_toEndOf="@+id/fragment_episode_image_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_state_text"
+            android:layout_marginStart="16dp"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_state_text"
+            motion:layout_constraintDimensionRatio="1:1" />
+        <Constraint
+            android:id="@+id/fragment_episode_favorite_icon"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginBottom="8dp"
+            motion:layout_constraintBottom_toTopOf="@+id/fragment_episode_like_icon"
+            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_state_icon"
+            motion:layout_constraintDimensionRatio="h,1:1" />
+        <Constraint
+            android:id="@+id/fragment_episode_like_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_image_container"
+            android:layout_marginBottom="8dp"
+            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_hosts"
+            motion:layout_constraintEnd_toEndOf="@+id/fragment_episode_favorite_icon"
+            motion:layout_constraintDimensionRatio="h,1:1" />
+        <Constraint
+            android:id="@+id/fragment_episode_likes"
+            motion:layout_constraintStart_toEndOf="@+id/fragment_episode_like_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_like_icon"
+            android:layout_marginStart="4dp"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_like_icon" />
+        <Constraint
+            android:id="@+id/fragment_episode_dislikes"
+            motion:layout_constraintStart_toEndOf="@+id/fragment_episode_dislike_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_like_icon"
+            android:layout_marginStart="4dp"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_like_icon" />
+        <Constraint
+            android:id="@+id/fragment_episode_dislike_icon"
+            motion:layout_constraintStart_toEndOf="@+id/fragment_episode_likes"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_like_icon"
+            motion:layout_constraintVertical_bias="0.0"
+            android:layout_marginStart="16dp"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_like_icon"
+            motion:layout_constraintDimensionRatio="1:1" />
     </ConstraintSet>
 
-    <ConstraintSet android:id="@+id/end">
+    <ConstraintSet android:id="@+id/middle">
         <Constraint
             android:id="@+id/fragment_episode_guideline"
             motion:layout_constraintGuide_percent="0.3"
@@ -280,41 +320,26 @@
             android:id="@+id/fragment_episode_title"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             motion:layout_constraintVertical_chainStyle="packed"
             motion:layout_constraintTop_toTopOf="@+id/fragment_episode_image_container"
             motion:layout_constraintStart_toEndOf="@+id/fragment_episode_image_container"
             android:layout_marginStart="16dp"
-            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_image_container">
+            motion:layout_constraintBottom_toTopOf="@+id/fragment_episode_favorite_icon"
+            android:layout_marginBottom="4dp">
             <CustomAttribute
                 motion:attributeName="maxLines"
-                motion:customIntegerValue="3" />
+                motion:customIntegerValue="2" />
         </Constraint>
         <Constraint
-            android:id="@+id/fragment_episode_state"
-            motion:layout_constraintEnd_toEndOf="@+id/fragment_episode_title"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_image_container"
-            motion:layout_constraintDimensionRatio="h,1:1" />
-        <Constraint
-            android:id="@+id/fragment_episode_state_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_state"
-            android:layout_marginStart="16dp"
-            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_state"
-            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_guideline"
-            android:visibility="invisible" />
-        <Constraint
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:layout_constraintTop_toBottomOf="@+id/fragment_episode_title"
+            motion:layout_constraintTop_toBottomOf="@+id/fragment_episode_favorite_icon"
             motion:layout_constraintVertical_chainStyle="packed"
             motion:layout_constraintStart_toStartOf="@+id/fragment_episode_image_container"
-            android:layout_marginTop="8dp"
-            android:id="@+id/fragment_episode_number" />
+            android:id="@+id/fragment_episode_number"
+            android:layout_marginTop="8dp" />
         <Constraint
             android:id="@+id/fragment_episode_hosts"
             android:layout_width="wrap_content"
@@ -331,26 +356,6 @@
             motion:layout_constraintStart_toStartOf="@+id/fragment_episode_number"
             android:layout_marginTop="8dp" />
         <Constraint
-            android:id="@+id/fragment_episode_edited"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:layout_constraintTop_toBottomOf="@+id/fragment_episode_gridview"
-            android:layout_marginStart="16dp"
-            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_guideline"
-            android:visibility="gone" />
-        <Constraint
-            android:id="@+id/fragment_episode_editer"
-            android:layout_width="30dp"
-            android:layout_height="0dp"
-            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_image_container"
-            motion:layout_constraintVertical_bias="0.0"
-            motion:layout_constraintTop_toBottomOf="@+id/fragment_episode_edited"
-            android:layout_marginStart="8dp"
-            motion:layout_constraintDimensionRatio="h,1:1"
-            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_edited"
-            android:layout_marginTop="2dp"
-            android:visibility="gone" />
-        <Constraint
             android:id="@+id/fragment_episode_gridview"
             motion:layout_constraintEnd_toEndOf="@+id/fragment_episode_date"
             android:layout_width="0dp"
@@ -366,10 +371,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
             android:layout_marginStart="32dp"
-            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_no_topics_background"
             motion:layout_constraintHorizontal_bias="0.498"
             motion:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp" />
+            motion:layout_constraintTop_toBottomOf="@+id/fragment_episode_no_topics_ill"
+            android:layout_marginTop="8dp" />
         <Constraint
             android:id="@+id/fragment_episode_no_topics_background"
             motion:layout_constraintEnd_toEndOf="parent"
@@ -378,5 +383,182 @@
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintTop_toBottomOf="@+id/fragment_episode_filter"
             motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_filter"
+            android:layout_marginEnd="16dp"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_filter"
+            motion:layout_constraintDimensionRatio="1:1"
+            android:id="@+id/fragment_episode_play_background"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp" />
+        <Constraint
+            android:id="@+id/fragment_episode_play_youtube"
+            motion:layout_constraintEnd_toStartOf="@+id/fragment_episode_play_spotify"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_play_spotify"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="3dp"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_play_spotify"
+            motion:layout_constraintDimensionRatio="1:1"
+            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_play_background"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@+id/fragment_episode_state_text"
+            motion:layout_constraintStart_toEndOf="@+id/fragment_episode_state_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_image_container"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@+id/fragment_episode_state_icon"
+            motion:layout_constraintStart_toEndOf="@+id/fragment_episode_image_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_state_text"
+            android:layout_marginStart="16dp"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_state_text"
+            motion:layout_constraintDimensionRatio="1:1"
+            android:visibility="gone" />
+        <Constraint
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:id="@+id/fragment_episode_like_icon"
+            motion:layout_constraintStart_toEndOf="@+id/fragment_episode_favorite"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_favorite_icon"
+            android:layout_marginStart="16dp"
+            motion:layout_constraintEnd_toStartOf="@+id/fragment_episode_likes"
+            android:layout_marginEnd="4dp"
+            motion:layout_constraintHorizontal_bias="1.0"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_favorite_icon"
+            motion:layout_constraintDimensionRatio="1:1" />
+        <Constraint
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:id="@+id/fragment_episode_favorite_icon"
+            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_title"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_image_container"
+            motion:layout_constraintDimensionRatio="h,1:1" />
+        <Constraint
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_like_icon"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_like_icon"
+            motion:layout_constraintEnd_toEndOf="@+id/fragment_episode_title"
+            android:layout_width="wrap_content"
+            android:id="@+id/fragment_episode_dislikes" />
+        <Constraint
+            android:layout_height="0dp"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_like_icon"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_like_icon"
+            android:layout_width="0dp"
+            motion:layout_constraintVertical_bias="0.0"
+            motion:layout_constraintEnd_toStartOf="@+id/fragment_episode_dislikes"
+            android:id="@+id/fragment_episode_dislike_icon"
+            android:layout_marginEnd="4dp"
+            motion:layout_constraintDimensionRatio="1:1" />
+        <Constraint
+            android:layout_height="wrap_content"
+            motion:layout_constraintEnd_toStartOf="@+id/fragment_episode_dislike_icon"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_like_icon"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_like_icon"
+            android:layout_width="wrap_content"
+            android:id="@+id/fragment_episode_likes"
+            android:layout_marginEnd="16dp" />
     </ConstraintSet>
+    <ConstraintSet
+        android:id="@+id/play_start"
+        motion:deriveConstraintsFrom="@+id/start" >
+        <Constraint
+            android:id="@+id/fragment_episode_play_background"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_filter"
+            android:layout_marginEnd="16dp"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_filter"
+            motion:layout_constraintDimensionRatio="2:1"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp" />
+        <Constraint
+            android:id="@+id/fragment_episode_play_youtube"
+            motion:layout_constraintEnd_toStartOf="@+id/fragment_episode_play_spotify"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_play_spotify"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="3dp"
+            motion:layout_constraintHorizontal_bias="0.0"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_play_spotify"
+            motion:layout_constraintDimensionRatio="1:1"
+            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_play_background" />
+        <Constraint
+            android:id="@+id/fragment_episode_play_spotify"
+            motion:layout_constraintEnd_toEndOf="@+id/fragment_episode_play_background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="3dp"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_play_background"
+            android:layout_marginTop="4dp"
+            motion:layout_constraintStart_toEndOf="@+id/fragment_episode_play_youtube"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_play_background"
+            android:layout_marginBottom="4dp"
+            motion:layout_constraintDimensionRatio="h,1:1" />
+    </ConstraintSet>
+    <ConstraintSet
+        android:id="@+id/play_end"
+        motion:deriveConstraintsFrom="@+id/middle" >
+        <Constraint
+            android:id="@+id/fragment_episode_play_spotify"
+            motion:layout_constraintEnd_toEndOf="@+id/fragment_episode_play_background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="3dp"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_play_background"
+            android:layout_marginTop="4dp"
+            motion:layout_constraintStart_toEndOf="@+id/fragment_episode_play_youtube"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_play_background"
+            android:layout_marginBottom="4dp"
+            motion:layout_constraintDimensionRatio="h,1:1" />
+        <Constraint
+            android:id="@+id/fragment_episode_play_youtube"
+            motion:layout_constraintEnd_toStartOf="@+id/fragment_episode_play_spotify"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_play_spotify"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="3dp"
+            motion:layout_constraintHorizontal_bias="0.0"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_play_spotify"
+            motion:layout_constraintDimensionRatio="1:1"
+            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_play_background" />
+        <Constraint
+            android:id="@+id/fragment_episode_play_background"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_filter"
+            android:layout_marginEnd="16dp"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_filter"
+            motion:layout_constraintDimensionRatio="2:1"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="4dp" />
+    </ConstraintSet>
+    <Transition
+        motion:constraintSetStart="@+id/start"
+        motion:constraintSetEnd="@+id/play_start"
+        motion:duration="200">
+    <OnClick motion:targetId="@+id/fragment_episode_play_spotify" />
+    </Transition>
+    <Transition
+        motion:constraintSetStart="@+id/middle"
+        motion:constraintSetEnd="@+id/play_end"
+        motion:duration="200">
+    <OnClick motion:targetId="@+id/fragment_episode_play_background" />
+    </Transition>
 </MotionScene>

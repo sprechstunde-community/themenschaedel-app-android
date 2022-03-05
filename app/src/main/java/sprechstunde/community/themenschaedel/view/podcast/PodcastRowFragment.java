@@ -1,5 +1,7 @@
 package sprechstunde.community.themenschaedel.view.podcast;
 
+import static sprechstunde.community.themenschaedel.Enums.SORTED_BY;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +22,19 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import sprechstunde.community.themenschaedel.MainActivity;
 import sprechstunde.community.themenschaedel.R;
+import sprechstunde.community.themenschaedel.UsedSharedPreferences;
 import sprechstunde.community.themenschaedel.adapter.podcast.PodcastRowAdapter;
+import sprechstunde.community.themenschaedel.api.ApiClient;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
-import sprechstunde.community.themenschaedel.model.Episode;
+import sprechstunde.community.themenschaedel.model.episode.Episode;
 import sprechstunde.community.themenschaedel.databinding.FragmentPodcastRowBinding;
 import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.HostViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 
-public class PodcastRowFragment extends Fragment implements ParentChildFragmentListener{
+public class PodcastRowFragment extends Fragment implements ParentChildFragmentListener, SwipeRefreshLayout.OnRefreshListener {
 
     FragmentPodcastRowBinding mBinding;
     private SharedPreferences mSharedPref;
@@ -45,11 +53,12 @@ public class PodcastRowFragment extends Fragment implements ParentChildFragmentL
                              Bundle savedInstanceState) {
         mBinding = FragmentPodcastRowBinding.inflate(inflater, container, false);
         View view = mBinding.getRoot();
+        mBinding.fragmentRowSwipeUp.setOnRefreshListener(this);
 
         EpisodeViewModel viewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
         viewModel.getAllEpisodes().observe(getViewLifecycleOwner(), episodes -> {
-            Collections.sort(episodes, (a, b) -> Integer.compare(b.getNumber(), a.getNumber()));
-            PodcastRowAdapter adapter = new PodcastRowAdapter(episodes);
+            Collections.sort(episodes, (a, b) -> Integer.compare(b.getEpisodeNumber(), a.getEpisodeNumber()));
+            PodcastRowAdapter adapter = new PodcastRowAdapter(getContext(), episodes);
             Objects.requireNonNull(mBinding.fragmentRowRecyclerview).setAdapter(adapter);
             mBinding.fragmentRowRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -80,10 +89,10 @@ public class PodcastRowFragment extends Fragment implements ParentChildFragmentL
         switch (sortedBy) {
             case DATE_UP:
             default: {
-                Collections.sort(episodes, (a,b) -> Integer.compare(a.getNumber(), b.getNumber()));
+                Collections.sort(episodes, (a,b) -> Integer.compare(a.getEpisodeNumber(), b.getEpisodeNumber()));
             } break;
             case DATE_DOWN: {
-                Collections.sort(episodes, (a,b) -> Integer.compare(b.getNumber(), a.getNumber()));
+                Collections.sort(episodes, (a,b) -> Integer.compare(b.getEpisodeNumber(), a.getEpisodeNumber()));
             } break;
             case TITLE_UP: {
                 Collections.sort(episodes, (a,b) -> {
@@ -117,5 +126,40 @@ public class PodcastRowFragment extends Fragment implements ParentChildFragmentL
     public void onSearch(List<Episode> episodeList) {
         ((PodcastRowAdapter) Objects.requireNonNull(mBinding.fragmentRowRecyclerview.getAdapter())).setEpisodes(episodeList);
         mBinding.fragmentRowRecyclerview.getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public void onFilterSelected(boolean showState) {
+        ((PodcastRowAdapter) Objects.requireNonNull(mBinding.fragmentRowRecyclerview.getAdapter())).setShowState(showState);
+        ((PodcastRowAdapter) mBinding.fragmentRowRecyclerview.getAdapter()).notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRefresh() {
+        refresh();
+    }
+
+    @Override
+    public void onMenuRefresh() {
+        mBinding.fragmentRowSwipeUp.setRefreshing(true);
+        refresh();
+    }
+
+    private void refresh() {
+        new Thread(() -> {
+            try {
+                EpisodeViewModel episodeViewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
+                TopicViewModel topicViewModel = new ViewModelProvider(requireActivity()).get(TopicViewModel.class);
+                HostViewModel hostViewModel = new ViewModelProvider(requireActivity()).get(HostViewModel.class);
+                MainActivity mainActivity = (MainActivity) requireActivity();
+
+                UsedSharedPreferences.getInstance(mainActivity).saveTopicCountToSharedPreferences(0);
+                UsedSharedPreferences.getInstance(mainActivity).saveEpisodeCountToSharedPreferences(0);
+                ApiClient.getInstance(mainActivity).saveEpisodesToDB(episodeViewModel, topicViewModel, hostViewModel, true, mBinding.fragmentRowSwipeUp);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 }

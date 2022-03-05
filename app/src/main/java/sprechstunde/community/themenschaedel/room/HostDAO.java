@@ -28,6 +28,6 @@ public interface HostDAO {
     @Query("DELETE FROM host_table")
     void deleteAllHosts();
 
-    @Query("SELECT * FROM host_table ORDER BY name ASC")
+    @Query("SELECT * FROM host_table ORDER BY hostName ASC")
     LiveData<List<Host>> getAllHosts();
 }

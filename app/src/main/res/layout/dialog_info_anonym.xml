@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/dialog_info_anonym_layout"
+    android:id="@+id/dialog_host_layout"
     android:layout_width="300dp"
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/dialog_info_anonym_background"
+        android:id="@+id/dialog_host_background"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/ic_card"
@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/dialog_info_anonym_title"
+        android:id="@+id/dialog_host_text"
         style="@style/Dialog.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,8 +42,8 @@
         android:text="@string/dialog_info_anonym_state"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/dialog_info_anonym_title"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_info_anonym_title" />
+        app:layout_constraintStart_toStartOf="@+id/dialog_host_text"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_host_text" />
 
     <TextView
         android:id="@+id/dialog_info_anonym_can"
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/dialog_info_anonym_rigths_title"
+        android:text="@string/dialog_info_rights_title"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_anonym_subtitle"
         app:layout_constraintTop_toBottomOf="@+id/dialog_info_anonym_subtitle" />
 
@@ -61,7 +61,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="@string/dialog_info_anonym_rigths_subtitle"
+        android:text="@string/dialog_info_rights_subtitle"
         app:layout_constraintEnd_toEndOf="@+id/dialog_info_anonym_subtitle"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_anonym_can"
         app:layout_constraintTop_toBottomOf="@+id/dialog_info_anonym_can" />
@@ -72,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
-        android:text="@string/dialog_info_anonym_no_rigths_title_1"
+        android:text="@string/dialog_info_no_rights_title_1"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_anonym_can_subtitle"
         app:layout_constraintTop_toBottomOf="@+id/dialog_info_anonym_can_subtitle" />
 
@@ -82,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
-        android:text="@string/dialog_info_anonym_no_rigths_title_2"
+        android:text="@string/dialog_info_no_rights_title_2"
         android:textStyle="italic"
         app:layout_constraintBaseline_toBaselineOf="@+id/dialog_info_anonym_can_not_1"
         app:layout_constraintStart_toEndOf="@+id/dialog_info_anonym_can_not_1" />
@@ -93,7 +93,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="@string/dialog_info_anonym_no_rigths_subtitle"
+        android:text="@string/dialog_info_no_rights_subtitle"
         app:layout_constraintEnd_toEndOf="@+id/dialog_info_anonym_can_subtitle"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_anonym_can_not_1"
         app:layout_constraintTop_toBottomOf="@+id/dialog_info_anonym_can_not_1" />

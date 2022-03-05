@@ -29,7 +29,7 @@ public class TopicDetailsViewHolderWithSubtopic extends RecyclerView.ViewHolder 
 
     public TopicDetailsViewHolderWithSubtopic(@NonNull View itemView) {
         super(itemView);
-        mName = itemView.findViewById(R.id.list_item_sugg_details_sub_title);
+        mName = itemView.findViewById(R.id.list_item_topic_with_subtopic_detail_title);
         mNumber = itemView.findViewById(R.id.list_item_topic_with_subtopic_detail_number);
         mIcon = itemView.findViewById(R.id.list_item_topic_with_subtopic_detail_icon);
         mRecyclerView = itemView.findViewById(R.id.list_item_topic_with_subtopic_detail_recyclerview);

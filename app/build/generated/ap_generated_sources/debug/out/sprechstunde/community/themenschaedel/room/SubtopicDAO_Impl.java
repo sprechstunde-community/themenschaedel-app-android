@@ -43,7 +43,7 @@ public final class SubtopicDAO_Impl implements SubtopicDAO {
     this.__insertionAdapterOfSubtopic = new EntityInsertionAdapter<Subtopic>(__db) {
       @Override
       public String createQuery() {
-        return "INSERT OR REPLACE INTO `subtopic_table` (`id`,`name`,`topic_id`) VALUES (?,?,?)";
+        return "INSERT OR REPLACE INTO `subtopic_table` (`id`,`name`,`id_topic`) VALUES (?,?,?)";
       }
 
       @Override
@@ -71,7 +71,7 @@ public final class SubtopicDAO_Impl implements SubtopicDAO {
     this.__updateAdapterOfSubtopic = new EntityDeletionOrUpdateAdapter<Subtopic>(__db) {
       @Override
       public String createQuery() {
-        return "UPDATE OR ABORT `subtopic_table` SET `id` = ?,`name` = ?,`topic_id` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `subtopic_table` SET `id` = ?,`name` = ?,`id_topic` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -156,7 +156,7 @@ public final class SubtopicDAO_Impl implements SubtopicDAO {
         try {
           final int _cursorIndexOfMId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
           final int _cursorIndexOfMName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
-          final int _cursorIndexOfMTopicId = CursorUtil.getColumnIndexOrThrow(_cursor, "topic_id");
+          final int _cursorIndexOfMTopicId = CursorUtil.getColumnIndexOrThrow(_cursor, "id_topic");
           final List<Subtopic> _result = new ArrayList<Subtopic>(_cursor.getCount());
           while(_cursor.moveToNext()) {
             final Subtopic _item;
@@ -188,7 +188,7 @@ public final class SubtopicDAO_Impl implements SubtopicDAO {
 
   @Override
   public LiveData<List<Subtopic>> getAllSubtopicsFrom(final int topic) {
-    final String _sql = "SELECT * FROM subtopic_table WHERE topic_id = ?";
+    final String _sql = "SELECT * FROM subtopic_table WHERE id_topic = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
     _statement.bindLong(_argIndex, topic);
@@ -199,7 +199,7 @@ public final class SubtopicDAO_Impl implements SubtopicDAO {
         try {
           final int _cursorIndexOfMId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
           final int _cursorIndexOfMName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
-          final int _cursorIndexOfMTopicId = CursorUtil.getColumnIndexOrThrow(_cursor, "topic_id");
+          final int _cursorIndexOfMTopicId = CursorUtil.getColumnIndexOrThrow(_cursor, "id_topic");
           final List<Subtopic> _result = new ArrayList<Subtopic>(_cursor.getCount());
           while(_cursor.moveToNext()) {
             final Subtopic _item;
@@ -231,7 +231,7 @@ public final class SubtopicDAO_Impl implements SubtopicDAO {
 
   @Override
   public LiveData<List<TopicWithSubtopic>> search(final String query) {
-    final String _sql = "SELECT DISTINCT topic_table.id, topic_table.name, topic_table.episode_id FROM topic_table LEFT JOIN subtopic_table on topic_table.id = subtopic_table.topic_id WHERE topic_table.name LIKE '%' || ? || '%' OR subtopic_table.name LIKE '%' || ? || '%'";
+    final String _sql = "SELECT DISTINCT topic_table.id, topic_table.name, topic_table.episode_id FROM topic_table LEFT JOIN subtopic_table on topic_table.id = subtopic_table.id_topic WHERE topic_table.name LIKE '%' || ? || '%' OR subtopic_table.name LIKE '%' || ? || '%'";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
     int _argIndex = 1;
     if (query == null) {
@@ -252,9 +252,9 @@ public final class SubtopicDAO_Impl implements SubtopicDAO {
         try {
           final Cursor _cursor = DBUtil.query(__db, _statement, true, null);
           try {
-            final int _cursorIndexOfMId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-            final int _cursorIndexOfMName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
-            final int _cursorIndexOfMEpisode = CursorUtil.getColumnIndexOrThrow(_cursor, "episode_id");
+            final int _cursorIndexOfMId = 0;
+            final int _cursorIndexOfMName = 1;
+            final int _cursorIndexOfMEpisode = 2;
             final LongSparseArray<ArrayList<Subtopic>> _collectionMSubtopics = new LongSparseArray<ArrayList<Subtopic>>();
             while (_cursor.moveToNext()) {
               if (!_cursor.isNull(_cursorIndexOfMId)) {
@@ -349,7 +349,7 @@ public final class SubtopicDAO_Impl implements SubtopicDAO {
       return;
     }
     StringBuilder _stringBuilder = StringUtil.newStringBuilder();
-    _stringBuilder.append("SELECT `id`,`name`,`topic_id` FROM `subtopic_table` WHERE `topic_id` IN (");
+    _stringBuilder.append("SELECT `id`,`name`,`id_topic` FROM `subtopic_table` WHERE `id_topic` IN (");
     final int _inputSize = _map.size();
     StringUtil.appendPlaceholders(_stringBuilder, _inputSize);
     _stringBuilder.append(")");
@@ -364,13 +364,13 @@ public final class SubtopicDAO_Impl implements SubtopicDAO {
     }
     final Cursor _cursor = DBUtil.query(__db, _stmt, false, null);
     try {
-      final int _itemKeyIndex = CursorUtil.getColumnIndex(_cursor, "topic_id");
+      final int _itemKeyIndex = CursorUtil.getColumnIndex(_cursor, "id_topic");
       if (_itemKeyIndex == -1) {
         return;
       }
-      final int _cursorIndexOfMId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-      final int _cursorIndexOfMName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
-      final int _cursorIndexOfMTopicId = CursorUtil.getColumnIndexOrThrow(_cursor, "topic_id");
+      final int _cursorIndexOfMId = 0;
+      final int _cursorIndexOfMName = 1;
+      final int _cursorIndexOfMTopicId = 2;
       while(_cursor.moveToNext()) {
         if (!_cursor.isNull(_itemKeyIndex)) {
           final long _tmpKey = _cursor.getLong(_itemKeyIndex);

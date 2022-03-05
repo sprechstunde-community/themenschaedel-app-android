@@ -19,13 +19,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import sprechstunde.community.themenschaedel.Enums;
 import sprechstunde.community.themenschaedel.MainActivity;
 import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.UsedSharedPreferences;
 import sprechstunde.community.themenschaedel.adapter.podcast.PodcastCardAdapter;
 import sprechstunde.community.themenschaedel.api.ApiClient;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
-import sprechstunde.community.themenschaedel.model.Episode;
+import sprechstunde.community.themenschaedel.model.episode.Episode;
 import sprechstunde.community.themenschaedel.databinding.FragmentPodcastCardBinding;
 import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
 import sprechstunde.community.themenschaedel.viewmodel.HostViewModel;
@@ -49,20 +50,22 @@ public class PodcastCardFragment extends Fragment implements ParentChildFragment
     public View onCreateView (@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = FragmentPodcastCardBinding.inflate(inflater, container, false);
         View view = mBinding.getRoot();
-        mBinding.fragmentPodcastSwipeUp.setOnRefreshListener(this);
+        mBinding.fragmentCardSwipeUp.setOnRefreshListener(this);
 
         EpisodeViewModel viewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
         viewModel.getAllEpisodes().observe(getViewLifecycleOwner(), episodes -> {
-            Collections.sort(episodes, (a,b) -> Integer.compare(b.getNumber(), a.getNumber()));
-            PodcastCardAdapter adapter = new PodcastCardAdapter(getContext(), episodes);
+            Collections.sort(episodes, (a,b) -> Integer.compare(b.getEpisodeNumber(), a.getEpisodeNumber()));
+            PodcastCardAdapter adapter = new PodcastCardAdapter(getContext(), episodes, mBinding.fragmentPodcastEmptyIll, mBinding.fragmentPodcastEmptyText);
             Objects.requireNonNull(mBinding.fragmentCardGridview).setAdapter(adapter);
 
             mSharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);
             getFilterTypeFromSharedPreferences();
+
         });
 
         return view;
     }
+
 
     @Override
     public void onDestroyView() {
@@ -71,9 +74,9 @@ public class PodcastCardFragment extends Fragment implements ParentChildFragment
     }
 
     private void getFilterTypeFromSharedPreferences() {
-        int defaultValue = SORTED_BY.DATE_DOWN.ordinal();
+        int defaultValue = Enums.SORTED_BY.DATE_DOWN.ordinal();
         int displayType = mSharedPref.getInt(getString(R.string.saved_filter_type_podcast), defaultValue);
-        onSortChanged(SORTED_BY.values()[displayType]);
+        onSortChanged(Enums.SORTED_BY.values()[displayType]);
     }
 
     @Override
@@ -86,38 +89,17 @@ public class PodcastCardFragment extends Fragment implements ParentChildFragment
     }
 
     @Override
-    public void onRefresh() {
-        new Thread(() -> {
-            try {
-                EpisodeViewModel episodeViewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
-                TopicViewModel topicViewModel = new ViewModelProvider(requireActivity()).get(TopicViewModel.class);
-                HostViewModel hostViewModel = new ViewModelProvider(requireActivity()).get(HostViewModel.class);
-                MainActivity mainActivity = (MainActivity) requireActivity();
-
-                UsedSharedPreferences.getInstance(mainActivity).saveTopicCountToSharedPreferences(0);
-                UsedSharedPreferences.getInstance(mainActivity).saveEpisodeCountToSharedPreferences(0);
-                ApiClient.getInstance(mainActivity).saveEpisodesToDB(episodeViewModel, hostViewModel, true, mBinding.fragmentPodcastSwipeUp);
-                ApiClient.getInstance(mainActivity).saveTopicsToDB(topicViewModel, true);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
-
-    }
-
-    @Override
-    public void onSortChanged(SORTED_BY sortedBy) {
+    public void onSortChanged(Enums.SORTED_BY sortedBy) {
         PodcastCardAdapter adapter = (PodcastCardAdapter) mBinding.fragmentCardGridview.getAdapter();
         List<Episode> episodes = adapter.getEpisodes();
 
         switch (sortedBy) {
             case DATE_UP:
             default: {
-                Collections.sort(episodes, (a,b) -> Integer.compare(a.getNumber(), b.getNumber()));
+                Collections.sort(episodes, (a,b) -> Integer.compare(a.getEpisodeNumber(), b.getEpisodeNumber()));
             } break;
             case DATE_DOWN: {
-                Collections.sort(episodes, (a,b) -> Integer.compare(b.getNumber(), a.getNumber()));
+                Collections.sort(episodes, (a,b) -> Integer.compare(b.getEpisodeNumber(), a.getEpisodeNumber()));
             } break;
             case TITLE_UP: {
                 Collections.sort(episodes, (a,b) -> {
@@ -143,5 +125,40 @@ public class PodcastCardFragment extends Fragment implements ParentChildFragment
         ((PodcastCardAdapter) mBinding.fragmentCardGridview.getAdapter()).setEpisodes(episodeList);
         ((PodcastCardAdapter) mBinding.fragmentCardGridview.getAdapter()).notifyDataSetChanged();
 
+    }
+
+    @Override
+    public void onFilterSelected(boolean showState) {
+        ((PodcastCardAdapter) mBinding.fragmentCardGridview.getAdapter()).setShowState(showState);
+        ((PodcastCardAdapter) mBinding.fragmentCardGridview.getAdapter()).notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRefresh() {
+        refresh();
+    }
+
+    @Override
+    public void onMenuRefresh() {
+        mBinding.fragmentCardSwipeUp.setRefreshing(true);
+        refresh();
+    }
+
+    private void refresh() {
+        new Thread(() -> {
+            try {
+                EpisodeViewModel episodeViewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
+                TopicViewModel topicViewModel = new ViewModelProvider(requireActivity()).get(TopicViewModel.class);
+                HostViewModel hostViewModel = new ViewModelProvider(requireActivity()).get(HostViewModel.class);
+                MainActivity mainActivity = (MainActivity) requireActivity();
+
+                UsedSharedPreferences.getInstance(mainActivity).saveTopicCountToSharedPreferences(0);
+                UsedSharedPreferences.getInstance(mainActivity).saveEpisodeCountToSharedPreferences(0);
+                ApiClient.getInstance(mainActivity).saveEpisodesToDB(episodeViewModel, topicViewModel, hostViewModel, true, mBinding.fragmentCardSwipeUp);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 }

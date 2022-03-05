@@ -21,6 +21,7 @@ public class TopicDetailsViewHolder extends RecyclerView.ViewHolder {
 
     private final Drawable mCommunity;
     private final Drawable mBoys;
+    private final Drawable mAd;
 
     public TopicDetailsViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -30,6 +31,7 @@ public class TopicDetailsViewHolder extends RecyclerView.ViewHolder {
 
         mCommunity = ResourcesCompat.getDrawable(itemView.getResources(), R.drawable.ic_community, null);
         mBoys = ResourcesCompat.getDrawable(itemView.getResources(), R.drawable.ic_boys, null);
+        mAd = ResourcesCompat.getDrawable(itemView.getResources(), R.drawable.ic_ad, null);
     }
 
     public void setTopicValues(Topic topic, int episodeNumber) {
@@ -40,6 +42,8 @@ public class TopicDetailsViewHolder extends RecyclerView.ViewHolder {
 
         if(topic.getCommunityContribution()) {
             mIcon.setBackground(mCommunity);
+        } else if (topic.getAd()) {
+            mIcon.setBackground(mAd);
         } else {
             mIcon.setBackground(mBoys);
         }

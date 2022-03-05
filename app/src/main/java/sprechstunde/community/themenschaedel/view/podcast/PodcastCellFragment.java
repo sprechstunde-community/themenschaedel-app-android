@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +20,20 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import sprechstunde.community.themenschaedel.Enums;
+import sprechstunde.community.themenschaedel.MainActivity;
 import sprechstunde.community.themenschaedel.R;
+import sprechstunde.community.themenschaedel.UsedSharedPreferences;
 import sprechstunde.community.themenschaedel.adapter.podcast.PodcastCellAdapter;
+import sprechstunde.community.themenschaedel.api.ApiClient;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
-import sprechstunde.community.themenschaedel.model.Episode;
+import sprechstunde.community.themenschaedel.model.episode.Episode;
 import sprechstunde.community.themenschaedel.databinding.FragmentPodcastCellBinding;
 import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.HostViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 
-public class PodcastCellFragment extends Fragment implements ParentChildFragmentListener{
+public class PodcastCellFragment extends Fragment implements ParentChildFragmentListener, SwipeRefreshLayout.OnRefreshListener {
 
     private FragmentPodcastCellBinding mBinding;
     private SharedPreferences mSharedPref;
@@ -45,16 +52,17 @@ public class PodcastCellFragment extends Fragment implements ParentChildFragment
                              Bundle savedInstanceState) {
         mBinding = FragmentPodcastCellBinding.inflate(inflater, container, false);
         View view = mBinding.getRoot();
+        mBinding.fragmentCellSwipeUp.setOnRefreshListener(this);
 
         EpisodeViewModel viewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
         viewModel.getAllEpisodes().observe(getViewLifecycleOwner(), episodes -> {
-            Collections.sort(episodes, (a, b) -> Integer.compare(b.getNumber(), a.getNumber()));
+            Collections.sort(episodes, (a, b) -> Integer.compare(b.getEpisodeNumber(), a.getEpisodeNumber()));
             PodcastCellAdapter adapter = new PodcastCellAdapter(getContext(), episodes);
             Objects.requireNonNull(mBinding.fragmentCellRecyclerview).setAdapter(adapter);
             mBinding.fragmentCellRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
 
             mSharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);
-            getFilterTypeFromSharedPreferences();
+            UsedSharedPreferences.getInstance((MainActivity) requireActivity()).getFilterTypeFromSharedPreferences();
         });
 
         return view;
@@ -67,24 +75,18 @@ public class PodcastCellFragment extends Fragment implements ParentChildFragment
         mBinding = null;
     }
 
-    private void getFilterTypeFromSharedPreferences() {
-        int defaultValue = SORTED_BY.DATE_DOWN.ordinal();
-        int displayType = mSharedPref.getInt(getString(R.string.saved_filter_type_podcast), defaultValue);
-        onSortChanged(SORTED_BY.values()[displayType]);
-    }
-
     @Override
-    public void onSortChanged(SORTED_BY sortedBy) {
+    public void onSortChanged(Enums.SORTED_BY sortedBy) {
         PodcastCellAdapter adapter = (PodcastCellAdapter) mBinding.fragmentCellRecyclerview.getAdapter();
         List<Episode> episodes = Objects.requireNonNull(adapter).getEpisodes();
 
         switch (sortedBy) {
             case DATE_UP:
             default: {
-                Collections.sort(episodes, (a,b) -> Integer.compare(a.getNumber(), b.getNumber()));
+                Collections.sort(episodes, (a,b) -> Integer.compare(a.getEpisodeNumber(), b.getEpisodeNumber()));
             } break;
             case DATE_DOWN: {
-                Collections.sort(episodes, (a,b) -> Integer.compare(b.getNumber(), a.getNumber()));
+                Collections.sort(episodes, (a,b) -> Integer.compare(b.getEpisodeNumber(), a.getEpisodeNumber()));
             } break;
             case TITLE_UP: {
                 Collections.sort(episodes, (a,b) -> {
@@ -109,6 +111,41 @@ public class PodcastCellFragment extends Fragment implements ParentChildFragment
        ((PodcastCellAdapter) Objects.requireNonNull(mBinding.fragmentCellRecyclerview.getAdapter())).setEpisodes(episodeList);
         mBinding.fragmentCellRecyclerview.getAdapter().notifyDataSetChanged();
 
+    }
+
+    @Override
+    public void onFilterSelected(boolean showState) {
+        ((PodcastCellAdapter) Objects.requireNonNull(mBinding.fragmentCellRecyclerview.getAdapter())).setShowState(showState);
+        mBinding.fragmentCellRecyclerview.getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRefresh() {
+        refresh();
+    }
+
+    @Override
+    public void onMenuRefresh() {
+        mBinding.fragmentCellSwipeUp.setRefreshing(true);
+        refresh();
+    }
+
+    private void refresh() {
+        new Thread(() -> {
+            try {
+                EpisodeViewModel episodeViewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
+                TopicViewModel topicViewModel = new ViewModelProvider(requireActivity()).get(TopicViewModel.class);
+                HostViewModel hostViewModel = new ViewModelProvider(requireActivity()).get(HostViewModel.class);
+                MainActivity mainActivity = (MainActivity) requireActivity();
+
+                UsedSharedPreferences.getInstance(mainActivity).saveTopicCountToSharedPreferences(0);
+                UsedSharedPreferences.getInstance(mainActivity).saveEpisodeCountToSharedPreferences(0);
+                ApiClient.getInstance(mainActivity).saveEpisodesToDB(episodeViewModel, topicViewModel, hostViewModel, true, mBinding.fragmentCellSwipeUp);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     @Override

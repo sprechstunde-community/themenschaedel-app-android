@@ -62,6 +62,22 @@ public class TopicViewModel extends AndroidViewModel {
         return mRepository.getAllTopicsWithSubtopics();
     }
 
+    public LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsAllWithoutAds() {
+        return mRepository.getAllTopicsWithSubtopicsAllWithoutAds();
+    }
+
+    public LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsCommunityAndAds(int community, int ad) {
+        return mRepository.getAllTopicsWithSubtopicsCommunityAndAds(community, ad);
+    }
+
+    public LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsCommunity(int community) {
+        return mRepository.getAllTopicsWithSubtopicsCommunity(community);
+    }
+
+    public LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsOnlyAds() {
+        return mRepository.getAllTopicsWithSubtopicsOnlyAds();
+    }
+
     public LiveData<List<Subtopic>> getAllSubtopics() {
         return mRepository.getAllSubtopics();
     }

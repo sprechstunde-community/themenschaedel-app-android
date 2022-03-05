@@ -43,6 +43,18 @@ public class UsedSharedPreferences {
         return mSharedPref.getInt(mMainActivity.getString(R.string.saved_topicCount), defaultValue);
     }
 
+    public void getUserRoleToSharedPreferences() {
+        int defaultValue = 1;
+        int value = mSharedPref.getInt(mMainActivity.getString(R.string.saved_user_role), defaultValue);
+        SessionManagement.getInstance().setCurrentRole(value);
+    }
+
+    public void saveUserRoleToSharedPreferences(SessionManagement.ROLE role) {
+        SharedPreferences.Editor editor = mSharedPref.edit();
+        editor.putInt(mMainActivity.getString(R.string.saved_user_role), SessionManagement.getInstance().getIntFromEnum(role));
+        editor.apply();
+    }
+
     public void saveFirstStartToSharedPreferences(int value) {
         SharedPreferences.Editor editor = mSharedPref.edit();
         editor.putInt(mMainActivity.getString(R.string.saved_first_start), value);
@@ -53,4 +65,17 @@ public class UsedSharedPreferences {
         int defaultValue = 0;
         return mSharedPref.getInt(mMainActivity.getString(R.string.saved_first_start), defaultValue);
     }
+
+    public void saveFilterTypeToSharedPreferences(Enums.SORTED_BY sortedBy) {
+        SharedPreferences.Editor editor = mSharedPref.edit();
+        editor.putInt(mMainActivity.getString(R.string.saved_filter_type_list), sortedBy.ordinal());
+        editor.apply();
+    }
+
+    public Enums.SORTED_BY getFilterTypeFromSharedPreferences() {
+        int defaultValue = Enums.SORTED_BY.NUMBER_DOWN.ordinal();
+        int displayType = mSharedPref.getInt(mMainActivity.getString(R.string.saved_filter_type_list), defaultValue);
+        return Enums.SORTED_BY.values()[displayType];
+    }
+
 }

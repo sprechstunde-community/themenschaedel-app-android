@@ -1,6 +1,7 @@
 package sprechstunde.community.themenschaedel.adapter.podcast;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,24 +22,27 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.List;
 
 import sprechstunde.community.themenschaedel.R;
-import sprechstunde.community.themenschaedel.model.Episode;
+import sprechstunde.community.themenschaedel.model.episode.Episode;
 import sprechstunde.community.themenschaedel.view.podcast.PodcastFragmentDirections;
 
 public class PodcastCellAdapter extends RecyclerView.Adapter<PodcastCellAdapter.ViewHolder> {
 
-    private final Context context;
+    private final Context mContext;
     private List<Episode> mEpisodes;
+    private boolean mShowState;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView number;
         private final TextView title;
         private final ImageView image;
+        private final ImageView icon;
 
         public ViewHolder(View view) {
             super(view);
             number = view.findViewById(R.id.cell_number);
             title = view.findViewById(R.id.cell_title);
             image = view.findViewById(R.id.cell_image);
+            icon = view.findViewById(R.id.cell_corner_icon);
         }
 
         public TextView getNumber() {
@@ -51,11 +56,21 @@ public class PodcastCellAdapter extends RecyclerView.Adapter<PodcastCellAdapter.
         public ImageView getImage() {
             return image;
         }
+
+        public ImageView getIcon() { return icon; }
     }
 
     public PodcastCellAdapter(Context context, List<Episode> episodes) {
-        this.context = context;
+        mContext = context;
         mEpisodes = episodes;
+    }
+
+    public boolean isShowState() {
+        return mShowState;
+    }
+
+    public void setShowState(boolean showState) {
+        mShowState = showState;
     }
 
     @NonNull
@@ -69,24 +84,47 @@ public class PodcastCellAdapter extends RecyclerView.Adapter<PodcastCellAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        String episode = context.getResources().getString(R.string.podcast_episode) + " " + mEpisodes.get(position).getNumber();
+        String episode = mContext.getResources().getString(R.string.podcast_episode) + " " + mEpisodes.get(position).getEpisodeNumber();
         viewHolder.getNumber().setText(episode);
         viewHolder.getTitle().setText(mEpisodes.get(position).getTitle());
 
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
+        setUpState(viewHolder, position);
 
-        Glide.with(context).asBitmap()
+        Glide.with(mContext).asBitmap()
                 .load(mEpisodes.get(position).getImage())
                 .apply(requestOptions)
                 .transition(BitmapTransitionOptions.withCrossFade())
-                .error(R.drawable.podcast_defauft_image)
+                .error(R.drawable.podcast_default_image)
                 .into(viewHolder.getImage());
         viewHolder.itemView.setOnClickListener(v -> {
             PodcastFragmentDirections.ActionPodcastToEpisode action = PodcastFragmentDirections.actionPodcastToEpisode();
-            action.setEpisodeId(mEpisodes.get(position).getId());
+            action.setEpisodeId(mEpisodes.get(position).getEpisodeNumber());
             Navigation.findNavController(v).navigate(action);
         });
+    }
+
+    private void setUpState(ViewHolder viewHolder,int position)  {
+
+        ImageView icon = viewHolder.getIcon();
+
+        Episode episode = mEpisodes.get(position);
+        icon.setVisibility(View.GONE);
+        if(isShowState()) {
+            icon.setVisibility(View.VISIBLE);
+            Drawable stateDrawable = ContextCompat.getDrawable(mContext, R.drawable.ic_open);
+            if(episode.getVerified()) {
+                icon.setVisibility(View.GONE);
+            } else if (episode.isClaimed()) {
+                stateDrawable = ContextCompat.getDrawable(mContext, R.drawable.ic_claimed);
+                icon.setBackground(stateDrawable);
+            } else if (!episode.getVerified() && episode.isClaimed()) {
+                stateDrawable = ContextCompat.getDrawable(mContext, R.drawable.ic_unverified);
+                icon.setBackground(stateDrawable);
+            }
+            icon.setBackground(stateDrawable);
+        }
     }
 
     public List<Episode> getEpisodes() {

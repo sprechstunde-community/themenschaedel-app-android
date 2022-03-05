@@ -1,14 +1,19 @@
 package sprechstunde.community.themenschaedel.room;
 
 import android.app.Application;
-import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
-import sprechstunde.community.themenschaedel.model.Episode;
+import sprechstunde.community.themenschaedel.model.episode.Episode;
 import sprechstunde.community.themenschaedel.model.Host;
+import sprechstunde.community.themenschaedel.model.SessionData;
+import sprechstunde.community.themenschaedel.model.User;
+import sprechstunde.community.themenschaedel.model.episode.EpisodeHostCrossRef;
+import sprechstunde.community.themenschaedel.model.episode.EpisodeWithHosts;
 import sprechstunde.community.themenschaedel.model.topic.Subtopic;
 import sprechstunde.community.themenschaedel.model.topic.Topic;
 import sprechstunde.community.themenschaedel.model.topic.TopicWithSubtopic;
@@ -19,11 +24,17 @@ public class Repository {
     private final TopicDAO mTopicDAO;
     private final SubtopicDAO mSubtopicDAO;
     private final HostDAO mHostDAO;
+    private final UserDAO mUserDAO;
+    private final SessionDAO mSessionDAO;
 
     private final LiveData<List<Episode>> mAllEpisodes;
     private final LiveData<List<Topic>> mAllTopics;
     private final LiveData<List<Subtopic>> mAllSubtopics;
     private final LiveData<List<Host>> mAllHosts;
+    private final LiveData<List<User>> mAllUsers;
+    private final LiveData<SessionData> mSessionData;
+
+    private final Executor mExecutor = Executors.newSingleThreadExecutor();
 
     /**
      * Constructor
@@ -43,27 +54,52 @@ public class Repository {
 
         mHostDAO = db.hosts();
         mAllHosts = mHostDAO.getAllHosts();
+
+        mUserDAO = db.users();
+        mAllUsers = mUserDAO.getAllUsers();
+
+        mSessionDAO = db.sessionData();
+        mSessionData = mSessionDAO.getSessionData();
     }
 
     /**
      * Create methods for all the different database operations.
      * Those are the ones that the API exposes to the outside.
-     * Make an AsyncTask for each method
      */
     public void insert(Subtopic subtopic) {
-        new InsertSubtopicAsyncTask(mSubtopicDAO).execute(subtopic);
+        mExecutor.execute(() -> mSubtopicDAO.insert(subtopic));
     }
 
     public void insert(Topic topic) {
-        new InsertTopicAsyncTask(mTopicDAO).execute(topic);
+        mExecutor.execute(() -> mTopicDAO.insert(topic));
     }
 
     public void insert(Episode episode) {
-        new InsertEpisodeAsyncTask(mEpisodeDAO).execute(episode);
+        mExecutor.execute(() -> mEpisodeDAO.insert(episode));
+    }
+
+    public void insertEpisodeHostCrossRef(EpisodeHostCrossRef crossRef) {
+        mExecutor.execute(() -> mEpisodeDAO.insertEpisodeHostCrossRef(crossRef));
     }
 
     public void insert(Host host) {
-        new InsertHostAsyncTask(mHostDAO).execute(host);
+        mExecutor.execute(() -> mHostDAO.insert(host));
+    }
+
+    public void insert(User user) {
+        mExecutor.execute(() -> mUserDAO.insert(user));
+    }
+
+    public void insert(SessionData sessionData) {
+        mExecutor.execute(() -> mSessionDAO.insert(sessionData));
+    }
+
+    public void insertMySelf(User user) {
+        mExecutor.execute(() -> mSessionDAO.insertUser(user.getId(), user.getUsername(), user.getEmail(), user.getRoleId()));
+    }
+
+    public LiveData<User> getMyself() {
+        return mSessionDAO.getMyself();
     }
 
     public void update(Topic topic) {
@@ -71,11 +107,19 @@ public class Repository {
     }
 
     public void update(Episode episode) {
-        new UpdateEpisodeAsyncTask(mEpisodeDAO).execute(episode);
+        mExecutor.execute(() -> mEpisodeDAO.update(episode));
     }
 
     public void update(Host host) {
-        new UpdateHostAsyncTask(mHostDAO).execute(host);
+        mExecutor.execute(() -> mHostDAO.update(host));
+    }
+
+    public void update(User user) {
+        mExecutor.execute(() -> mUserDAO.update(user));
+    }
+
+    public void update(SessionData sessionData) {
+        mExecutor.execute(() -> mSessionDAO.update(sessionData));
     }
 
     public void delete(Topic topic) {
@@ -83,11 +127,22 @@ public class Repository {
     }
 
     public void delete(Episode episode) {
-        new DeleteEpisodeAsyncTask(mEpisodeDAO).execute(episode);
+        mExecutor.execute(() -> mEpisodeDAO.delete(episode));
     }
+
     public void delete(Host host) {
         mHostDAO.delete(host);
     }
+
+    public void delete(User user) {
+        mUserDAO.delete(user);
+    }
+
+    public void delete(SessionData sessionData) {
+        mSessionDAO.delete(sessionData);
+    }
+
+    public void deleteToken() { mExecutor.execute(mSessionDAO::deleteToken); }
 
     public void deleteAllTopics() {
         mTopicDAO.deleteAllTopics();
@@ -101,6 +156,10 @@ public class Repository {
         mHostDAO.deleteAllHosts();
     }
 
+    public void deleteAllUsers() {
+        mUserDAO.deleteAllUsers();
+    }
+
     public LiveData<Topic> getTopicById(int topicId) {
         return mTopicDAO.getTopicById(topicId);
     }
@@ -112,6 +171,23 @@ public class Repository {
     public LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopics() {
         return mTopicDAO.getAllTopicsWithSubtopics();
     }
+
+    public LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsAllWithoutAds() {
+        return mTopicDAO.getAllTopicsWithSubtopicsAllWithoutAds();
+    }
+
+    public LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsCommunityAndAds(int community, int ad) {
+        return mTopicDAO.getAllTopicsWithSubtopicsCommunityAndAds(community, ad);
+    }
+
+    public LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsCommunity(int community) {
+        return mTopicDAO.getAllTopicsWithSubtopicsCommunity(community);
+    }
+
+    public LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsOnlyAds() {
+        return mTopicDAO.getAllTopicsWithSubtopicsOnlyAds();
+    }
+
     public LiveData<List<Subtopic>> getAllSubtopics() {
         return mAllSubtopics;
     }
@@ -122,6 +198,14 @@ public class Repository {
 
     public LiveData<List<Host>> getAllHosts() {
         return mAllHosts;
+    }
+
+    public LiveData<List<User>> getAllUsers() {
+        return mAllUsers;
+    }
+
+    public LiveData<SessionData> getSessionData() {
+        return mSessionData;
     }
 
     public LiveData<List<Subtopic>> getAllSubtopicsFromTopic(int number) {
@@ -136,16 +220,16 @@ public class Repository {
         return mEpisodeDAO.getEpisode(name);
     }
 
-    public LiveData<Episode> getEpisode(int id) {
-        return mEpisodeDAO.getEpisode(id);
-    }
-
     public LiveData<Episode> getEpisodeByNumber (int number) {
         return mEpisodeDAO.getEpisodeByNumber(number);
     }
 
     public LiveData<List<Episode>> searchForEpisodes(String query) {
         return mEpisodeDAO.search(query);
+    }
+
+    public LiveData<EpisodeWithHosts> getEpisodeWithHosts(int number) {
+        return mEpisodeDAO.getEpisodeWithHosts(number);
     }
 
     public LiveData<List<Topic>> searchForTopics(String query) {
@@ -158,103 +242,5 @@ public class Repository {
 
     public LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsFromEpisode(int number) {
         return mTopicDAO.getAllTopicsWithSubtopicsFrom(number);
-    }
-
-    private static class InsertTopicAsyncTask extends AsyncTask<Topic, Void, Void> {
-        private final TopicDAO mTopicDAO;
-
-        private InsertTopicAsyncTask(TopicDAO topicDAO) {
-            mTopicDAO = topicDAO;
-        }
-
-        @Override
-        protected Void doInBackground(Topic... topics) {
-            mTopicDAO.insert(topics[0]);
-            return null;
-        }
-    }
-
-    private static class InsertSubtopicAsyncTask extends AsyncTask<Subtopic, Void, Void> {
-        private final SubtopicDAO mSubtopicDAO;
-
-        private InsertSubtopicAsyncTask(SubtopicDAO subtopicDAO) {
-            mSubtopicDAO = subtopicDAO;
-        }
-
-        @Override
-        protected Void doInBackground(Subtopic... topics) {
-            mSubtopicDAO.insert(topics[0]);
-            return null;
-        }
-    }
-
-    private static class InsertHostAsyncTask extends AsyncTask<Host, Void, Void> {
-        private final HostDAO mHostDAO;
-
-        private InsertHostAsyncTask(HostDAO hostDAO) {
-            mHostDAO = hostDAO;
-        }
-
-        @Override
-        protected Void doInBackground(Host... hosts) {
-            mHostDAO.insert(hosts[0]);
-            return null;
-        }
-    }
-
-    private static class UpdateEpisodeAsyncTask extends AsyncTask<Episode, Void, Void> {
-        private final EpisodeDAO mEpisodeDAO;
-
-        public UpdateEpisodeAsyncTask(EpisodeDAO episodeDAO) {
-            mEpisodeDAO = episodeDAO;
-        }
-
-        @Override
-        protected Void doInBackground(Episode... episodes) {
-            mEpisodeDAO.update(episodes[0]);
-            return null;
-        }
-    }
-
-    private static class UpdateHostAsyncTask extends AsyncTask<Host, Void, Void> {
-        private final HostDAO mHostDAO;
-
-        public UpdateHostAsyncTask(HostDAO hostDAO) {
-            mHostDAO = hostDAO;
-        }
-
-        @Override
-        protected Void doInBackground(Host... hosts) {
-            mHostDAO.update(hosts[0]);
-            return null;
-        }
-    }
-
-    private static class InsertEpisodeAsyncTask extends AsyncTask<Episode, Void, Void> {
-        private final EpisodeDAO mEpisodeDAO;
-
-        public InsertEpisodeAsyncTask(EpisodeDAO episodeDAO) {
-            mEpisodeDAO = episodeDAO;
-        }
-
-        @Override
-        protected Void doInBackground(Episode... episodes) {
-            mEpisodeDAO.insert(episodes[0]);
-            return null;
-        }
-    }
-
-    private static class DeleteEpisodeAsyncTask extends AsyncTask<Episode, Void, Void> {
-        private final EpisodeDAO mEpisodeDAO;
-
-        public DeleteEpisodeAsyncTask(EpisodeDAO episodeDAO) {
-            mEpisodeDAO = episodeDAO;
-        }
-
-        @Override
-        protected Void doInBackground(Episode... episodes) {
-            mEpisodeDAO.delete(episodes[0]);
-            return null;
-        }
     }
 }

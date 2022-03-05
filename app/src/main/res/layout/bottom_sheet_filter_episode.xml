@@ -4,42 +4,104 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".view.topic.BottomSheetDialogFilterFragment">
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/bottom_sheet_filter_episode"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_filter_episode_sort_by"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_filter_episode_by"
-        app:selectionRequired="true"
-        app:singleLine="true"
-        app:singleSelection="false" />
+    tools:context=".view.podcast.BottomSheetDialogEpisodeFilterFragment">
 
     <TextView
-        android:id="@+id/bottom_sheet_filter_episode_sort_by"
+        android:id="@+id/fragment_filter_episode_sort_by"
         style="@style/Sort.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:text="@string/filter_sorted_by"
+        android:text="@string/filter_filter_by"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/bottom_sheet_filter_episode_by"
+        android:id="@+id/fragment_filter_episode_persons"
         style="@style/Sort.Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/persons_in_episode"
-        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_filter_episode_sort_by"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_filter_episode_sort_by" />
+        app:layout_constraintStart_toStartOf="@+id/fragment_filter_episode_sort_by"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_episode_sort_by" />
+
+    <TextView
+        android:id="@+id/fragment_filter_episode_persons2"
+        style="@style/Sort.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/state_of_episode"
+        app:layout_constraintStart_toStartOf="@+id/fragment_filter_episode_sort_by"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_episode_persons" />
+
+    <View
+        android:id="@+id/fragment_filter_episode_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/primaryColor"
+        android:contentDescription="@string/contentDescription_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_episode_open" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/fragment_filter_episode_switch"
+        style="@style/Switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/filter_show_state"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/fragment_filter_episode_persons"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_episode_divider"
+        app:switchPadding="2dp"
+        app:thumbTint="@color/switch_thumb_color"
+        app:trackTint="@color/switch_track_color"
+        app:useMaterialThemeColors="false" />
+
+    <ImageView
+        android:id="@+id/fragment_filter_episode_open"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_open"
+        app:layout_constraintStart_toStartOf="@+id/fragment_filter_episode_persons2"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_filter_episode_persons2" />
+
+    <ImageView
+        android:id="@+id/fragment_filter_episode_claimed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_claimed"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_filter_episode_open"
+        app:layout_constraintStart_toEndOf="@+id/fragment_filter_episode_open"
+        app:layout_constraintTop_toTopOf="@+id/fragment_filter_episode_open"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/fragment_filter_episode_unverified"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_unverified"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_filter_episode_claimed"
+        app:layout_constraintStart_toEndOf="@+id/fragment_filter_episode_claimed"
+        app:layout_constraintTop_toTopOf="@+id/fragment_filter_episode_claimed" />
+
+    <ImageView
+        android:id="@+id/fragment_filter_episode_closed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_closed"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_filter_episode_unverified"
+        app:layout_constraintStart_toEndOf="@+id/fragment_filter_episode_unverified"
+        app:layout_constraintTop_toTopOf="@+id/fragment_filter_episode_unverified" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/fragment_profile_settings_scene"
+    tools:context=".view.profile.ProfileSettingsFragment">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/fragment_profile_settings_field_mask"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+        app:layout_constraintDimensionRatio="w,1.5:4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/fragment_profile_settings_random_field"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_profile_card"
+            android:contentDescription="@string/contentDescription_profile_image" />
+
+    </androidx.cardview.widget.CardView>
+
+    <View
+        android:id="@+id/fragment_profile_settings_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_play_actions_background"
+        android:backgroundTint="@color/secondaryColor"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_profile_settings_field_role_icon"
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_profile_settings_field_platform"
+        app:layout_constraintStart_toStartOf="@+id/fragment_profile_settings_field_platform"
+        app:layout_constraintTop_toTopOf="@+id/fragment_profile_settings_field_role_icon" />
+
+    <ImageButton
+        android:id="@+id/fragment_profile_settings_spotify"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/ic_spotify"
+        android:contentDescription="@string/contentDescription_spotify"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_profile_settings_background"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_profile_settings_background"
+        app:layout_constraintStart_toEndOf="@+id/fragment_profile_settings_youtube"
+        app:layout_constraintTop_toTopOf="@+id/fragment_profile_settings_background" />
+
+    <ImageButton
+        android:id="@+id/fragment_profile_settings_youtube"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:background="@drawable/ic_youtube"
+        android:contentDescription="@string/contentDescription_youtube"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_profile_settings_spotify"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_profile_settings_spotify"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/fragment_profile_settings_background"
+        app:layout_constraintTop_toTopOf="@+id/fragment_profile_settings_spotify" />
+
+
+    <TextView
+        android:id="@+id/fragment_profile_settings_field_platform"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="@string/profile_platform"
+        app:layout_constraintBaseline_toBaselineOf="@+id/fragment_profile_settings_field_role"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_profile_settings_field_mask"
+        app:layout_constraintStart_toEndOf="@+id/fragment_profile_settings_field_role" />
+
+    <TextView
+        android:id="@+id/fragment_profile_settings_field_role"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/profile_role_user"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_profile_settings_field_mask"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_profile_settings_field_platform"
+        app:layout_constraintStart_toStartOf="@+id/fragment_profile_settings_field_mask"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_profile_settings_field_role_icon" />
+
+    <ImageView
+        android:id="@+id/fragment_profile_settings_field_role_icon"
+        android:layout_width="45dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/ic_user_transparent"
+        android:backgroundTint="@color/secondaryColor"
+        android:contentDescription="@string/profile_role_user"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_profile_settings_field_role"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_profile_settings_field_role"
+        app:layout_constraintStart_toStartOf="@+id/fragment_profile_settings_field_role"
+        app:layout_constraintTop_toTopOf="@+id/fragment_profile_settings_field_mask"
+        app:layout_constraintVertical_bias="1.0" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

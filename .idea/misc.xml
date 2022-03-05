@@ -4,20 +4,82 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/custom_edit_text.xml" value="0.20104166666666667" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/custom_edit_text_gradient_line.xml" value="0.3828125" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/custom_edit_text_gradient_pill.xml" value="0.3828125" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_admin.xml" value="0.3828125" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_anonym.xml" value="0.3828125" />
         <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_arrow_right.xml" value="0.20104166666666667" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_card.xml" value="0.3411458333333333" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_card_corner.xml" value="0.3411458333333333" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_card_with_corner.xml" value="0.3411458333333333" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_circle.xml" value="0.284375" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_circle_background.xml" value="0.284375" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_circle_shadow.xml" value="0.284375" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_claimed.xml" value="0.2791666666666667" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_closed.xml" value="0.2791666666666667" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_curve_bottom_login.xml" value="0.3828125" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_curve_bottom_profile.xml" value="0.25364583333333335" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_curve_top_login.xml" value="0.30520833333333336" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_curve_top_profile.xml" value="0.3828125" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_curve_top_profile_shadow.xml" value="0.3828125" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_dislike_full.xml" value="0.2777777777777778" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_favorite.xml" value="0.2890625" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_favorite_full.xml" value="0.2890625" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_filter_details.xml" value="0.23541666666666666" />
         <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_launcher_background.xml" value="0.19583333333333333" />
         <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.19583333333333333" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_like_full.xml" value="0.2777777777777778" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_mod.xml" value="0.3828125" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_open.xml" value="0.3828125" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_play_actions_background.xml" value="0.3828125" />
         <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_refresh.xml" value="0.2703125" />
         <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_subtopics.xml" value="0.20104166666666667" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_unverified.xml" value="0.2791666666666667" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_user.xml" value="0.3828125" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_view_split.xml" value="0.3828125" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/ic_wiki_card.xml" value="0.3828125" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/img_default_profile.xml" value="0.30520833333333336" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/toggle_dislike.xml" value="0.2777777777777778" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/toggle_favorite.xml" value="0.2890625" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/toggle_like.xml" value="0.2869791666666667" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/toolbar_gradient.xml" value="0.30520833333333336" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/drawable/toolbar_gradient_register.xml" value="0.30520833333333336" />
         <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/activity_main.xml" value="0.18489583333333334" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/bottom_sheet_filter_episode.xml" value="0.5" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/bottom_sheet_filter_topics.xml" value="0.5" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/dialog_host.xml" value="0.25" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/dialog_info_anonym.xml" value="0.36666666666666664" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/dialog_info_episode_types.xml" value="0.67" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/dialog_info_profile_roles.xml" value="0.67" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/dialog_info_sugg_topic_types.xml" value="0.36666666666666664" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/dialog_info_topic_types.xml" value="0.67" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/dialog_info_user.xml" value="0.37864583333333335" />
         <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/dialog_to_episode.xml" value="0.18489583333333334" />
-        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/fragment_bottom_sheet_dialog_filter.xml" value="0.18489583333333334" />
-        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/fragment_episode.xml" value="0.20520833333333333" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/drawer_header.xml" value="0.5" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/drawer_header_anonym.xml" value="0.36666666666666664" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/drawer_header_user.xml" value="0.36666666666666664" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/fragment_bottom_sheet_dialog_filter.xml" value="0.33" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/fragment_episode.xml" value="0.33" />
         <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/fragment_list.xml" value="0.20520833333333333" />
-        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/fragment_podcast_card.xml" value="0.20520833333333333" />
-        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/fragment_topic.xml" value="0.20520833333333333" />
-        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_episode_topic.xml" value="0.16203703703703703" />
-        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_podcast_cell.xml" value="0.20520833333333333" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/fragment_login.xml" value="0.5" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/fragment_podcast.xml" value="0.33" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/fragment_podcast_card.xml" value="0.33" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/fragment_podcast_cell.xml" value="0.26197916666666665" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/fragment_podcast_row.xml" value="0.26197916666666665" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/fragment_profile_favorites.xml" value="0.36666666666666664" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/fragment_profile_random.xml" value="0.33" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/fragment_profile_settings.xml" value="0.25" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/fragment_register.xml" value="0.5" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/fragment_topic.xml" value="0.19004524886877827" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/layout_platform_selector.xml" value="0.25416666666666665" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_episode_host.xml" value="0.33" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_episode_topic.xml" value="0.33" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_podcast_card.xml" value="0.67" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_podcast_card_with_state.xml" value="0.519163763066202" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_podcast_cell.xml" value="0.5" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_podcast_row.xml" value="0.67" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_profile_host.xml" value="0.5" />
         <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_sugg_topic_details.xml" value="0.20520833333333333" />
         <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_sugg_topic_sub.xml" value="0.20520833333333333" />
         <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_sugg_topic_sub_details.xml" value="0.20520833333333333" />
@@ -28,9 +90,13 @@
         <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_topic_detail.xml" value="0.5" />
         <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_topic_subtopic.xml" value="0.33" />
         <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_topic_subtopic_detail.xml" value="0.18489583333333334" />
-        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_topic_with_subtopic.xml" value="0.18489583333333334" />
-        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_topic_with_subtopic_detail.xml" value="0.22" />
-        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/menu/menu_drawer_anonym.xml" value="0.1875" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_topic_with_subtopic.xml" value="0.22" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/layout/list_item_topic_with_subtopic_detail.xml" value="0.33" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/menu/menu_drawer_anonym.xml" value="0.5" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/menu/menu_drawer_user.xml" value="0.36666666666666664" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/menu/menu_info_settings.xml" value="0.36666666666666664" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/menu/menu_search_info.xml" value="0.36666666666666664" />
+        <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/menu/menu_search_settings.xml" value="0.36666666666666664" />
         <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3828125" />
         <entry key="..\:/Repos/AndroidStudioProjects/Themenschaedel/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3828125" />
       </map>

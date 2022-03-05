@@ -9,6 +9,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,14 +26,14 @@ import com.google.android.material.chip.Chip;
 
 import java.util.List;
 
+import sprechstunde.community.themenschaedel.Enums;
 import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.databinding.FragmentPodcastBinding;
 import sprechstunde.community.themenschaedel.listener.ParentChildFragmentListener;
-import sprechstunde.community.themenschaedel.model.Episode;
-import sprechstunde.community.themenschaedel.view.topic.BottomSheetDialogFilterFragment;
+import sprechstunde.community.themenschaedel.model.episode.Episode;
 import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
 
-public class PodcastFragment extends Fragment implements View.OnClickListener, SearchView.OnQueryTextListener {
+public class PodcastFragment extends Fragment implements View.OnClickListener, SearchView.OnQueryTextListener, BottomSheetDialogEpisodeFilterFragment.ProcessFilter {
 
     private FragmentPodcastBinding mBinding;
     private Display mCurrentDisplay;
@@ -59,7 +60,7 @@ public class PodcastFragment extends Fragment implements View.OnClickListener, S
         return gotScrolledUp;
     }
 
-    private void notifyFragmentsForSort(ParentChildFragmentListener.SORTED_BY sortedBy) {
+    private void notifyFragmentsForSort(Enums.SORTED_BY sortedBy) {
         List<Fragment> fragments = getParentFragmentManager().getFragments();
         for (Fragment f : fragments) {
             if(f != this)
@@ -75,6 +76,22 @@ public class PodcastFragment extends Fragment implements View.OnClickListener, S
         }
     }
 
+    private void notifyFragmentsForRefresh() {
+        List<Fragment> fragments = getParentFragmentManager().getFragments();
+        for (Fragment f : fragments) {
+            if(f != this)
+                ((ParentChildFragmentListener) f).onMenuRefresh();
+        }
+    }
+
+    private void notifyFragmentsForFilter(boolean showState) {
+        List<Fragment> fragments = getParentFragmentManager().getFragments();
+        for (Fragment f : fragments) {
+            if(f != this)
+                ((ParentChildFragmentListener) f).onFilterSelected(showState);
+        }
+    }
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -85,8 +102,14 @@ public class PodcastFragment extends Fragment implements View.OnClickListener, S
 
         MenuItem filterItem = menu.findItem(R.id.menu_filter);
         filterItem.setOnMenuItemClickListener(item -> {
-            final BottomSheetDialogFilterFragment bottomSheetDialog = new BottomSheetDialogFilterFragment();
+            final BottomSheetDialogEpisodeFilterFragment bottomSheetDialog = new BottomSheetDialogEpisodeFilterFragment(this );
             bottomSheetDialog.show(getChildFragmentManager(), "OpenFilterBottomSheet");
+            return true;
+        });
+
+        MenuItem refreshItem = menu.findItem(R.id.menu_refresh);
+        refreshItem.setOnMenuItemClickListener( item -> {
+            notifyFragmentsForRefresh();
             return true;
         });
     }
@@ -123,6 +146,8 @@ public class PodcastFragment extends Fragment implements View.OnClickListener, S
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+        Toolbar toolbar = requireActivity().findViewById(R.id.activity_main_toolbar);
+        toolbar.setBackgroundColor(requireActivity().getColor(R.color.primaryColor));
 
         return view;
     }
@@ -133,10 +158,10 @@ public class PodcastFragment extends Fragment implements View.OnClickListener, S
         if (mBinding.fragmentPodcastDisplay == v && getActivity() != null) {
             changeDisplayFragment(false);
         } else if (mBinding.filterDate == v) {
-            fromASCToDESC(mBinding.filterDate, v.getId() == mPreSelectedChipId, ParentChildFragmentListener.SORTED_BY.DATE_UP, ParentChildFragmentListener.SORTED_BY.DATE_DOWN);
+            fromASCToDESC(mBinding.filterDate, v.getId() == mPreSelectedChipId, Enums.SORTED_BY.DATE_UP, Enums.SORTED_BY.DATE_DOWN);
             mPreSelectedChipId = mBinding.filterDate.getId();
         } else if (mBinding.filterTitle == v) {
-            fromASCToDESC(mBinding.filterTitle, v.getId() == mPreSelectedChipId, ParentChildFragmentListener.SORTED_BY.TITLE_UP, ParentChildFragmentListener.SORTED_BY.TITLE_DOWN);
+            fromASCToDESC(mBinding.filterTitle, v.getId() == mPreSelectedChipId, Enums.SORTED_BY.TITLE_UP, Enums.SORTED_BY.TITLE_DOWN);
             mPreSelectedChipId = mBinding.filterTitle.getId();
         }
     }
@@ -153,6 +178,11 @@ public class PodcastFragment extends Fragment implements View.OnClickListener, S
         return false;
     }
 
+    @Override
+    public void onProcessFilter(boolean showDetails) {
+        notifyFragmentsForFilter(showDetails);
+    }
+
     private void onSearch(String query) {
         EpisodeViewModel viewModel = new ViewModelProvider(this).get(EpisodeViewModel.class);
         if(!query.equals("")) {
@@ -160,7 +190,7 @@ public class PodcastFragment extends Fragment implements View.OnClickListener, S
         }
     }
 
-    private void fromASCToDESC(Chip chip, boolean wasAlreadySelected, ParentChildFragmentListener.SORTED_BY up, ParentChildFragmentListener.SORTED_BY down) {
+    private void fromASCToDESC(Chip chip, boolean wasAlreadySelected, Enums.SORTED_BY up, Enums.SORTED_BY down) {
         String tag = (String) chip.getTag();
         Drawable upIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_up);
         Drawable downIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_down);
@@ -178,7 +208,7 @@ public class PodcastFragment extends Fragment implements View.OnClickListener, S
         }
     }
 
-    private void saveFilterTypeToSharedPreferences(ParentChildFragmentListener.SORTED_BY filter) {
+    private void saveFilterTypeToSharedPreferences(Enums.SORTED_BY filter) {
         SharedPreferences.Editor editor = mSharedPref.edit();
         editor.putInt(getString(R.string.saved_filter_type_podcast), filter.ordinal());
         editor.apply();

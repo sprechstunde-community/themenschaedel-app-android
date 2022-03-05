@@ -1,5 +1,6 @@
 package sprechstunde.community.themenschaedel.adapter.list;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import java.util.List;
 import sprechstunde.community.themenschaedel.MainActivity;
 import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.model.topic.Subtopic;
+import sprechstunde.community.themenschaedel.model.topic.Topic;
 import sprechstunde.community.themenschaedel.model.topic.TopicWithSubtopic;
 import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
 import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
@@ -30,6 +32,9 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private TopicViewModel mTopicViewModel;
     private EpisodeViewModel mEpisodeViewModel;
     private boolean mShowDetails;
+    private boolean mFromCommunity;
+    private boolean mFromBoys;
+    private boolean mIsAd;
 
     public TopicAdapter(List<TopicWithSubtopic> topics, MainActivity mainActivity) {
         mTopics = topics;
@@ -93,25 +98,24 @@ public class TopicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
-
-        mEpisodeViewModel.getEpisode(mTopics.get(position).getTopic().getEpisode()).observe(mMainActivity, episode -> {
+        Topic topic = mTopics.get(position).getTopic();
+        List<Subtopic> subtopic = mTopics.get(position).getSubtopics();
 
         switch (getItemViewType(position)) {
             case TYPE_TOPIC_WITH_DETAILS: {
-                ((TopicDetailsViewHolder) viewHolder).setTopicValues(mTopics.get(position).getTopic(), episode.getNumber());
+                ((TopicDetailsViewHolder) viewHolder).setTopicValues(topic, topic.getEpisode());
             } break;
             case TYPE_TOPIC_WITH_SUBTOPICS_AND_DETAILS: {
-                ((TopicDetailsViewHolderWithSubtopic) viewHolder).setTopicValues(mTopics.get(position).getSubtopics(), mTopics.get(position).getTopic(), episode.getNumber());
+                ((TopicDetailsViewHolderWithSubtopic) viewHolder).setTopicValues(subtopic, topic, topic.getEpisode());
             } break;
             case TYPE_TOPIC: {
-                ((TopicViewHolder) viewHolder).setTopicValues(mTopics.get(position).getTopic(), episode.getNumber());
+                ((TopicViewHolder) viewHolder).setTopicValues(topic, topic.getEpisode());
             } break;
             case TYPE_TOPIC_WITH_SUBTOPICS:
             default: {
-                ((TopicViewHolderWithSubtopic) viewHolder).setTopicValues(mTopics.get(position).getSubtopics(), mTopics.get(position).getTopic(), episode.getNumber());
+                ((TopicViewHolderWithSubtopic) viewHolder).setTopicValues(subtopic, topic, topic.getEpisode());
             }
         }
-        });
     }
 
     @Override

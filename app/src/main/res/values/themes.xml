@@ -177,6 +177,12 @@
         <item name="android:textColor">@color/onSurface</item>
     </style>
 
+    <style name="Episode.State_Text">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/onSurface</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
     <style name="Login"/>
 
     <style name="Login.Title">
@@ -194,21 +200,18 @@
         <item name="android:textColor">@color/primaryColor</item>
     </style>
 
-    <style name="Login.EditText">
-        <item name="android:background">@drawable/custom_edit_text_gradient_pill</item>
-        <item name="android:paddingTop">19dp</item>
-        <item name="android:paddingBottom">19dp</item>
-        <item name="android:paddingStart">20dp</item>
-        <item name="android:paddingEnd">20dp</item>
+    <style name="Login.EditText" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/teal</item>
+        <item name="strokeColor">@color/primaryColor</item>
+        <item name="boxStrokeWidthFocused">1dp</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="hintTextAppearance">@style/HintText</item>
+        <item name="endIconTint">@color/primaryColor</item>
     </style>
 
-    <style name="Login.EditText_Hint">
+    <style name="HintText" parent="TextAppearance.Design.Hint">
         <item name="android:textSize">12sp</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:textColor">@color/onBackground</item>
-        <item name="android:paddingStart">4dp</item>
-        <item name="android:paddingEnd">4dp</item>
-        <item name="android:background">@color/background</item>
+        <item name="android:textColor">#7EAFA6</item>
     </style>
 
     <style name="Register"/>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialog_info_profile_roles_layout"
     android:layout_width="300dp"
     android:layout_height="wrap_content">
@@ -19,7 +20,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/dialog_info_profile_roles_ano_icon"
+        android:id="@+id/dialog_info_profile_roles_icon_ano"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_anonym"
@@ -36,15 +37,15 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:text="@string/dialog_info_anonym"
-        app:layout_constraintStart_toEndOf="@+id/dialog_info_profile_roles_icon"
+        app:layout_constraintStart_toEndOf="@+id/dialog_info_profile_roles_icon_user"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/dialog_info_profile_roles_ano_details"
+        android:id="@+id/dialog_info_profile_roles_details_ano"
         style="@style/Dialog.Details"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="6dp"
         android:layout_marginEnd="32dp"
         android:text="@string/dialog_info_anonym_subtitle"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/dialog_info_profile_roles_anonym" />
 
     <ImageView
-        android:id="@+id/dialog_info_profile_roles_icon"
+        android:id="@+id/dialog_info_profile_roles_icon_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_user"
@@ -61,29 +62,82 @@
         app:layout_constraintStart_toStartOf="@+id/dialog_info_profile_roles_guideline"
         app:layout_constraintTop_toTopOf="@+id/dialog_info_profile_roles_user" />
 
+    <ImageView
+        android:id="@+id/dialog_info_profile_roles_icon_mod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_mod"
+        android:contentDescription="@string/contentDescription_icon_suggested"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_info_profile_roles_mod"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_profile_roles_guideline"
+        app:layout_constraintTop_toTopOf="@+id/dialog_info_profile_roles_mod" />
+
+    <ImageView
+        android:id="@+id/dialog_info_profile_roles_icon_admin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/ic_admin"
+        android:contentDescription="@string/contentDescription_icon_suggested"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_info_profile_roles_icon_mod"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/dialog_info_profile_roles_icon_mod" />
+
     <TextView
         android:id="@+id/dialog_info_profile_roles_user"
         style="@style/Dialog.Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="@string/profile_role_user"
-        app:layout_constraintStart_toEndOf="@+id/dialog_info_profile_roles_icon"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_info_profile_roles_ano_details" />
+        app:layout_constraintStart_toEndOf="@+id/dialog_info_profile_roles_icon_user"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_profile_roles_details_ano" />
 
     <TextView
-        android:id="@+id/dialog_info_profile_roles_details"
+        android:id="@+id/dialog_info_profile_roles_mod"
+        style="@style/Dialog.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/profile_role_mod"
+        app:layout_constraintStart_toEndOf="@+id/dialog_info_profile_roles_icon_user"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_profile_roles_details_user" />
+
+    <TextView
+        android:id="@+id/dialog_info_profile_roles_admin"
+        style="@style/Dialog.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/profile_role_admin"
+        app:layout_constraintBaseline_toBaselineOf="@+id/dialog_info_profile_roles_mod"
+        app:layout_constraintStart_toEndOf="@+id/dialog_info_profile_roles_icon_admin" />
+
+    <TextView
+        android:id="@+id/dialog_info_profile_roles_details_user"
         style="@style/Dialog.Details"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="6dp"
         android:text="@string/dialog_info_user_subtitle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/dialog_info_profile_roles_ano_details"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_info_profile_roles_details_ano"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_profile_roles_user"
         app:layout_constraintTop_toBottomOf="@+id/dialog_info_profile_roles_user" />
+
+    <TextView
+        android:id="@+id/dialog_info_profile_roles_details_mod"
+        style="@style/Dialog.Details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/dialog_info_mod_subtitle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_info_profile_roles_details_ano"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_profile_roles_user"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_profile_roles_mod" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/dialog_info_profile_roles_guideline"
@@ -91,4 +145,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="32dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/ic_view_split"
+        android:backgroundTint="@color/onBackgroundSecondary"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_info_profile_roles_mod"
+        app:layout_constraintStart_toEndOf="@+id/dialog_info_profile_roles_mod"
+        app:layout_constraintTop_toTopOf="@+id/dialog_info_profile_roles_mod" />
 </androidx.constraintlayout.widget.ConstraintLayout>

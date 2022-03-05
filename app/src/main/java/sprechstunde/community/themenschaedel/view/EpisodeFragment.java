@@ -1,8 +1,11 @@
 package sprechstunde.community.themenschaedel.view;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -35,8 +38,7 @@ import sprechstunde.community.themenschaedel.R;
 import sprechstunde.community.themenschaedel.adapter.episodeList.EpisodeHostAdapter;
 import sprechstunde.community.themenschaedel.adapter.episodeList.EpisodeTopicAdapter;
 import sprechstunde.community.themenschaedel.databinding.FragmentEpisodeBinding;
-import sprechstunde.community.themenschaedel.model.Episode;
-import sprechstunde.community.themenschaedel.model.topic.Topic;
+import sprechstunde.community.themenschaedel.model.episode.Episode;
 import sprechstunde.community.themenschaedel.model.topic.TopicWithSubtopic;
 import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
 import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
@@ -67,7 +69,7 @@ public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChan
         super.onOptionsItemSelected(item);
         if(item.getItemId() == R.id.menu_info) {
             CustomPopupWindow popupWindow = new CustomPopupWindow();
-            popupWindow.showSortPopup(R.id.dialog_info_topic_layout, R.layout.dialog_info_topic_types, requireActivity());
+            popupWindow.showSortPopup(R.id.dialog_info_topic_layout, R.layout.dialog_info_episode_types, requireActivity());
         }
 
         NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_main);
@@ -84,12 +86,27 @@ public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChan
         EpisodeViewModel episodeViewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
         TopicViewModel topicViewModel = new ViewModelProvider(requireActivity()).get(TopicViewModel.class);
 
-        episodeViewModel.getEpisode(id).observe(getViewLifecycleOwner(), episode -> {
+        episodeViewModel.getEpisodeWithHosts(id).observe(getViewLifecycleOwner(), episodeWithHosts -> {
+            Episode episode = episodeWithHosts.getEpisode();
             mBinding.fragmentEpisodeTitle.setText(episode.getTitle());
-            String number =  getString(R.string.list_item_topic_number) + " " + episode.getNumber();
+            String number =  getString(R.string.list_item_topic_number) + " " + episode.getEpisodeNumber();
             mBinding.fragmentEpisodeNumber.setText(number);
             mBinding.fragmentEpisodeDate.setText(episode.getDate());
             mBinding.fragmentEpisodeLength.setText(episode.getDuration());
+            mBinding.fragmentEpisodeLikes.setText(String.valueOf(episode.getUpvotes()));
+            mBinding.fragmentEpisodeDislikes.setText(String.valueOf(episode.getDownvotes()));
+
+            setEpisodeState(episode);
+
+            if(episodeWithHosts.getHosts() != null && episodeWithHosts.getHosts().size() > 0) {
+                EpisodeHostAdapter adapter = new EpisodeHostAdapter((MainActivity) requireActivity(), episodeWithHosts.getHosts());
+                Objects.requireNonNull(mBinding.fragmentEpisodeGridview).setAdapter(adapter);
+                mBinding.fragmentEpisodeHosts.setVisibility(View.VISIBLE);
+                mBinding.fragmentEpisodeGridview.setVisibility(View.VISIBLE);
+            } else {
+                mBinding.fragmentEpisodeHosts.setVisibility(View.GONE);
+                mBinding.fragmentEpisodeGridview.setVisibility(View.GONE);
+            }
 
             RequestOptions requestOptions = new RequestOptions();
             requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(40));
@@ -98,6 +115,7 @@ public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChan
                     .load(episode.getImage())
                     .transition(BitmapTransitionOptions.withCrossFade())
                     .apply(requestOptions)
+                    .fallback(R.drawable.podcast_default_image)
                     .into(mBinding.fragmentEpisodeImage);
         });
 
@@ -109,19 +127,39 @@ public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChan
             if(topics == null || topics.size() == 0) {
                 mBinding.fragmentEpisodeNoTopics.setVisibility(View.VISIBLE);
                 mBinding.fragmentEpisodeNoTopicsBackground.setVisibility(View.VISIBLE);
+                mBinding.fragmentEpisodeNoTopicsIll.setVisibility(View.VISIBLE);
                 mBinding.fragmentEpisodeMotionlayout.getTransition(R.id.motionlayout_episode).setEnabled(false);
                 mBinding.fragmentEpisodeRecyclerview.setVisibility(View.GONE);
             } else {
                 mBinding.fragmentEpisodeNoTopics.setVisibility(View.GONE);
                 mBinding.fragmentEpisodeNoTopicsBackground.setVisibility(View.GONE);
+                mBinding.fragmentEpisodeNoTopicsIll.setVisibility(View.GONE);
                 mBinding.fragmentEpisodeMotionlayout.getTransition(R.id.motionlayout_episode).setEnabled(true);
                 mBinding.fragmentEpisodeRecyclerview.setVisibility(View.VISIBLE);
             }
         });
 
         mBinding.fragmentEpisodeFilter.setOnCheckedChangeListener(this);
-
+        Toolbar toolbar = requireActivity().findViewById(R.id.activity_main_toolbar);
+        toolbar.setBackgroundColor(requireActivity().getColor(R.color.primaryColor));
         return mBinding.getRoot();
+    }
+
+    private void setEpisodeState(Episode episode) {
+        Drawable icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_open);
+        if(episode.getVerified()) {
+            mBinding.fragmentEpisodeStateText.setText(R.string.state_closed);
+            icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_closed);
+        } else if (!episode.getVerified() && episode.isClaimed()) {
+            mBinding.fragmentEpisodeStateText.setText(R.string.state_unverified);
+            icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_unverified);
+        } else if (episode.isClaimed()) {
+            mBinding.fragmentEpisodeStateText.setText(R.string.state_claimed);
+            icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_claimed);
+        } else {
+            mBinding.fragmentEpisodeStateText.setText(R.string.state_open);
+        }
+        mBinding.fragmentEpisodeStateIcon.setBackground(icon);
     }
 
     @Override

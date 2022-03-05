@@ -64,16 +64,6 @@
         app:layout_constraintEnd_toStartOf="@+id/list_item_episode_topic_time"
         app:layout_constraintTop_toTopOf="@+id/list_item_episode_topic_time" />
 
-    <ImageView
-        android:id="@+id/list_item_episode_topic_divider"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_line"
-        android:contentDescription="@string/contentDescription_line"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/list_item_episode_topic_title" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_item_episode_topic_recyclerView"
         android:layout_width="match_parent"

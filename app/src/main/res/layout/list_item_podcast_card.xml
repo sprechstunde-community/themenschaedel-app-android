@@ -22,6 +22,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/card_corner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:elevation="3dp"
+        android:rotation="90"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_card_corner" />
+
+    <ImageView
+        android:id="@+id/card_corner_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/ic_claimed"
+        android:elevation="3dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/card_corner"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="@+id/card_corner"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/card_corner"
+        app:layout_constraintTop_toTopOf="@+id/card_corner"
+        app:layout_constraintVertical_bias="1.0" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card_container"
         android:layout_width="0dp"
@@ -41,7 +72,7 @@
             android:id="@+id/card_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/podcast_defauft_image"
+            android:background="@drawable/podcast_default_image"
             android:contentDescription="@string/contentDescription_podcast_image"
             android:elevation="5dp"
             android:scaleType="center"

@@ -3,6 +3,7 @@ package sprechstunde.community.themenschaedel.view.topic;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -49,6 +50,8 @@ public class TopicFragment extends Fragment {
         }).attach();
 
         setHasOptionsMenu(true);
+        Toolbar toolbar = requireActivity().findViewById(R.id.activity_main_toolbar);
+        toolbar.setBackgroundColor(requireActivity().getColor(R.color.primaryColor));
         return view;
     }
 

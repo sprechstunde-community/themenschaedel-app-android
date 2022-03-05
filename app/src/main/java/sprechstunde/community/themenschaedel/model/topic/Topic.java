@@ -22,11 +22,11 @@ public class Topic {
     String mName;
 
     @ColumnInfo(name = "start")
-    @SerializedName("start")
+    @SerializedName("timestamp_start")
     int mStart;
 
     @ColumnInfo(name = "end")
-    @SerializedName("end")
+    @SerializedName("timestamp_end")
     int mEnd;
 
     @ColumnInfo(name = "ad")
@@ -38,11 +38,11 @@ public class Topic {
     boolean mCommunityContribution;
 
     @Ignore
-    @SerializedName("subtopics")
+    @SerializedName("subtopic")
     List<Subtopic> mSubtopics;
 
     @ColumnInfo(name = "episode_id")
-    @SerializedName("episode_id")
+    @SerializedName("id_episodes")
     int mEpisode;
 
     public Topic(int id, String name) {

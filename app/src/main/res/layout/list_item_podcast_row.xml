@@ -5,6 +5,20 @@
     android:layout_height="wrap_content">
 
     <ImageView
+        android:id="@+id/row_icon"
+        android:layout_width="15dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/ic_claimed"
+        android:elevation="3dp"
+        android:visibility="visible"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/row_title"
+        app:layout_constraintTop_toTopOf="@+id/row_title" />
+
+    <ImageView
         android:id="@+id/row_background"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -29,7 +43,7 @@
         android:text="@string/podcast_title_dummy"
         android:textAlignment="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/row_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -36,7 +36,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="32dp"
         android:text="@string/dialog_info_boys_subtitle"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_info_topic_background"
         app:layout_constraintEnd_toEndOf="@+id/dialog_info_ep_types_comm_details"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_ep_types_boys"
         app:layout_constraintTop_toBottomOf="@+id/dialog_info_ep_types_boys" />
@@ -50,6 +50,16 @@
         android:text="@string/boys"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_ep_types_comm_details"
         app:layout_constraintTop_toBottomOf="@+id/dialog_info_ep_types_comm_details" />
+
+    <TextView
+        android:id="@+id/dialog_info_ep_types_list"
+        style="@style/Dialog.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/subtopics"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_ep_types_boys_details"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_ep_types_title" />
 
     <TextView
         android:id="@+id/dialog_info_ep_types_comm_details"
@@ -71,7 +81,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/dialog_info_community"
         app:layout_constraintStart_toEndOf="@+id/dialog_info_ep_types_comm_icon"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_info_ep_types_title" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_ep_types_list_details" />
 
     <ImageView
         android:id="@+id/dialog_info_ep_types_comm_icon"
@@ -83,6 +93,17 @@
         app:layout_constraintStart_toStartOf="@+id/dialog_info_ep_types_title"
         app:layout_constraintTop_toTopOf="@+id/dialog_info_ep_types_community" />
 
+    <TextView
+        android:id="@+id/dialog_info_ep_types_list_details"
+        style="@style/Dialog.Details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/dialog_info_list_subtitle"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_info_ep_types_comm_details"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_ep_types_boys"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_info_ep_types_list" />
+
     <ImageView
         android:id="@+id/dialog_info_ep_types_boys_icon"
         android:layout_width="wrap_content"
@@ -93,6 +114,18 @@
         app:layout_constraintEnd_toEndOf="@+id/dialog_info_ep_types_comm_icon"
         app:layout_constraintStart_toStartOf="@+id/dialog_info_ep_types_comm_icon"
         app:layout_constraintTop_toTopOf="@+id/dialog_info_ep_types_boys" />
+
+    <ImageView
+        android:id="@+id/dialog_info_ep_types_list_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_subtopics"
+        android:backgroundTint="@color/black"
+        android:contentDescription="@string/contentDescription_icon_list"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_info_ep_types_list"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_info_ep_types_comm_icon"
+        app:layout_constraintStart_toStartOf="@+id/dialog_info_ep_types_comm_icon"
+        app:layout_constraintTop_toTopOf="@+id/dialog_info_ep_types_list" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/dialog_info_ep_types_begin"

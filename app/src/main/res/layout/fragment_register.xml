@@ -8,19 +8,6 @@
     tools:context=".view.RegisterFragment">
 
   <ImageView
-      android:id="@+id/fragment_register_curve_top_shadow"
-      android:contentDescription="@string/contentDescription_curve_top_shadow"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-      android:layout_marginTop="4dp"
-      android:background="@drawable/ic_curve_top_register"
-      android:backgroundTint="@color/secondaryColor_Alpha60"
-      app:layout_constraintDimensionRatio="w,1:3"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
-
-  <ImageView
       android:id="@+id/fragment_register_curve_top"
       android:layout_width="0dp"
       android:contentDescription="@string/contentDescription_curve"
@@ -73,169 +60,214 @@
       android:layout_height="0dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/fragment_register_circle"
       app:layout_constraintVertical_bias="0.0">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layoutDescription="@xml/fragment_register_scene">
 
-      <EditText
+      <com.google.android.material.textfield.TextInputLayout
           android:id="@+id/fragment_register_username"
           style="@style/Login.EditText"
-          android:autofillHints="@string/profile_name_autofill"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginStart="16dp"
-          android:layout_marginTop="32dp"
+          android:layout_marginTop="16dp"
           android:layout_marginEnd="16dp"
+          android:autofillHints="@string/profile_name_autofill"
           android:ems="10"
           android:hint="@string/login_username_hint"
-          android:inputType="textPersonName"
+          app:endIconMode="clear_text"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
+          app:layout_constraintTop_toTopOf="parent">
 
-      <TextView
-          android:id="@+id/fragment_register_username_hint"
-          style="@style/Login.EditText_Hint"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="35dp"
-          android:text="@string/profile_name_hint"
-          app:layout_constraintBottom_toTopOf="@+id/fragment_register_username"
-          app:layout_constraintStart_toStartOf="@+id/fragment_register_mail"
-          app:layout_constraintTop_toTopOf="@+id/fragment_register_username" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/fragment_register_username_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPersonName" />
 
-      <EditText
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <com.google.android.material.textfield.TextInputLayout
           android:id="@+id/fragment_register_mail"
           style="@style/Login.EditText"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginStart="16dp"
-          android:layout_marginTop="26dp"
+          android:layout_marginTop="8dp"
           android:layout_marginEnd="16dp"
           android:autofillHints="@string/profile_email_autofill"
           android:ems="10"
           android:hint="@string/login_mail_hint"
-          android:inputType="textEmailAddress"
+          app:endIconMode="clear_text"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/fragment_register_username" />
+          app:layout_constraintTop_toBottomOf="@+id/fragment_register_username">
 
-      <TextView
-          android:id="@+id/fragment_register_mail_hint"
-          style="@style/Login.EditText_Hint"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="35dp"
-          android:text="@string/profile_name_hint"
-          app:layout_constraintBottom_toTopOf="@+id/fragment_register_mail"
-          app:layout_constraintStart_toStartOf="@+id/fragment_register_mail"
-          app:layout_constraintTop_toTopOf="@+id/fragment_register_mail" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/fragment_register_mail_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textEmailAddress" />
 
-      <EditText
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <com.google.android.material.textfield.TextInputLayout
           android:id="@+id/fragment_register_password"
           style="@style/Login.EditText"
-          android:autofillHints="@string/profile_password_autofill"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_marginTop="26dp"
+          android:layout_marginTop="8dp"
+          android:autofillHints="@string/profile_password_autofill"
           android:ems="10"
           android:hint="@string/login_password_hint"
-          android:inputType="textPassword"
+          app:endIconMode="clear_text"
           app:layout_constraintEnd_toEndOf="@+id/fragment_register_mail"
           app:layout_constraintStart_toStartOf="@+id/fragment_register_mail"
-          app:layout_constraintTop_toBottomOf="@+id/fragment_register_mail" />
+          app:layout_constraintTop_toBottomOf="@+id/fragment_register_mail">
 
-      <EditText
-          android:id="@+id/fragment_register_password_again"
-          style="@style/Login.EditText"
-          android:autofillHints="@string/profile_password_autofill"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="26dp"
-          android:ems="10"
-          android:hint="@string/login_password_hint"
-          android:inputType="textPassword"
-          app:layout_constraintEnd_toEndOf="@+id/fragment_register_mail"
-          app:layout_constraintHorizontal_bias="0.0"
-          app:layout_constraintStart_toStartOf="@+id/fragment_register_mail"
-          app:layout_constraintTop_toBottomOf="@+id/fragment_register_password" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/fragment_register_password_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPassword" />
 
-      <EditText
-          android:id="@+id/fragment_register_password_again2"
-          style="@style/Login.EditText"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="26dp"
-          android:autofillHints="@string/profile_password_autofill"
-          android:ems="10"
-          android:hint="@string/login_password_again_hint"
-          android:inputType="textPassword"
-          app:layout_constraintEnd_toEndOf="@+id/fragment_register_mail"
-          app:layout_constraintHorizontal_bias="0.0"
-          app:layout_constraintStart_toStartOf="@+id/fragment_register_mail"
-          app:layout_constraintTop_toBottomOf="@+id/fragment_register_password" />
+      </com.google.android.material.textfield.TextInputLayout>
+
 
       <TextView
-          android:id="@+id/fragment_register_password_hint"
-          style="@style/Login.EditText_Hint"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="@string/profile_password_hint"
-          app:layout_constraintBottom_toTopOf="@+id/fragment_register_password"
-          app:layout_constraintStart_toStartOf="@+id/fragment_register_mail_hint"
-          app:layout_constraintTop_toTopOf="@+id/fragment_register_password" />
-
-      <TextView
-          android:id="@+id/fragment_register_plattfrom"
+          android:id="@+id/fragment_register_platfrom"
+          style="@style/Register.Subtitle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="20dp"
           android:layout_marginTop="32dp"
           android:layout_marginBottom="32dp"
-          style="@style/Register.Subtitle"
           android:text="@string/login_choosen_platform"
           app:layout_constraintBottom_toTopOf="@+id/fragment_register_button"
-          app:layout_constraintStart_toStartOf="@+id/fragment_register_password_again"
-          app:layout_constraintTop_toBottomOf="@+id/fragment_register_password_again" />
+          app:layout_constraintStart_toStartOf="@+id/fragment_register_password"
+          app:layout_constraintTop_toBottomOf="@+id/fragment_register_password" />
+
+      <View
+          android:id="@+id/fragment_register_play_background"
+          android:layout_width="0dp"
+          android:layout_height="50dp"
+          android:layout_marginStart="12dp"
+          android:background="@drawable/ic_play_actions_background"
+          app:layout_constraintBottom_toBottomOf="@+id/fragment_register_platfrom"
+          app:layout_constraintDimensionRatio="2:1"
+          app:layout_constraintStart_toEndOf="@+id/fragment_register_platfrom"
+          app:layout_constraintTop_toTopOf="@+id/fragment_register_platfrom" />
 
       <ImageView
-          android:id="@+id/fragment_register_curve_bottom_shadow"
+          android:id="@+id/fragment_register_play_spotify"
           android:layout_width="0dp"
-          android:contentDescription="@string/contentDescription_curve_bottom_shadow"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="4dp"
-          android:background="@drawable/ic_curve_bottom_register"
-          android:backgroundTint="@color/secondaryColor_Alpha60"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent" />
+          android:layout_height="0dp"
+          android:layout_marginStart="3dp"
+          android:layout_marginTop="3dp"
+          android:layout_marginEnd="3dp"
+          android:layout_marginBottom="3dp"
+          android:background="@drawable/ic_spotify"
+          android:contentDescription="@string/contentDescription_spotify"
+          app:layout_constraintBottom_toBottomOf="@+id/fragment_register_play_background"
+          app:layout_constraintDimensionRatio="1:1"
+          app:layout_constraintEnd_toStartOf="@+id/fragment_register_play_youtube"
+          app:layout_constraintHorizontal_bias="1.0"
+          app:layout_constraintStart_toStartOf="@+id/fragment_register_play_background"
+          app:layout_constraintTop_toTopOf="@+id/fragment_register_play_background" />
 
       <ImageView
-          android:id="@+id/fragment_register_curve_bottom"
+          android:id="@+id/fragment_register_play_youtube"
           android:layout_width="0dp"
-          android:contentDescription="@string/contentDescription_curve"
-          android:layout_height="wrap_content"
-          android:background="@drawable/ic_curve_bottom_register"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent" />
+          android:layout_height="0dp"
+          android:layout_marginStart="3dp"
+          android:layout_marginTop="3dp"
+          android:layout_marginEnd="3dp"
+          android:layout_marginBottom="3dp"
+          android:background="@drawable/ic_youtube"
+          android:contentDescription="@string/contentDescription_youtube"
+          app:layout_constraintBottom_toBottomOf="@+id/fragment_register_play_background"
+          app:layout_constraintDimensionRatio="1:1"
+          app:layout_constraintEnd_toEndOf="@+id/fragment_register_play_background"
+          app:layout_constraintStart_toEndOf="@+id/fragment_register_play_spotify"
+          app:layout_constraintTop_toTopOf="@+id/fragment_register_play_background" />
 
       <Button
           android:id="@+id/fragment_register_button"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_marginTop="24dp"
           android:backgroundTint="@color/black"
           android:text="@string/login_register_2"
           app:cornerRadius="20dp"
-          app:layout_constraintBottom_toTopOf="@+id/fragment_register_curve_bottom_shadow"
-          app:layout_constraintEnd_toEndOf="@+id/fragment_register_password_again"
-          app:layout_constraintStart_toStartOf="@+id/fragment_register_password_again"
-          app:layout_constraintTop_toTopOf="@+id/fragment_register_curve_bottom_shadow" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+          app:layout_constraintEnd_toEndOf="@+id/fragment_register_password"
+          app:layout_constraintStart_toStartOf="@+id/fragment_register_password"
+          app:layout_constraintTop_toBottomOf="@+id/fragment_register_platfrom" />
+
+      <TextView
+          android:id="@+id/fragment_register_login_link"
+          style="@style/Login.Subtitle_Link"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="3dp"
+          android:text="@string/login_register_link"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toStartOf="@+id/fragment_register_login_2"
+          app:layout_constraintStart_toEndOf="@+id/fragment_register_login" />
+
+      <ImageView
+          android:id="@+id/fragment_register_password_underline"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="2dp"
+          android:layout_marginEnd="2dp"
+          android:layout_marginBottom="1dp"
+          android:background="@drawable/ic_line"
+          android:backgroundTint="@color/primaryColor"
+          android:contentDescription="@string/contentDescription_undeline"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toStartOf="@+id/fragment_register_login_2"
+          app:layout_constraintStart_toEndOf="@+id/fragment_register_login" />
+
+      <TextView
+          android:id="@+id/fragment_register_login_2"
+          style="@style/Login.Subtitle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="3dp"
+          android:text="@string/register_login_2"
+          app:layout_constraintBaseline_toBaselineOf="@+id/fragment_register_login"
+          app:layout_constraintEnd_toEndOf="@+id/fragment_register_button"
+          app:layout_constraintStart_toEndOf="@+id/fragment_register_login_link" />
+
+      <TextView
+          android:id="@+id/fragment_register_login"
+          style="@style/Login.Subtitle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          android:text="@string/register_login_1"
+          app:layout_constraintEnd_toStartOf="@+id/fragment_register_login_link"
+          app:layout_constraintStart_toStartOf="@+id/fragment_register_button"
+          app:layout_constraintTop_toBottomOf="@+id/fragment_register_button" />
+    </androidx.constraintlayout.motion.widget.MotionLayout>
   </ScrollView>
+
+  <ImageView
+      android:id="@+id/fragment_register_curve_bottom"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:background="@drawable/ic_curve_bottom_register"
+      android:contentDescription="@string/contentDescription_curve"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

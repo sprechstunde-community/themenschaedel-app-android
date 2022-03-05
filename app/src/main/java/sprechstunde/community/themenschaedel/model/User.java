@@ -2,6 +2,7 @@ package sprechstunde.community.themenschaedel.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
@@ -22,24 +23,24 @@ public class User {
     @ColumnInfo(name = "email")
     private String mEmail;
 
-    @SerializedName("name")
-    @ColumnInfo(name = "name")
-    private String mName;
+    @SerializedName("role_id")
+    @ColumnInfo(name = "role_id")
+    private int mRoleId;
 
-    @SerializedName("description")
-    @ColumnInfo(name = "description")
-    private String mDescription;
+    @ColumnInfo(name = "platform")
+    private String mPlatform;
 
-    @ColumnInfo(name = "token")
-    private String mToken;
+    @Ignore
+    public User() {
 
-    public User(int id, String username, String email, String description, String name, String token) {
+    }
+
+    public User(int id, String username, String email, int roleId, String platform) {
         mId = id;
         mUsername = username;
         mEmail = email;
-        mDescription = description;
-        mName = name;
-        mToken = token;
+        mRoleId = roleId;
+        mPlatform = platform;
     }
 
     public int getId() {
@@ -58,35 +59,27 @@ public class User {
         mUsername = username;
     }
 
-    public String setEmail() {
+    public String getEmail() {
         return mEmail;
     }
 
-    public void getEmail (String email) {
+    public void setEmail (String email) {
         mEmail = email;
     }
 
-    public String getName() {
-        return mName;
+    public int getRoleId() {
+        return mRoleId;
     }
 
-    public void setName(String name) {
-        mName = name;
+    public void setRoleId(int roleId) {
+        mRoleId = roleId;
     }
 
-    public String getDescription() {
-        return mDescription;
+    public String getPlatform() {
+        return mPlatform;
     }
 
-    public void setDescription(String description) {
-        mDescription = description;
-    }
-
-    public String getToken() {
-        return mToken;
-    }
-
-    public void setToken(String token) {
-        mToken = token;
+    public void setPlatform(String platform) {
+        mPlatform = platform;
     }
 }

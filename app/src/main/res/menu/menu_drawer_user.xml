@@ -19,9 +19,9 @@
     <group
         android:id="@+id/nav_bottom"
         android:checkableBehavior="none">
-            <item
-                android:id="@+id/nav_login"
-                android:icon="@drawable/ic_logout"
-                android:title="@string/logout"/>
+        <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/ic_login"
+            android:title="@string/login_register" />
     </group>
 </menu>

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -26,8 +27,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
-import com.spotify.protocol.client.CallResult;
-import com.spotify.protocol.types.Empty;
 
 import java.util.Objects;
 
@@ -36,6 +35,7 @@ import sprechstunde.community.themenschaedel.databinding.ActivityMainBinding;
 import sprechstunde.community.themenschaedel.listener.ActivityToFragmentListener;
 import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
 import sprechstunde.community.themenschaedel.viewmodel.HostViewModel;
+import sprechstunde.community.themenschaedel.viewmodel.SessionViewModel;
 import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 import sprechstunde.community.themenschaedel.view.CustomPopupWindow;
 
@@ -45,11 +45,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavController mNavController;
     private AppBarConfiguration mAppBarConfiguration;
     private CustomPopupWindow mPopupWindow;
+    private SessionViewModel mSessionViewModel;
 
     private static final String CLIENT_ID = "18aeb0670f3e4097a91bc63ce3f77e11";
     private static final String REDIRECT_URI = "http://sprechstunde.community.themenschaedel/callback";
     private SpotifyAppRemote mSpotifyAppRemote;
-    private  ConnectionParams mConnectionParams;
+    private ConnectionParams mConnectionParams;
 
     @Override
     protected void onStart() {
@@ -68,8 +69,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View view = mBinding.getRoot();
 
         EpisodeViewModel episodeViewModel =new ViewModelProvider(this).get(EpisodeViewModel.class);
-        TopicViewModel topicViewModel =new ViewModelProvider(this).get(TopicViewModel.class);
-
+        TopicViewModel topicViewModel = new ViewModelProvider(this).get(TopicViewModel.class);
+        HostViewModel hostViewModel = new ViewModelProvider(this).get(HostViewModel.class);
+        mSessionViewModel = new ViewModelProvider(this).get(SessionViewModel.class);
+        UsedSharedPreferences.getInstance(this).getUserRoleToSharedPreferences();
         UsedSharedPreferences.getInstance(this).saveFirstStartToSharedPreferences(UsedSharedPreferences.getInstance(this).getFirstStartFromSharedPreferences() + 1);
         episodeViewModel.setCurrentPage(1);
         topicViewModel.setCurrentPage(1);
@@ -78,8 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         new Thread(() -> {
             try {
-                ApiClient.getInstance(this).saveEpisodesToDB(episodeViewModel, new ViewModelProvider(this).get(HostViewModel.class), false, null);
-                ApiClient.getInstance(this).saveTopicsToDB(topicViewModel, false);
+                ApiClient.getInstance(this).saveEpisodesToDB(episodeViewModel, topicViewModel, hostViewModel, false, null);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -111,7 +113,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationUI.setupActionBarWithNavController(this, mNavController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(mBinding.navView, mNavController);
         mBinding.navView.setNavigationItemSelectedListener(this);
-        mBinding.navView.getHeaderView(0).setOnClickListener(this);
+
+        if (SessionManagement.getInstance().getCurrentRole() == SessionManagement.ROLE.ANONYM) {
+            SessionManagement.getInstance().setUIWhenAnonym(mBinding.navView, this);
+        } else {
+            mSessionViewModel.getMyself().observe(this, myself -> SessionManagement.getInstance().setUIWhenLoggedIn(mBinding.navView, this, myself));
+        }
+
         setTextColorForMenuItem();
     }
 
@@ -145,8 +153,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (item.getItemId() == R.id.nav_hint) {
             mPopupWindow = new CustomPopupWindow();
-            mPopupWindow.showSortPopup(R.id.dialog_info_anonym_layout, R.layout.dialog_info_anonym, this);
-            mPopupWindow.getContentView().findViewById(R.id.dialog_info_anonym_button).setOnClickListener(this);
+            if(SessionManagement.getInstance().getCurrentRole() == SessionManagement.ROLE.ANONYM) {
+                mPopupWindow.showSortPopup(R.id.dialog_host_layout, R.layout.dialog_info_anonym, this);
+                mPopupWindow.getContentView().findViewById(R.id.dialog_info_anonym_button).setOnClickListener(this);
+            } else {
+                mPopupWindow.showSortPopup(R.id.dialog_info_user_layout, R.layout.dialog_info_user, this);
+                mPopupWindow.getContentView().findViewById(R.id.dialog_info_user_button).setOnClickListener(this);
+            }
         } else {
             mBinding.drawerLayout.closeDrawer(GravityCompat.START);
         }
@@ -168,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mBinding.activityMainToolbar.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.toolbar_gradient, getTheme()));
             mNavController.navigate(R.id.nav_profile);
         } else if (v.getId() == R.id.dialog_info_anonym_button) {
-            mBinding.activityMainToolbar.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.toolbar_gradient_register, getTheme()));
+            mBinding.activityMainToolbar.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.toolbar_gradient, getTheme()));
             mNavController.navigate(R.id.nav_register);
             mPopupWindow.dismiss();
         }
@@ -189,6 +202,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         // Now you can start interacting with App Remote
                         mSpotifyAppRemote.getPlayerApi().pause();
                         mSpotifyAppRemote.getPlayerApi().play("spotify:episode:" + uri).setResultCallback(data -> mSpotifyAppRemote.getPlayerApi().seekTo(offset));
+
+                        Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.spotify.music");
+                        if (launchIntent != null) {
+                            startActivity(launchIntent);
+                        }
                     }
 
                     @Override

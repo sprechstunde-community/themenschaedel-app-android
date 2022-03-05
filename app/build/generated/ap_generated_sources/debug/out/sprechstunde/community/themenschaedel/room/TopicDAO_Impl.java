@@ -56,11 +56,9 @@ public final class TopicDAO_Impl implements TopicDAO {
         }
         stmt.bindLong(3, value.getStart());
         stmt.bindLong(4, value.getEnd());
-        final int _tmp;
-        _tmp = value.getAd() ? 1 : 0;
+        final int _tmp = value.getAd() ? 1 : 0;
         stmt.bindLong(5, _tmp);
-        final int _tmp_1;
-        _tmp_1 = value.getCommunityContribution() ? 1 : 0;
+        final int _tmp_1 = value.getCommunityContribution() ? 1 : 0;
         stmt.bindLong(6, _tmp_1);
         stmt.bindLong(7, value.getEpisode());
       }
@@ -92,11 +90,9 @@ public final class TopicDAO_Impl implements TopicDAO {
         }
         stmt.bindLong(3, value.getStart());
         stmt.bindLong(4, value.getEnd());
-        final int _tmp;
-        _tmp = value.getAd() ? 1 : 0;
+        final int _tmp = value.getAd() ? 1 : 0;
         stmt.bindLong(5, _tmp);
-        final int _tmp_1;
-        _tmp_1 = value.getCommunityContribution() ? 1 : 0;
+        final int _tmp_1 = value.getCommunityContribution() ? 1 : 0;
         stmt.bindLong(6, _tmp_1);
         stmt.bindLong(7, value.getEpisode());
         stmt.bindLong(8, value.getId());
@@ -615,6 +611,401 @@ public final class TopicDAO_Impl implements TopicDAO {
     });
   }
 
+  @Override
+  public LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsAllWithoutAds() {
+    final String _sql = "SELECT * FROM topic_table WHERE topic_table.ad = 0";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    return __db.getInvalidationTracker().createLiveData(new String[]{"subtopic_table","topic_table"}, true, new Callable<List<TopicWithSubtopic>>() {
+      @Override
+      public List<TopicWithSubtopic> call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Cursor _cursor = DBUtil.query(__db, _statement, true, null);
+          try {
+            final int _cursorIndexOfMId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfMName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+            final int _cursorIndexOfMStart = CursorUtil.getColumnIndexOrThrow(_cursor, "start");
+            final int _cursorIndexOfMEnd = CursorUtil.getColumnIndexOrThrow(_cursor, "end");
+            final int _cursorIndexOfMAd = CursorUtil.getColumnIndexOrThrow(_cursor, "ad");
+            final int _cursorIndexOfMCommunityContribution = CursorUtil.getColumnIndexOrThrow(_cursor, "community_contribution");
+            final int _cursorIndexOfMEpisode = CursorUtil.getColumnIndexOrThrow(_cursor, "episode_id");
+            final LongSparseArray<ArrayList<Subtopic>> _collectionMSubtopics = new LongSparseArray<ArrayList<Subtopic>>();
+            while (_cursor.moveToNext()) {
+              if (!_cursor.isNull(_cursorIndexOfMId)) {
+                final long _tmpKey = _cursor.getLong(_cursorIndexOfMId);
+                ArrayList<Subtopic> _tmpMSubtopicsCollection = _collectionMSubtopics.get(_tmpKey);
+                if (_tmpMSubtopicsCollection == null) {
+                  _tmpMSubtopicsCollection = new ArrayList<Subtopic>();
+                  _collectionMSubtopics.put(_tmpKey, _tmpMSubtopicsCollection);
+                }
+              }
+            }
+            _cursor.moveToPosition(-1);
+            __fetchRelationshipsubtopicTableAssprechstundeCommunityThemenschaedelModelTopicSubtopic(_collectionMSubtopics);
+            final List<TopicWithSubtopic> _result = new ArrayList<TopicWithSubtopic>(_cursor.getCount());
+            while(_cursor.moveToNext()) {
+              final TopicWithSubtopic _item;
+              final Topic _tmpMTopic;
+              if (! (_cursor.isNull(_cursorIndexOfMId) && _cursor.isNull(_cursorIndexOfMName) && _cursor.isNull(_cursorIndexOfMStart) && _cursor.isNull(_cursorIndexOfMEnd) && _cursor.isNull(_cursorIndexOfMAd) && _cursor.isNull(_cursorIndexOfMCommunityContribution) && _cursor.isNull(_cursorIndexOfMEpisode))) {
+                final int _tmpMId;
+                _tmpMId = _cursor.getInt(_cursorIndexOfMId);
+                final String _tmpMName;
+                if (_cursor.isNull(_cursorIndexOfMName)) {
+                  _tmpMName = null;
+                } else {
+                  _tmpMName = _cursor.getString(_cursorIndexOfMName);
+                }
+                _tmpMTopic = new Topic(_tmpMId,_tmpMName);
+                final int _tmpMStart;
+                _tmpMStart = _cursor.getInt(_cursorIndexOfMStart);
+                _tmpMTopic.setStart(_tmpMStart);
+                final int _tmpMEnd;
+                _tmpMEnd = _cursor.getInt(_cursorIndexOfMEnd);
+                _tmpMTopic.setEnd(_tmpMEnd);
+                final boolean _tmpMAd;
+                final int _tmp;
+                _tmp = _cursor.getInt(_cursorIndexOfMAd);
+                _tmpMAd = _tmp != 0;
+                _tmpMTopic.setAd(_tmpMAd);
+                final boolean _tmpMCommunityContribution;
+                final int _tmp_1;
+                _tmp_1 = _cursor.getInt(_cursorIndexOfMCommunityContribution);
+                _tmpMCommunityContribution = _tmp_1 != 0;
+                _tmpMTopic.setCommunityContribution(_tmpMCommunityContribution);
+                final int _tmpMEpisode;
+                _tmpMEpisode = _cursor.getInt(_cursorIndexOfMEpisode);
+                _tmpMTopic.setEpisode(_tmpMEpisode);
+              }  else  {
+                _tmpMTopic = null;
+              }
+              ArrayList<Subtopic> _tmpMSubtopicsCollection_1 = null;
+              if (!_cursor.isNull(_cursorIndexOfMId)) {
+                final long _tmpKey_1 = _cursor.getLong(_cursorIndexOfMId);
+                _tmpMSubtopicsCollection_1 = _collectionMSubtopics.get(_tmpKey_1);
+              }
+              if (_tmpMSubtopicsCollection_1 == null) {
+                _tmpMSubtopicsCollection_1 = new ArrayList<Subtopic>();
+              }
+              _item = new TopicWithSubtopic();
+              _item.setTopic(_tmpMTopic);
+              _item.setSubtopics(_tmpMSubtopicsCollection_1);
+              _result.add(_item);
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+          }
+        } finally {
+          __db.endTransaction();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
+  public LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsCommunityAndAds(
+      final int community, final int ad) {
+    final String _sql = "SELECT * FROM topic_table WHERE topic_table.community_contribution = ? AND topic_table.ad = ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, community);
+    _argIndex = 2;
+    _statement.bindLong(_argIndex, ad);
+    return __db.getInvalidationTracker().createLiveData(new String[]{"subtopic_table","topic_table"}, true, new Callable<List<TopicWithSubtopic>>() {
+      @Override
+      public List<TopicWithSubtopic> call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Cursor _cursor = DBUtil.query(__db, _statement, true, null);
+          try {
+            final int _cursorIndexOfMId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfMName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+            final int _cursorIndexOfMStart = CursorUtil.getColumnIndexOrThrow(_cursor, "start");
+            final int _cursorIndexOfMEnd = CursorUtil.getColumnIndexOrThrow(_cursor, "end");
+            final int _cursorIndexOfMAd = CursorUtil.getColumnIndexOrThrow(_cursor, "ad");
+            final int _cursorIndexOfMCommunityContribution = CursorUtil.getColumnIndexOrThrow(_cursor, "community_contribution");
+            final int _cursorIndexOfMEpisode = CursorUtil.getColumnIndexOrThrow(_cursor, "episode_id");
+            final LongSparseArray<ArrayList<Subtopic>> _collectionMSubtopics = new LongSparseArray<ArrayList<Subtopic>>();
+            while (_cursor.moveToNext()) {
+              if (!_cursor.isNull(_cursorIndexOfMId)) {
+                final long _tmpKey = _cursor.getLong(_cursorIndexOfMId);
+                ArrayList<Subtopic> _tmpMSubtopicsCollection = _collectionMSubtopics.get(_tmpKey);
+                if (_tmpMSubtopicsCollection == null) {
+                  _tmpMSubtopicsCollection = new ArrayList<Subtopic>();
+                  _collectionMSubtopics.put(_tmpKey, _tmpMSubtopicsCollection);
+                }
+              }
+            }
+            _cursor.moveToPosition(-1);
+            __fetchRelationshipsubtopicTableAssprechstundeCommunityThemenschaedelModelTopicSubtopic(_collectionMSubtopics);
+            final List<TopicWithSubtopic> _result = new ArrayList<TopicWithSubtopic>(_cursor.getCount());
+            while(_cursor.moveToNext()) {
+              final TopicWithSubtopic _item;
+              final Topic _tmpMTopic;
+              if (! (_cursor.isNull(_cursorIndexOfMId) && _cursor.isNull(_cursorIndexOfMName) && _cursor.isNull(_cursorIndexOfMStart) && _cursor.isNull(_cursorIndexOfMEnd) && _cursor.isNull(_cursorIndexOfMAd) && _cursor.isNull(_cursorIndexOfMCommunityContribution) && _cursor.isNull(_cursorIndexOfMEpisode))) {
+                final int _tmpMId;
+                _tmpMId = _cursor.getInt(_cursorIndexOfMId);
+                final String _tmpMName;
+                if (_cursor.isNull(_cursorIndexOfMName)) {
+                  _tmpMName = null;
+                } else {
+                  _tmpMName = _cursor.getString(_cursorIndexOfMName);
+                }
+                _tmpMTopic = new Topic(_tmpMId,_tmpMName);
+                final int _tmpMStart;
+                _tmpMStart = _cursor.getInt(_cursorIndexOfMStart);
+                _tmpMTopic.setStart(_tmpMStart);
+                final int _tmpMEnd;
+                _tmpMEnd = _cursor.getInt(_cursorIndexOfMEnd);
+                _tmpMTopic.setEnd(_tmpMEnd);
+                final boolean _tmpMAd;
+                final int _tmp;
+                _tmp = _cursor.getInt(_cursorIndexOfMAd);
+                _tmpMAd = _tmp != 0;
+                _tmpMTopic.setAd(_tmpMAd);
+                final boolean _tmpMCommunityContribution;
+                final int _tmp_1;
+                _tmp_1 = _cursor.getInt(_cursorIndexOfMCommunityContribution);
+                _tmpMCommunityContribution = _tmp_1 != 0;
+                _tmpMTopic.setCommunityContribution(_tmpMCommunityContribution);
+                final int _tmpMEpisode;
+                _tmpMEpisode = _cursor.getInt(_cursorIndexOfMEpisode);
+                _tmpMTopic.setEpisode(_tmpMEpisode);
+              }  else  {
+                _tmpMTopic = null;
+              }
+              ArrayList<Subtopic> _tmpMSubtopicsCollection_1 = null;
+              if (!_cursor.isNull(_cursorIndexOfMId)) {
+                final long _tmpKey_1 = _cursor.getLong(_cursorIndexOfMId);
+                _tmpMSubtopicsCollection_1 = _collectionMSubtopics.get(_tmpKey_1);
+              }
+              if (_tmpMSubtopicsCollection_1 == null) {
+                _tmpMSubtopicsCollection_1 = new ArrayList<Subtopic>();
+              }
+              _item = new TopicWithSubtopic();
+              _item.setTopic(_tmpMTopic);
+              _item.setSubtopics(_tmpMSubtopicsCollection_1);
+              _result.add(_item);
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+          }
+        } finally {
+          __db.endTransaction();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
+  public LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsCommunity(final int community) {
+    final String _sql = "SELECT * FROM topic_table WHERE topic_table.community_contribution = ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, community);
+    return __db.getInvalidationTracker().createLiveData(new String[]{"subtopic_table","topic_table"}, true, new Callable<List<TopicWithSubtopic>>() {
+      @Override
+      public List<TopicWithSubtopic> call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Cursor _cursor = DBUtil.query(__db, _statement, true, null);
+          try {
+            final int _cursorIndexOfMId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfMName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+            final int _cursorIndexOfMStart = CursorUtil.getColumnIndexOrThrow(_cursor, "start");
+            final int _cursorIndexOfMEnd = CursorUtil.getColumnIndexOrThrow(_cursor, "end");
+            final int _cursorIndexOfMAd = CursorUtil.getColumnIndexOrThrow(_cursor, "ad");
+            final int _cursorIndexOfMCommunityContribution = CursorUtil.getColumnIndexOrThrow(_cursor, "community_contribution");
+            final int _cursorIndexOfMEpisode = CursorUtil.getColumnIndexOrThrow(_cursor, "episode_id");
+            final LongSparseArray<ArrayList<Subtopic>> _collectionMSubtopics = new LongSparseArray<ArrayList<Subtopic>>();
+            while (_cursor.moveToNext()) {
+              if (!_cursor.isNull(_cursorIndexOfMId)) {
+                final long _tmpKey = _cursor.getLong(_cursorIndexOfMId);
+                ArrayList<Subtopic> _tmpMSubtopicsCollection = _collectionMSubtopics.get(_tmpKey);
+                if (_tmpMSubtopicsCollection == null) {
+                  _tmpMSubtopicsCollection = new ArrayList<Subtopic>();
+                  _collectionMSubtopics.put(_tmpKey, _tmpMSubtopicsCollection);
+                }
+              }
+            }
+            _cursor.moveToPosition(-1);
+            __fetchRelationshipsubtopicTableAssprechstundeCommunityThemenschaedelModelTopicSubtopic(_collectionMSubtopics);
+            final List<TopicWithSubtopic> _result = new ArrayList<TopicWithSubtopic>(_cursor.getCount());
+            while(_cursor.moveToNext()) {
+              final TopicWithSubtopic _item;
+              final Topic _tmpMTopic;
+              if (! (_cursor.isNull(_cursorIndexOfMId) && _cursor.isNull(_cursorIndexOfMName) && _cursor.isNull(_cursorIndexOfMStart) && _cursor.isNull(_cursorIndexOfMEnd) && _cursor.isNull(_cursorIndexOfMAd) && _cursor.isNull(_cursorIndexOfMCommunityContribution) && _cursor.isNull(_cursorIndexOfMEpisode))) {
+                final int _tmpMId;
+                _tmpMId = _cursor.getInt(_cursorIndexOfMId);
+                final String _tmpMName;
+                if (_cursor.isNull(_cursorIndexOfMName)) {
+                  _tmpMName = null;
+                } else {
+                  _tmpMName = _cursor.getString(_cursorIndexOfMName);
+                }
+                _tmpMTopic = new Topic(_tmpMId,_tmpMName);
+                final int _tmpMStart;
+                _tmpMStart = _cursor.getInt(_cursorIndexOfMStart);
+                _tmpMTopic.setStart(_tmpMStart);
+                final int _tmpMEnd;
+                _tmpMEnd = _cursor.getInt(_cursorIndexOfMEnd);
+                _tmpMTopic.setEnd(_tmpMEnd);
+                final boolean _tmpMAd;
+                final int _tmp;
+                _tmp = _cursor.getInt(_cursorIndexOfMAd);
+                _tmpMAd = _tmp != 0;
+                _tmpMTopic.setAd(_tmpMAd);
+                final boolean _tmpMCommunityContribution;
+                final int _tmp_1;
+                _tmp_1 = _cursor.getInt(_cursorIndexOfMCommunityContribution);
+                _tmpMCommunityContribution = _tmp_1 != 0;
+                _tmpMTopic.setCommunityContribution(_tmpMCommunityContribution);
+                final int _tmpMEpisode;
+                _tmpMEpisode = _cursor.getInt(_cursorIndexOfMEpisode);
+                _tmpMTopic.setEpisode(_tmpMEpisode);
+              }  else  {
+                _tmpMTopic = null;
+              }
+              ArrayList<Subtopic> _tmpMSubtopicsCollection_1 = null;
+              if (!_cursor.isNull(_cursorIndexOfMId)) {
+                final long _tmpKey_1 = _cursor.getLong(_cursorIndexOfMId);
+                _tmpMSubtopicsCollection_1 = _collectionMSubtopics.get(_tmpKey_1);
+              }
+              if (_tmpMSubtopicsCollection_1 == null) {
+                _tmpMSubtopicsCollection_1 = new ArrayList<Subtopic>();
+              }
+              _item = new TopicWithSubtopic();
+              _item.setTopic(_tmpMTopic);
+              _item.setSubtopics(_tmpMSubtopicsCollection_1);
+              _result.add(_item);
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+          }
+        } finally {
+          __db.endTransaction();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
+  public LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsOnlyAds() {
+    final String _sql = "SELECT * FROM topic_table WHERE topic_table.ad = 1";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
+    return __db.getInvalidationTracker().createLiveData(new String[]{"subtopic_table","topic_table"}, true, new Callable<List<TopicWithSubtopic>>() {
+      @Override
+      public List<TopicWithSubtopic> call() throws Exception {
+        __db.beginTransaction();
+        try {
+          final Cursor _cursor = DBUtil.query(__db, _statement, true, null);
+          try {
+            final int _cursorIndexOfMId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+            final int _cursorIndexOfMName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+            final int _cursorIndexOfMStart = CursorUtil.getColumnIndexOrThrow(_cursor, "start");
+            final int _cursorIndexOfMEnd = CursorUtil.getColumnIndexOrThrow(_cursor, "end");
+            final int _cursorIndexOfMAd = CursorUtil.getColumnIndexOrThrow(_cursor, "ad");
+            final int _cursorIndexOfMCommunityContribution = CursorUtil.getColumnIndexOrThrow(_cursor, "community_contribution");
+            final int _cursorIndexOfMEpisode = CursorUtil.getColumnIndexOrThrow(_cursor, "episode_id");
+            final LongSparseArray<ArrayList<Subtopic>> _collectionMSubtopics = new LongSparseArray<ArrayList<Subtopic>>();
+            while (_cursor.moveToNext()) {
+              if (!_cursor.isNull(_cursorIndexOfMId)) {
+                final long _tmpKey = _cursor.getLong(_cursorIndexOfMId);
+                ArrayList<Subtopic> _tmpMSubtopicsCollection = _collectionMSubtopics.get(_tmpKey);
+                if (_tmpMSubtopicsCollection == null) {
+                  _tmpMSubtopicsCollection = new ArrayList<Subtopic>();
+                  _collectionMSubtopics.put(_tmpKey, _tmpMSubtopicsCollection);
+                }
+              }
+            }
+            _cursor.moveToPosition(-1);
+            __fetchRelationshipsubtopicTableAssprechstundeCommunityThemenschaedelModelTopicSubtopic(_collectionMSubtopics);
+            final List<TopicWithSubtopic> _result = new ArrayList<TopicWithSubtopic>(_cursor.getCount());
+            while(_cursor.moveToNext()) {
+              final TopicWithSubtopic _item;
+              final Topic _tmpMTopic;
+              if (! (_cursor.isNull(_cursorIndexOfMId) && _cursor.isNull(_cursorIndexOfMName) && _cursor.isNull(_cursorIndexOfMStart) && _cursor.isNull(_cursorIndexOfMEnd) && _cursor.isNull(_cursorIndexOfMAd) && _cursor.isNull(_cursorIndexOfMCommunityContribution) && _cursor.isNull(_cursorIndexOfMEpisode))) {
+                final int _tmpMId;
+                _tmpMId = _cursor.getInt(_cursorIndexOfMId);
+                final String _tmpMName;
+                if (_cursor.isNull(_cursorIndexOfMName)) {
+                  _tmpMName = null;
+                } else {
+                  _tmpMName = _cursor.getString(_cursorIndexOfMName);
+                }
+                _tmpMTopic = new Topic(_tmpMId,_tmpMName);
+                final int _tmpMStart;
+                _tmpMStart = _cursor.getInt(_cursorIndexOfMStart);
+                _tmpMTopic.setStart(_tmpMStart);
+                final int _tmpMEnd;
+                _tmpMEnd = _cursor.getInt(_cursorIndexOfMEnd);
+                _tmpMTopic.setEnd(_tmpMEnd);
+                final boolean _tmpMAd;
+                final int _tmp;
+                _tmp = _cursor.getInt(_cursorIndexOfMAd);
+                _tmpMAd = _tmp != 0;
+                _tmpMTopic.setAd(_tmpMAd);
+                final boolean _tmpMCommunityContribution;
+                final int _tmp_1;
+                _tmp_1 = _cursor.getInt(_cursorIndexOfMCommunityContribution);
+                _tmpMCommunityContribution = _tmp_1 != 0;
+                _tmpMTopic.setCommunityContribution(_tmpMCommunityContribution);
+                final int _tmpMEpisode;
+                _tmpMEpisode = _cursor.getInt(_cursorIndexOfMEpisode);
+                _tmpMTopic.setEpisode(_tmpMEpisode);
+              }  else  {
+                _tmpMTopic = null;
+              }
+              ArrayList<Subtopic> _tmpMSubtopicsCollection_1 = null;
+              if (!_cursor.isNull(_cursorIndexOfMId)) {
+                final long _tmpKey_1 = _cursor.getLong(_cursorIndexOfMId);
+                _tmpMSubtopicsCollection_1 = _collectionMSubtopics.get(_tmpKey_1);
+              }
+              if (_tmpMSubtopicsCollection_1 == null) {
+                _tmpMSubtopicsCollection_1 = new ArrayList<Subtopic>();
+              }
+              _item = new TopicWithSubtopic();
+              _item.setTopic(_tmpMTopic);
+              _item.setSubtopics(_tmpMSubtopicsCollection_1);
+              _result.add(_item);
+            }
+            __db.setTransactionSuccessful();
+            return _result;
+          } finally {
+            _cursor.close();
+          }
+        } finally {
+          __db.endTransaction();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
   public static List<Class<?>> getRequiredConverters() {
     return Collections.emptyList();
   }
@@ -646,7 +1037,7 @@ public final class TopicDAO_Impl implements TopicDAO {
       return;
     }
     StringBuilder _stringBuilder = StringUtil.newStringBuilder();
-    _stringBuilder.append("SELECT `id`,`name`,`topic_id` FROM `subtopic_table` WHERE `topic_id` IN (");
+    _stringBuilder.append("SELECT `id`,`name`,`id_topic` FROM `subtopic_table` WHERE `id_topic` IN (");
     final int _inputSize = _map.size();
     StringUtil.appendPlaceholders(_stringBuilder, _inputSize);
     _stringBuilder.append(")");
@@ -661,13 +1052,13 @@ public final class TopicDAO_Impl implements TopicDAO {
     }
     final Cursor _cursor = DBUtil.query(__db, _stmt, false, null);
     try {
-      final int _itemKeyIndex = CursorUtil.getColumnIndex(_cursor, "topic_id");
+      final int _itemKeyIndex = CursorUtil.getColumnIndex(_cursor, "id_topic");
       if (_itemKeyIndex == -1) {
         return;
       }
-      final int _cursorIndexOfMId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-      final int _cursorIndexOfMName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
-      final int _cursorIndexOfMTopicId = CursorUtil.getColumnIndexOrThrow(_cursor, "topic_id");
+      final int _cursorIndexOfMId = 0;
+      final int _cursorIndexOfMName = 1;
+      final int _cursorIndexOfMTopicId = 2;
       while(_cursor.moveToNext()) {
         if (!_cursor.isNull(_itemKeyIndex)) {
           final long _tmpKey = _cursor.getLong(_itemKeyIndex);

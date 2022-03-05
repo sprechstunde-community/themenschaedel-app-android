@@ -5,6 +5,21 @@
     android:layout_height="wrap_content">
 
     <ImageView
+        android:id="@+id/cell_corner_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/ic_claimed"
+        android:elevation="3dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/cell_number"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="@+id/cell_title"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/cell_number"
+        app:layout_constraintTop_toTopOf="@+id/cell_number" />
+
+    <ImageView
         android:id="@+id/cell_background"
         android:layout_width="0dp"
         android:layout_height="90dp"
@@ -28,7 +43,7 @@
         app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/podcast_defauft_image" />
+        app:srcCompat="@drawable/podcast_default_image" />
 
     <TextView
         android:id="@+id/cell_title"

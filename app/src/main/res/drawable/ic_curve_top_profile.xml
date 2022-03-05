@@ -1,9 +1,4 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="404.4dp"
-    android:height="120.5dp"
-    android:viewportWidth="404.4"
-    android:viewportHeight="120.5">
-  <path
-      android:pathData="M0,120.5c77.1,0 204.8,-50.6 308.8,-50.6c64.7,0 95.6,17.4 95.6,17.4V0H0V120.5z"
-      android:fillColor="@color/curve_gradient_profile" />
+<vector android:height="149.88025dp" android:viewportHeight="149.77"
+    android:viewportWidth="502.63" android:width="503dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="@color/curve_gradient_login" android:pathData="M0,149.77c95.83,0 254.55,-62.89 383.81,-62.89 80.41,0 118.82,21.63 118.82,21.63V0H0Z"/>
 </vector>

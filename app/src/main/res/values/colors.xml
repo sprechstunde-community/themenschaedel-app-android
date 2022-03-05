@@ -35,7 +35,18 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="lightGreen">#ACF44F</color>
+    <color name="green">#5FDB54</color>
+    <color name="darkGreen">#05A475</color>
     <color name="teal">#018B8C</color>
     <color name="tealDark">#1D5C71</color>
+    <color name="lightGrey">#F4F4F4</color>
+    <color name="grey">#979797</color>
+
+    <color name="mtrl_textinput_default_box_stroke_color">@color/primaryColor_Alpha60</color>
+    <color name="mtrl_textinput_disabled_color">#1F000000</color>
+    <color name="mtrl_textinput_filled_box_default_background_color">#0A000000</color>
+    <color name="mtrl_textinput_focused_box_stroke_color">#00000000</color>
+    <color name="mtrl_textinput_hovered_box_stroke_color">#DE000000</color>
 
 </resources>

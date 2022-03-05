@@ -25,8 +25,8 @@ public interface UserDAO {
     void delete(User user);
 
     @Query("DELETE FROM user_table")
-    void deleteAllHosts();
+    void deleteAllUsers();
 
-    @Query("SELECT * FROM host_table ORDER BY name ASC")
-    LiveData<List<Host>> getAllHosts();
+    @Query("SELECT * FROM user_table ORDER BY username ASC")
+    LiveData<List<User>> getAllUsers();
 }

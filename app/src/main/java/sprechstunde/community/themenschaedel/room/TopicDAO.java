@@ -49,4 +49,19 @@ public interface TopicDAO {
     @Query("SELECT * FROM topic_table WHERE topic_table.name LIKE '%' || :query || '%'")
     LiveData<List<Topic>> search(String query);
 
+    @Transaction
+    @Query("SELECT * FROM topic_table WHERE topic_table.ad = 0")
+    LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsAllWithoutAds();
+
+    @Transaction
+    @Query("SELECT * FROM topic_table WHERE topic_table.community_contribution = :community AND topic_table.ad = :ad")
+    LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsCommunityAndAds(int community, int ad);
+
+    @Transaction
+    @Query("SELECT * FROM topic_table WHERE topic_table.community_contribution = :community")
+    LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsCommunity(int community);
+
+    @Transaction
+    @Query("SELECT * FROM topic_table WHERE topic_table.ad = 1")
+    LiveData<List<TopicWithSubtopic>> getAllTopicsWithSubtopicsOnlyAds();
 }

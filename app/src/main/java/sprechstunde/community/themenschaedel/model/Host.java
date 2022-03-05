@@ -1,5 +1,6 @@
 package sprechstunde.community.themenschaedel.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -11,44 +12,28 @@ import com.google.gson.annotations.SerializedName;
 public class Host {
 
     @PrimaryKey
-    @SerializedName("id")
-    @ColumnInfo(name = "host_id")
-    private int mId;
-
     @SerializedName("name")
-    @ColumnInfo(name = "name")
+    @ColumnInfo(name = "hostName")
+    @NonNull
     private String mName;
 
     @SerializedName("description")
     @ColumnInfo(name = "description")
     private String mDescription;
 
-    @SerializedName("profile_picture")
-    @ColumnInfo(name = "profile_picture")
-    private String mImage;
+    @SerializedName("host")
+    @ColumnInfo(name = "host")
+    private boolean mHost;
 
-    @SerializedName("main")
-    @ColumnInfo(name = "main")
-    private boolean mMain;
-
-    public Host(int id, String name, String description, String image) {
-        mId = id;
+    public Host(@NonNull String name, String description, boolean host) {
         mName = name;
         mDescription = description;
-        mImage = image;
+        mHost = host;
     }
 
     @Ignore
-    public Host(String name) {
+    public Host(@NonNull String name) {
         mName = name;
-    }
-
-    public int getId() {
-        return mId;
-    }
-
-    public void setId(int id) {
-        mId = id;
     }
 
     public String getName() {
@@ -67,19 +52,11 @@ public class Host {
         mDescription = description;
     }
 
-    public String getImage() {
-        return mImage;
+    public boolean isHost() {
+        return mHost;
     }
 
-    public void setImage(String image) {
-        mImage = image;
-    }
-
-    public boolean isMain() {
-        return mMain;
-    }
-
-    public void setMain(boolean main) {
-        mMain = main;
+    public void setHost(boolean isHost) {
+        mHost = isHost;
     }
 }

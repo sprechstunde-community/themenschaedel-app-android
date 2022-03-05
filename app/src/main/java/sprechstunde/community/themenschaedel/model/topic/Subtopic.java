@@ -19,8 +19,8 @@ public class Subtopic {
     @SerializedName("name")
     private String mName;
 
-    @ColumnInfo(name="topic_id")
-    @SerializedName("topic_id")
+    @ColumnInfo(name="id_topic")
+    @SerializedName("id_topic")
     private int mTopicId;
 
     public Subtopic(int id, String name, int topicId) {

@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Themenschaedel.iml" filepath="$PROJECT_DIR$/.idea/modules/Themenschaedel.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Themenschaedel.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Themenschaedel.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app-remote-lib/Themenschaedel.app-remote-lib.iml" filepath="$PROJECT_DIR$/.idea/modules/app-remote-lib/Themenschaedel.app-remote-lib.iml" />
     </modules>
   </component>
 </project>

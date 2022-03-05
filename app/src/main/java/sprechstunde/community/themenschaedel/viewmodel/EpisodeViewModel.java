@@ -9,7 +9,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
-import sprechstunde.community.themenschaedel.model.Episode;
+import sprechstunde.community.themenschaedel.model.episode.Episode;
+import sprechstunde.community.themenschaedel.model.episode.EpisodeHostCrossRef;
+import sprechstunde.community.themenschaedel.model.episode.EpisodeWithHosts;
 import sprechstunde.community.themenschaedel.room.Repository;
 
 public class EpisodeViewModel extends AndroidViewModel {
@@ -45,6 +47,10 @@ public class EpisodeViewModel extends AndroidViewModel {
         mRepository.insert(e);
     }
 
+    public void insertEpisodeHostCrossRef(EpisodeHostCrossRef crossRef) {
+        mRepository.insertEpisodeHostCrossRef(crossRef);
+    }
+
     public void update(Episode e) {
         mRepository.update(e);
     }
@@ -61,16 +67,16 @@ public class EpisodeViewModel extends AndroidViewModel {
         return mRepository.getAllEpisodes();
     }
 
-    public LiveData<Episode> getEpisode(int id) {
-        return mRepository.getEpisode(id);
-    }
-
-    public LiveData<Episode> getEpisodeByNumber (int number) {
+    public LiveData<Episode> getEpisode(int number) {
         return mRepository.getEpisodeByNumber(number);
     }
 
     public LiveData<Episode> getEpisode(String title) {
         return mRepository.getEpisode(title);
+    }
+
+    public LiveData<EpisodeWithHosts> getEpisodeWithHosts(int number) {
+        return mRepository.getEpisodeWithHosts(number);
     }
 
     public LiveData<List<Episode>> searchForEpisodes(String title) {
