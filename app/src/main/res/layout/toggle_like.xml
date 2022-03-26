@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ToggleButton
+        android:id="@+id/toggle_like_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/toggle_like"
+        android:textOff=""
+        android:textOn=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/toggle_dislike_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/podcast_vote_dummy"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/toggle_dislike_icon"
+        app:layout_constraintStart_toEndOf="@+id/toggle_dislike_icon"
+        app:layout_constraintTop_toTopOf="@+id/toggle_dislike_icon" />
+
+    <ToggleButton
+        android:id="@+id/toggle_dislike_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/toggle_dislike"
+        android:textOff=""
+        android:textOn=""
+        app:layout_constraintBottom_toBottomOf="@+id/toggle_like_icon"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toEndOf="@+id/toggle_like_text"
+        app:layout_constraintTop_toTopOf="@+id/toggle_like_icon" />
+
+    <TextView
+        android:id="@+id/toggle_like_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/podcast_vote_dummy"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/toggle_like_icon"
+        app:layout_constraintStart_toEndOf="@+id/toggle_like_icon"
+        app:layout_constraintTop_toTopOf="@+id/toggle_like_icon" />
+</androidx.constraintlayout.widget.ConstraintLayout>

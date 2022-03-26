@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-
     <color name="primaryColor">#2AAD94</color>
     <color name="primaryColor_Alpha60">#992AAD94</color>
     <color name="primaryColor_Alpha40">#662AAD94</color>
@@ -17,7 +15,7 @@
     <color name="secondaryColor_Alpha0">#00013732</color>
     <color name="secondaryDarkColor">#FF79D7</color>
 
-    <color name="Error">#B00020</color>
+    <color name="Error">#9B0303</color>
     <color name="background">#FFFFFFFF</color>
     <color name="surface">#FFFFFFFF</color>
 
@@ -35,6 +33,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="ultraLightGreen">#CAEFE6</color>
+    <color name="ultraLightGreen_Alpha0">#0048C0A3</color>
     <color name="lightGreen">#ACF44F</color>
     <color name="green">#5FDB54</color>
     <color name="darkGreen">#05A475</color>

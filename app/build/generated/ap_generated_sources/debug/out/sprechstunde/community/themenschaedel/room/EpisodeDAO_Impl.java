@@ -49,7 +49,7 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
     this.__insertionAdapterOfEpisode = new EntityInsertionAdapter<Episode>(__db) {
       @Override
       public String createQuery() {
-        return "INSERT OR REPLACE INTO `episode_table` (`episodeNumber`,`title`,`subtitle`,`date`,`image`,`duration`,`verified`,`claimed`,`upvotes`,`downvotes`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        return "INSERT OR REPLACE INTO `episode_table` (`episodeNumber`,`title`,`subtitle`,`date`,`image`,`duration`,`verified`,`claimed`,`upvotes`,`downvotes`,`mIsFavorite`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -86,6 +86,8 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
         stmt.bindLong(8, _tmp_1);
         stmt.bindLong(9, value.getUpvotes());
         stmt.bindLong(10, value.getDownvotes());
+        final int _tmp_2 = value.isIsFavorite() ? 1 : 0;
+        stmt.bindLong(11, _tmp_2);
       }
     };
     this.__insertionAdapterOfEpisodeHostCrossRef = new EntityInsertionAdapter<EpisodeHostCrossRef>(__db) {
@@ -118,7 +120,7 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
     this.__updateAdapterOfEpisode = new EntityDeletionOrUpdateAdapter<Episode>(__db) {
       @Override
       public String createQuery() {
-        return "UPDATE OR ABORT `episode_table` SET `episodeNumber` = ?,`title` = ?,`subtitle` = ?,`date` = ?,`image` = ?,`duration` = ?,`verified` = ?,`claimed` = ?,`upvotes` = ?,`downvotes` = ? WHERE `episodeNumber` = ?";
+        return "UPDATE OR ABORT `episode_table` SET `episodeNumber` = ?,`title` = ?,`subtitle` = ?,`date` = ?,`image` = ?,`duration` = ?,`verified` = ?,`claimed` = ?,`upvotes` = ?,`downvotes` = ?,`mIsFavorite` = ? WHERE `episodeNumber` = ?";
       }
 
       @Override
@@ -155,7 +157,9 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
         stmt.bindLong(8, _tmp_1);
         stmt.bindLong(9, value.getUpvotes());
         stmt.bindLong(10, value.getDownvotes());
-        stmt.bindLong(11, value.mEpisodeNumber);
+        final int _tmp_2 = value.isIsFavorite() ? 1 : 0;
+        stmt.bindLong(11, _tmp_2);
+        stmt.bindLong(12, value.mEpisodeNumber);
       }
     };
     this.__preparedStmtOfDeleteAllEpisodes = new SharedSQLiteStatement(__db) {
@@ -254,6 +258,7 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
           final int _cursorIndexOfMClaimed = CursorUtil.getColumnIndexOrThrow(_cursor, "claimed");
           final int _cursorIndexOfMUpvotes = CursorUtil.getColumnIndexOrThrow(_cursor, "upvotes");
           final int _cursorIndexOfMDownvotes = CursorUtil.getColumnIndexOrThrow(_cursor, "downvotes");
+          final int _cursorIndexOfMIsFavorite = CursorUtil.getColumnIndexOrThrow(_cursor, "mIsFavorite");
           final Episode _result;
           if(_cursor.moveToFirst()) {
             _result = new Episode();
@@ -309,6 +314,11 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
             final int _tmpMDownvotes;
             _tmpMDownvotes = _cursor.getInt(_cursorIndexOfMDownvotes);
             _result.setDownvotes(_tmpMDownvotes);
+            final boolean _tmpMIsFavorite;
+            final int _tmp_2;
+            _tmp_2 = _cursor.getInt(_cursorIndexOfMIsFavorite);
+            _tmpMIsFavorite = _tmp_2 != 0;
+            _result.setIsFavorite(_tmpMIsFavorite);
           } else {
             _result = null;
           }
@@ -346,6 +356,7 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
           final int _cursorIndexOfMClaimed = CursorUtil.getColumnIndexOrThrow(_cursor, "claimed");
           final int _cursorIndexOfMUpvotes = CursorUtil.getColumnIndexOrThrow(_cursor, "upvotes");
           final int _cursorIndexOfMDownvotes = CursorUtil.getColumnIndexOrThrow(_cursor, "downvotes");
+          final int _cursorIndexOfMIsFavorite = CursorUtil.getColumnIndexOrThrow(_cursor, "mIsFavorite");
           final Episode _result;
           if(_cursor.moveToFirst()) {
             _result = new Episode();
@@ -401,6 +412,11 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
             final int _tmpMDownvotes;
             _tmpMDownvotes = _cursor.getInt(_cursorIndexOfMDownvotes);
             _result.setDownvotes(_tmpMDownvotes);
+            final boolean _tmpMIsFavorite;
+            final int _tmp_2;
+            _tmp_2 = _cursor.getInt(_cursorIndexOfMIsFavorite);
+            _tmpMIsFavorite = _tmp_2 != 0;
+            _result.setIsFavorite(_tmpMIsFavorite);
           } else {
             _result = null;
           }
@@ -436,6 +452,7 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
           final int _cursorIndexOfMClaimed = CursorUtil.getColumnIndexOrThrow(_cursor, "claimed");
           final int _cursorIndexOfMUpvotes = CursorUtil.getColumnIndexOrThrow(_cursor, "upvotes");
           final int _cursorIndexOfMDownvotes = CursorUtil.getColumnIndexOrThrow(_cursor, "downvotes");
+          final int _cursorIndexOfMIsFavorite = CursorUtil.getColumnIndexOrThrow(_cursor, "mIsFavorite");
           final List<Episode> _result = new ArrayList<Episode>(_cursor.getCount());
           while(_cursor.moveToNext()) {
             final Episode _item;
@@ -492,6 +509,11 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
             final int _tmpMDownvotes;
             _tmpMDownvotes = _cursor.getInt(_cursorIndexOfMDownvotes);
             _item.setDownvotes(_tmpMDownvotes);
+            final boolean _tmpMIsFavorite;
+            final int _tmp_2;
+            _tmp_2 = _cursor.getInt(_cursorIndexOfMIsFavorite);
+            _tmpMIsFavorite = _tmp_2 != 0;
+            _item.setIsFavorite(_tmpMIsFavorite);
             _result.add(_item);
           }
           return _result;
@@ -538,6 +560,7 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
           final int _cursorIndexOfMClaimed = CursorUtil.getColumnIndexOrThrow(_cursor, "claimed");
           final int _cursorIndexOfMUpvotes = CursorUtil.getColumnIndexOrThrow(_cursor, "upvotes");
           final int _cursorIndexOfMDownvotes = CursorUtil.getColumnIndexOrThrow(_cursor, "downvotes");
+          final int _cursorIndexOfMIsFavorite = CursorUtil.getColumnIndexOrThrow(_cursor, "mIsFavorite");
           final List<Episode> _result = new ArrayList<Episode>(_cursor.getCount());
           while(_cursor.moveToNext()) {
             final Episode _item;
@@ -594,6 +617,11 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
             final int _tmpMDownvotes;
             _tmpMDownvotes = _cursor.getInt(_cursorIndexOfMDownvotes);
             _item.setDownvotes(_tmpMDownvotes);
+            final boolean _tmpMIsFavorite;
+            final int _tmp_2;
+            _tmp_2 = _cursor.getInt(_cursorIndexOfMIsFavorite);
+            _tmpMIsFavorite = _tmp_2 != 0;
+            _item.setIsFavorite(_tmpMIsFavorite);
             _result.add(_item);
           }
           return _result;
@@ -720,6 +748,7 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
             final int _cursorIndexOfMClaimed = CursorUtil.getColumnIndexOrThrow(_cursor, "claimed");
             final int _cursorIndexOfMUpvotes = CursorUtil.getColumnIndexOrThrow(_cursor, "upvotes");
             final int _cursorIndexOfMDownvotes = CursorUtil.getColumnIndexOrThrow(_cursor, "downvotes");
+            final int _cursorIndexOfMIsFavorite = CursorUtil.getColumnIndexOrThrow(_cursor, "mIsFavorite");
             final LongSparseArray<ArrayList<Host>> _collectionMHosts = new LongSparseArray<ArrayList<Host>>();
             while (_cursor.moveToNext()) {
               if (!_cursor.isNull(_cursorIndexOfMEpisodeNumber)) {
@@ -736,7 +765,7 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
             final EpisodeWithHosts _result;
             if(_cursor.moveToFirst()) {
               final Episode _tmpMEpisode;
-              if (! (_cursor.isNull(_cursorIndexOfMEpisodeNumber) && _cursor.isNull(_cursorIndexOfMTitle) && _cursor.isNull(_cursorIndexOfMSubtitle) && _cursor.isNull(_cursorIndexOfMDate) && _cursor.isNull(_cursorIndexOfMImage) && _cursor.isNull(_cursorIndexOfMDuration) && _cursor.isNull(_cursorIndexOfMVerified) && _cursor.isNull(_cursorIndexOfMClaimed) && _cursor.isNull(_cursorIndexOfMUpvotes) && _cursor.isNull(_cursorIndexOfMDownvotes))) {
+              if (! (_cursor.isNull(_cursorIndexOfMEpisodeNumber) && _cursor.isNull(_cursorIndexOfMTitle) && _cursor.isNull(_cursorIndexOfMSubtitle) && _cursor.isNull(_cursorIndexOfMDate) && _cursor.isNull(_cursorIndexOfMImage) && _cursor.isNull(_cursorIndexOfMDuration) && _cursor.isNull(_cursorIndexOfMVerified) && _cursor.isNull(_cursorIndexOfMClaimed) && _cursor.isNull(_cursorIndexOfMUpvotes) && _cursor.isNull(_cursorIndexOfMDownvotes) && _cursor.isNull(_cursorIndexOfMIsFavorite))) {
                 _tmpMEpisode = new Episode();
                 _tmpMEpisode.mEpisodeNumber = _cursor.getInt(_cursorIndexOfMEpisodeNumber);
                 final String _tmpMTitle;
@@ -790,6 +819,11 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
                 final int _tmpMDownvotes;
                 _tmpMDownvotes = _cursor.getInt(_cursorIndexOfMDownvotes);
                 _tmpMEpisode.setDownvotes(_tmpMDownvotes);
+                final boolean _tmpMIsFavorite;
+                final int _tmp_2;
+                _tmp_2 = _cursor.getInt(_cursorIndexOfMIsFavorite);
+                _tmpMIsFavorite = _tmp_2 != 0;
+                _tmpMEpisode.setIsFavorite(_tmpMIsFavorite);
               }  else  {
                 _tmpMEpisode = null;
               }
@@ -856,7 +890,7 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
       return;
     }
     StringBuilder _stringBuilder = StringUtil.newStringBuilder();
-    _stringBuilder.append("SELECT `episode_table`.`episodeNumber` AS `episodeNumber`,`episode_table`.`title` AS `title`,`episode_table`.`subtitle` AS `subtitle`,`episode_table`.`date` AS `date`,`episode_table`.`image` AS `image`,`episode_table`.`duration` AS `duration`,`episode_table`.`verified` AS `verified`,`episode_table`.`claimed` AS `claimed`,`episode_table`.`upvotes` AS `upvotes`,`episode_table`.`downvotes` AS `downvotes`,_junction.`hostName` FROM `EpisodeHostCrossRef` AS _junction INNER JOIN `episode_table` ON (_junction.`episodeNumber` = `episode_table`.`episodeNumber`) WHERE _junction.`hostName` IN (");
+    _stringBuilder.append("SELECT `episode_table`.`episodeNumber` AS `episodeNumber`,`episode_table`.`title` AS `title`,`episode_table`.`subtitle` AS `subtitle`,`episode_table`.`date` AS `date`,`episode_table`.`image` AS `image`,`episode_table`.`duration` AS `duration`,`episode_table`.`verified` AS `verified`,`episode_table`.`claimed` AS `claimed`,`episode_table`.`upvotes` AS `upvotes`,`episode_table`.`downvotes` AS `downvotes`,`episode_table`.`mIsFavorite` AS `mIsFavorite`,_junction.`hostName` FROM `EpisodeHostCrossRef` AS _junction INNER JOIN `episode_table` ON (_junction.`episodeNumber` = `episode_table`.`episodeNumber`) WHERE _junction.`hostName` IN (");
     final int _inputSize = __mapKeySet.size();
     StringUtil.appendPlaceholders(_stringBuilder, _inputSize);
     _stringBuilder.append(")");
@@ -874,7 +908,7 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
     }
     final Cursor _cursor = DBUtil.query(__db, _stmt, false, null);
     try {
-      final int _itemKeyIndex = 10; // _junction.hostName;
+      final int _itemKeyIndex = 11; // _junction.hostName;
       if (_itemKeyIndex == -1) {
         return;
       }
@@ -888,6 +922,7 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
       final int _cursorIndexOfMClaimed = 7;
       final int _cursorIndexOfMUpvotes = 8;
       final int _cursorIndexOfMDownvotes = 9;
+      final int _cursorIndexOfMIsFavorite = 10;
       while(_cursor.moveToNext()) {
         if (!_cursor.isNull(_itemKeyIndex)) {
           final String _tmpKey = _cursor.getString(_itemKeyIndex);
@@ -947,6 +982,11 @@ public final class EpisodeDAO_Impl implements EpisodeDAO {
             final int _tmpMDownvotes;
             _tmpMDownvotes = _cursor.getInt(_cursorIndexOfMDownvotes);
             _item_1.setDownvotes(_tmpMDownvotes);
+            final boolean _tmpMIsFavorite;
+            final int _tmp_2;
+            _tmp_2 = _cursor.getInt(_cursorIndexOfMIsFavorite);
+            _tmpMIsFavorite = _tmp_2 != 0;
+            _item_1.setIsFavorite(_tmpMIsFavorite);
             _tmpRelation.add(_item_1);
           }
         }

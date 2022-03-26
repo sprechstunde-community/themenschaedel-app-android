@@ -10,6 +10,42 @@
     tools:context=".view.EpisodeFragment">
 
 
+    <ImageView
+        android:id="@+id/fragment_episode_background_likes"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_episode_like_background"
+        android:backgroundTint="@color/onBackgroundSecondary"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_episode_image_container"
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fragment_episode_image_container" />
+
+    <ToggleButton
+        android:id="@+id/fragment_episode_favorite_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/toggle_favorite"
+        android:textOff=""
+        android:textOn=""
+        app:layout_constraintBottom_toTopOf="@+id/fragment_episode_like_icon"
+        app:layout_constraintStart_toStartOf="@+id/fragment_episode_background_likes"
+        app:layout_constraintTop_toTopOf="@+id/fragment_episode_background_likes" />
+
+    <TextView
+        android:id="@+id/fragment_episode_favorite_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/episode_favorite"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_episode_favorite_icon"
+        app:layout_constraintStart_toEndOf="@+id/fragment_episode_favorite_icon"
+        app:layout_constraintTop_toTopOf="@+id/fragment_episode_favorite_icon" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/fragment_episode_image_container"
         android:layout_width="0dp"
@@ -305,62 +341,11 @@
         app:layout_constraintStart_toEndOf="@+id/fragment_episode_state_icon"
         app:layout_constraintTop_toTopOf="@+id/fragment_episode_image_container" />
 
-    <ToggleButton
-        android:id="@+id/fragment_episode_like_icon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/toggle_like"
-        android:textOff=""
-        android:textOn=""
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_episode_image_container"
-        app:layout_constraintStart_toEndOf="@+id/fragment_episode_favorite_icon" />
-
-    <ToggleButton
-        android:id="@+id/fragment_episode_dislike_icon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="16dp"
-        android:background="@drawable/toggle_dislike"
-        android:textOff=""
-        android:textOn=""
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_episode_like_icon"
-        app:layout_constraintStart_toEndOf="@+id/fragment_episode_likes"
-        app:layout_constraintTop_toTopOf="@+id/fragment_episode_like_icon"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/fragment_episode_likes"
+    <sprechstunde.community.themenschaedel.view.LikeSwitch
+        android:id="@+id/view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="@string/podcast_vote_dummy"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_episode_like_icon"
-        app:layout_constraintStart_toEndOf="@+id/fragment_episode_like_icon"
-        app:layout_constraintTop_toTopOf="@+id/fragment_episode_like_icon" />
-
-    <TextView
-        android:id="@+id/fragment_episode_dislikes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="@string/podcast_vote_dummy"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_episode_like_icon"
-        app:layout_constraintStart_toEndOf="@+id/fragment_episode_dislike_icon"
-        app:layout_constraintTop_toTopOf="@+id/fragment_episode_like_icon" />
-
-    <ToggleButton
-        android:id="@+id/fragment_episode_favorite_icon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/toggle_favorite"
-        android:textOff=""
-        android:textOn=""
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_episode_image_container"
-        app:layout_constraintStart_toStartOf="@+id/fragment_episode_state_icon" />
+        tools:layout_editor_absoluteX="88dp"
+        tools:layout_editor_absoluteY="191dp" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

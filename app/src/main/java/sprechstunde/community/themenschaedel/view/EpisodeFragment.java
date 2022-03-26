@@ -19,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
@@ -43,9 +44,11 @@ import sprechstunde.community.themenschaedel.model.topic.TopicWithSubtopic;
 import sprechstunde.community.themenschaedel.viewmodel.EpisodeViewModel;
 import sprechstunde.community.themenschaedel.viewmodel.TopicViewModel;
 
-public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChangeListener {
+public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
 
-    FragmentEpisodeBinding mBinding;
+    private FragmentEpisodeBinding mBinding;
+    private EpisodeViewModel mEpisodeViewModel;
+    private Episode mEpisode;
 
     public EpisodeFragment() {
         // Required empty public constructor
@@ -83,20 +86,22 @@ public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChan
         mBinding = FragmentEpisodeBinding.inflate(inflater, container, false);
         int id = EpisodeFragmentArgs.fromBundle(requireArguments()).getEpisodeId();
 
-        EpisodeViewModel episodeViewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
+        mEpisodeViewModel = new ViewModelProvider(requireActivity()).get(EpisodeViewModel.class);
         TopicViewModel topicViewModel = new ViewModelProvider(requireActivity()).get(TopicViewModel.class);
 
-        episodeViewModel.getEpisodeWithHosts(id).observe(getViewLifecycleOwner(), episodeWithHosts -> {
+        mEpisodeViewModel.getEpisodeWithHosts(id).observe(getViewLifecycleOwner(), episodeWithHosts -> {
+            mEpisode = episodeWithHosts.getEpisode();
             Episode episode = episodeWithHosts.getEpisode();
             mBinding.fragmentEpisodeTitle.setText(episode.getTitle());
             String number =  getString(R.string.list_item_topic_number) + " " + episode.getEpisodeNumber();
             mBinding.fragmentEpisodeNumber.setText(number);
             mBinding.fragmentEpisodeDate.setText(episode.getDate());
             mBinding.fragmentEpisodeLength.setText(episode.getDuration());
-            mBinding.fragmentEpisodeLikes.setText(String.valueOf(episode.getUpvotes()));
-            mBinding.fragmentEpisodeDislikes.setText(String.valueOf(episode.getDownvotes()));
+            // mBinding.fragmentEpisodeLikes.setText(String.valueOf(episode.getUpvotes()));
+            // mBinding.fragmentEpisodeDislikes.setText(String.valueOf(episode.getDownvotes()));
 
             setEpisodeState(episode);
+            mBinding.fragmentEpisodeFavoriteIcon.setChecked(episode.isIsFavorite());
 
             if(episodeWithHosts.getHosts() != null && episodeWithHosts.getHosts().size() > 0) {
                 EpisodeHostAdapter adapter = new EpisodeHostAdapter((MainActivity) requireActivity(), episodeWithHosts.getHosts());
@@ -140,6 +145,7 @@ public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChan
         });
 
         mBinding.fragmentEpisodeFilter.setOnCheckedChangeListener(this);
+        mBinding.fragmentEpisodeFavoriteIcon.setOnCheckedChangeListener(this);
         Toolbar toolbar = requireActivity().findViewById(R.id.activity_main_toolbar);
         toolbar.setBackgroundColor(requireActivity().getColor(R.color.primaryColor));
         return mBinding.getRoot();
@@ -160,6 +166,17 @@ public class EpisodeFragment extends Fragment implements ChipGroup.OnCheckedChan
             mBinding.fragmentEpisodeStateText.setText(R.string.state_open);
         }
         mBinding.fragmentEpisodeStateIcon.setBackground(icon);
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        if (compoundButton == mBinding.fragmentEpisodeFavoriteIcon) {
+            if(mEpisode != null) {
+                mEpisode.setIsFavorite(b);
+                mEpisodeViewModel.update(mEpisode);
+            }
+        }
+
     }
 
     @Override

@@ -66,9 +66,27 @@
     <string name="profile_role_froid">Froid</string>
 
     <string name="profile_platform">Bevorzugte Platform</string>
+
     <string name="profile_hosts_in">muss fix dabei sein</string>
     <string name="profile_hosts_out">soll nicht dabei sein</string>
+    <string name="profile_episode_length">Länge</string>
+    <string name="profile_random">Egal</string>
+    <string name="profile_mind_1_topic">Hat mindestens 1</string>
+    <string name="profile_topic">Thema</string>
+    <string name="profile_no_ads">Hat keine Werbung</string>
     <string name="profile_play_random">Zufällige Folge abspielen</string>
+
+    <string name="profile_cancel_episode">Folge immer ausschließen</string>
+    <string name="profile_search_again">Erneut suchen</string>
+    <string name="profile_play_episode">Folge abspielen</string>
+    <string name="profile_change_filter">Filter umstellen</string>
+    <string name="profile_delete_history">Verlauf löschen</string>
+
+    <string-array name="profile_lists_array">
+        <item>Lieblingsfolgen</item>
+        <item>Gezogene Folgen</item>
+        <item>Gezogene Themen</item>
+    </string-array>
 
     // SharedPreferences
     <string name="saved_display_type">saved_display_type</string>
@@ -104,7 +122,6 @@
 
     <string name="dialog_info_user_state">Du bist derzeit eingeloggt :)</string>
     <string name="dialog_info_user_hello">Hallo</string>
-
 
     <string name="dialog_info_anonym_subtitle">Kann alles anschauen und lesen</string>
     <string name="dialog_info_user_subtitle">Hat mehrere Einstellungsmöglichkeiten in der App</string>

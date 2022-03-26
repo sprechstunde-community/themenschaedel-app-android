@@ -7,17 +7,60 @@
     android:layout_height="match_parent"
     tools:context=".view.profile.ProfileRandomFragment">
 
-<TextView
+    <TextView
         android:id="@+id/fragment_profile_random_hosts"
         style="@style/Profile.Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
         android:text="@string/episode_hosts_and_guests"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/fragment_profile_random_length"
+        style="@style/Profile.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/profile_episode_length"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/fragment_profile_random_hosts"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_profile_random_in" />
+
+    <TextView
+        android:id="@+id/fragment_profile_random_mind_topic"
+        style="@style/Profile.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/profile_mind_1_topic"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/fragment_profile_random_length"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_profile_random_length_bar" />
+
+    <TextView
+        android:id="@+id/fragment_profile_random_topic"
+        style="@style/Profile.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/profile_topic"
+        android:textColor="@color/black"
+        app:layout_constraintBaseline_toBaselineOf="@+id/fragment_profile_random_mind_topic"
+        app:layout_constraintStart_toEndOf="@+id/fragment_profile_random_topic_icon" />
+
+    <TextView
+        android:id="@+id/fragment_profile_random_time"
+        style="@style/Profile.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/podcast_length_dummy"
+        android:textColor="@color/primaryDarkColor"
+        app:layout_constraintBaseline_toBaselineOf="@+id/fragment_profile_random_length"
+        app:layout_constraintStart_toEndOf="@+id/fragment_profile_random_length" />
 
     <ImageView
         android:id="@+id/fragment_profile_random_in_icon"
@@ -94,11 +137,51 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/black"
+        style="@style/BlackButton"
         android:text="@string/profile_play_random"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/fragment_profile_random_topic_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_boys"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_profile_random_mind_topic"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toEndOf="@+id/fragment_profile_random_mind_topic"
+        app:layout_constraintTop_toTopOf="@+id/fragment_profile_random_mind_topic" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/fragment_profile_random_ad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/profile_no_ads"
+        app:layout_constraintStart_toStartOf="@+id/fragment_profile_random_mind_topic"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_profile_random_mind_topic" />
+
+    <SeekBar
+        android:id="@+id/fragment_profile_random_length_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_profile_random_length" />
+
+    <Button
+        android:id="@+id/fragment_profile_random_ignore_button"
+        style="@style/SecondaryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_random"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_profile_random_length_bar"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_profile_random_length_bar"
+        app:layout_constraintTop_toTopOf="@+id/fragment_profile_random_length" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

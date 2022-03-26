@@ -160,6 +160,26 @@
         <item name="android:trackTint">@color/switch_track_color</item>
     </style>
 
+    <style name="PrimaryButton" parent="@style/Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">@color/primaryColor</item>
+        <item name="android:textColor">@color/onPrimary</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="BlackButton" parent="@style/Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">@color/onBackground</item>
+        <item name="android:textColor">@color/background</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="SecondaryButton" parent="@style/Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">@color/onPrimary</item>
+        <item name="android:strokeColor">@color/primaryColor</item>
+        <item name="android:strokeWidth">1</item>
+        <item name="android:textColor">@color/primaryColor</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
     <style name="Episode"/>
 
     <style name="Episode.Title">

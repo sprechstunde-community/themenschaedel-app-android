@@ -258,46 +258,30 @@
         <Constraint
             android:id="@+id/fragment_episode_favorite_icon"
             android:layout_width="0dp"
-            android:layout_height="32dp"
-            android:layout_marginBottom="8dp"
-            motion:layout_constraintBottom_toTopOf="@+id/fragment_episode_like_icon"
+            android:layout_height="28dp"
             motion:layout_constraintStart_toStartOf="@+id/fragment_episode_state_icon"
-            motion:layout_constraintDimensionRatio="h,1:1" />
+            motion:layout_constraintDimensionRatio="h,1:1"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_background_likes"
+            android:layout_marginTop="16dp"
+            motion:layout_constraintBottom_toTopOf="@+id/view"
+            android:layout_marginBottom="0dp" />
         <Constraint
-            android:id="@+id/fragment_episode_like_icon"
-            android:layout_width="0dp"
             android:layout_height="0dp"
             motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_image_container"
-            android:layout_marginBottom="8dp"
-            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_hosts"
-            motion:layout_constraintEnd_toEndOf="@+id/fragment_episode_favorite_icon"
-            motion:layout_constraintDimensionRatio="h,1:1" />
-        <Constraint
-            android:id="@+id/fragment_episode_likes"
-            motion:layout_constraintStart_toEndOf="@+id/fragment_episode_like_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_like_icon"
-            android:layout_marginStart="4dp"
-            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_like_icon" />
-        <Constraint
-            android:id="@+id/fragment_episode_dislikes"
-            motion:layout_constraintStart_toEndOf="@+id/fragment_episode_dislike_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_like_icon"
-            android:layout_marginStart="4dp"
-            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_like_icon" />
-        <Constraint
-            android:id="@+id/fragment_episode_dislike_icon"
-            motion:layout_constraintStart_toEndOf="@+id/fragment_episode_likes"
+            motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_like_icon"
-            motion:layout_constraintVertical_bias="0.0"
-            android:layout_marginStart="16dp"
-            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_like_icon"
-            motion:layout_constraintDimensionRatio="1:1" />
+            motion:layout_constraintDimensionRatio="2:1"
+            android:id="@+id/fragment_episode_background_likes"
+            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_length" />
+        <Constraint
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            motion:layout_constraintTop_toBottomOf="@+id/fragment_episode_favorite_icon"
+            android:id="@+id/view"
+            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_favorite_icon"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_background_likes"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="4dp" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/middle">
@@ -425,49 +409,28 @@
             motion:layout_constraintDimensionRatio="1:1"
             android:visibility="gone" />
         <Constraint
-            android:layout_height="0dp"
             android:layout_width="0dp"
-            android:id="@+id/fragment_episode_like_icon"
-            motion:layout_constraintStart_toEndOf="@+id/fragment_episode_favorite"
-            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_favorite_icon"
-            android:layout_marginStart="16dp"
-            motion:layout_constraintEnd_toStartOf="@+id/fragment_episode_likes"
-            android:layout_marginEnd="4dp"
-            motion:layout_constraintHorizontal_bias="1.0"
-            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_favorite_icon"
-            motion:layout_constraintDimensionRatio="1:1" />
-        <Constraint
-            android:layout_width="0dp"
-            android:layout_height="32dp"
+            android:layout_height="28dp"
             android:id="@+id/fragment_episode_favorite_icon"
             motion:layout_constraintStart_toStartOf="@+id/fragment_episode_title"
             motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_image_container"
             motion:layout_constraintDimensionRatio="h,1:1" />
         <Constraint
-            android:layout_height="wrap_content"
-            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_like_icon"
-            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_like_icon"
-            motion:layout_constraintEnd_toEndOf="@+id/fragment_episode_title"
-            android:layout_width="wrap_content"
-            android:id="@+id/fragment_episode_dislikes" />
-        <Constraint
-            android:layout_height="0dp"
-            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_like_icon"
-            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_like_icon"
             android:layout_width="0dp"
-            motion:layout_constraintVertical_bias="0.0"
-            motion:layout_constraintEnd_toStartOf="@+id/fragment_episode_dislikes"
-            android:id="@+id/fragment_episode_dislike_icon"
-            android:layout_marginEnd="4dp"
-            motion:layout_constraintDimensionRatio="1:1" />
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_image_container"
+            android:id="@+id/fragment_episode_background_likes"
+            motion:layout_constraintTop_toBottomOf="@+id/fragment_episode_title"
+            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_date"
+            android:layout_marginTop="3dp" />
         <Constraint
+            motion:layout_constraintStart_toEndOf="@+id/fragment_episode_favorite_icon"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            motion:layout_constraintEnd_toStartOf="@+id/fragment_episode_dislike_icon"
-            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_like_icon"
-            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_like_icon"
-            android:layout_width="wrap_content"
-            android:id="@+id/fragment_episode_likes"
-            android:layout_marginEnd="16dp" />
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_favorite_icon"
+            android:layout_marginStart="4dp"
+            android:id="@+id/fragment_episode_favorite_text"
+            motion:layout_constraintTop_toTopOf="@+id/fragment_episode_favorite_icon" />
     </ConstraintSet>
     <ConstraintSet
         android:id="@+id/play_start"
@@ -548,6 +511,13 @@
             motion:layout_constraintDimensionRatio="2:1"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="4dp" />
+        <Constraint
+            android:layout_height="0dp"
+            motion:layout_constraintStart_toStartOf="@+id/fragment_episode_date"
+            motion:layout_constraintBottom_toBottomOf="@+id/fragment_episode_image_container"
+            android:layout_width="0dp"
+            motion:layout_constraintTop_toBottomOf="@+id/fragment_episode_title"
+            android:id="@+id/fragment_episode_background_likes" />
     </ConstraintSet>
     <Transition
         motion:constraintSetStart="@+id/start"

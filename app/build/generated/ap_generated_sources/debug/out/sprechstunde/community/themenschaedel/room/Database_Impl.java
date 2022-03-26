@@ -44,10 +44,10 @@ public final class Database_Impl extends Database {
 
   @Override
   protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration configuration) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(10) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(11) {
       @Override
       public void createAllTables(SupportSQLiteDatabase _db) {
-        _db.execSQL("CREATE TABLE IF NOT EXISTS `episode_table` (`episodeNumber` INTEGER NOT NULL, `title` TEXT, `subtitle` TEXT, `date` TEXT, `image` TEXT, `duration` TEXT, `verified` INTEGER NOT NULL, `claimed` INTEGER NOT NULL, `upvotes` INTEGER NOT NULL, `downvotes` INTEGER NOT NULL, PRIMARY KEY(`episodeNumber`))");
+        _db.execSQL("CREATE TABLE IF NOT EXISTS `episode_table` (`episodeNumber` INTEGER NOT NULL, `title` TEXT, `subtitle` TEXT, `date` TEXT, `image` TEXT, `duration` TEXT, `verified` INTEGER NOT NULL, `claimed` INTEGER NOT NULL, `upvotes` INTEGER NOT NULL, `downvotes` INTEGER NOT NULL, `mIsFavorite` INTEGER NOT NULL, PRIMARY KEY(`episodeNumber`))");
         _db.execSQL("CREATE TABLE IF NOT EXISTS `topic_table` (`id` INTEGER NOT NULL, `name` TEXT, `start` INTEGER NOT NULL, `end` INTEGER NOT NULL, `ad` INTEGER NOT NULL, `community_contribution` INTEGER NOT NULL, `episode_id` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         _db.execSQL("CREATE TABLE IF NOT EXISTS `subtopic_table` (`id` INTEGER NOT NULL, `name` TEXT, `id_topic` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         _db.execSQL("CREATE TABLE IF NOT EXISTS `host_table` (`hostName` TEXT NOT NULL, `description` TEXT, `host` INTEGER NOT NULL, PRIMARY KEY(`hostName`))");
@@ -55,7 +55,7 @@ public final class Database_Impl extends Database {
         _db.execSQL("CREATE TABLE IF NOT EXISTS `user_table` (`id` INTEGER NOT NULL, `username` TEXT, `email` TEXT, `role_id` INTEGER NOT NULL, `platform` TEXT, PRIMARY KEY(`id`))");
         _db.execSQL("CREATE TABLE IF NOT EXISTS `session_table` (`session_id` INTEGER NOT NULL, `refresh_token` TEXT, `access_token` TEXT, `id` INTEGER, `username` TEXT, `email` TEXT, `role_id` INTEGER, `platform` TEXT, PRIMARY KEY(`session_id`))");
         _db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7ff516234500b5afdb2dab9df31b7ef8')");
+        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'df4f57751d081ed9f3c8b03fc1c33088')");
       }
 
       @Override
@@ -105,7 +105,7 @@ public final class Database_Impl extends Database {
 
       @Override
       protected RoomOpenHelper.ValidationResult onValidateSchema(SupportSQLiteDatabase _db) {
-        final HashMap<String, TableInfo.Column> _columnsEpisodeTable = new HashMap<String, TableInfo.Column>(10);
+        final HashMap<String, TableInfo.Column> _columnsEpisodeTable = new HashMap<String, TableInfo.Column>(11);
         _columnsEpisodeTable.put("episodeNumber", new TableInfo.Column("episodeNumber", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsEpisodeTable.put("title", new TableInfo.Column("title", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsEpisodeTable.put("subtitle", new TableInfo.Column("subtitle", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -116,6 +116,7 @@ public final class Database_Impl extends Database {
         _columnsEpisodeTable.put("claimed", new TableInfo.Column("claimed", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsEpisodeTable.put("upvotes", new TableInfo.Column("upvotes", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsEpisodeTable.put("downvotes", new TableInfo.Column("downvotes", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsEpisodeTable.put("mIsFavorite", new TableInfo.Column("mIsFavorite", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysEpisodeTable = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesEpisodeTable = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoEpisodeTable = new TableInfo("episode_table", _columnsEpisodeTable, _foreignKeysEpisodeTable, _indicesEpisodeTable);
@@ -215,7 +216,7 @@ public final class Database_Impl extends Database {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "7ff516234500b5afdb2dab9df31b7ef8", "dfdf2bbbfa7e0954700aca70c067fbec");
+    }, "df4f57751d081ed9f3c8b03fc1c33088", "53aef3839e818c7ddfdc47ff176accfb");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(configuration.context)
         .name(configuration.name)
         .callback(_openCallback)

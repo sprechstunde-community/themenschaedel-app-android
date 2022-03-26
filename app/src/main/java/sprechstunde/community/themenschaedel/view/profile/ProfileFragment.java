@@ -98,6 +98,17 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
+                if(position == 0) {
+                    mBinding.fragmentProfileEmail.setVisibility(View.VISIBLE);
+                    mBinding.fragmentProfileName.setVisibility(View.VISIBLE);
+                    mBinding.fragmentProfileCircle.setVisibility(View.VISIBLE);
+                    mBinding.fragmentProfileImageMask.setVisibility(View.VISIBLE);
+                } else {
+                    mBinding.fragmentProfileEmail.setVisibility(View.GONE);
+                    mBinding.fragmentProfileName.setVisibility(View.GONE);
+                    mBinding.fragmentProfileCircle.setVisibility(View.GONE);
+                    mBinding.fragmentProfileImageMask.setVisibility(View.GONE);
+                }
             }
         });
 

@@ -15,7 +15,7 @@ import sprechstunde.community.themenschaedel.model.episode.EpisodeHostCrossRef;
 import sprechstunde.community.themenschaedel.model.topic.Subtopic;
 import sprechstunde.community.themenschaedel.model.topic.Topic;
 
-@androidx.room.Database(entities = {Episode.class, Topic.class, Subtopic.class, Host.class, EpisodeHostCrossRef.class, User.class, SessionData.class}, version = 10, exportSchema = false)
+@androidx.room.Database(entities = {Episode.class, Topic.class, Subtopic.class, Host.class, EpisodeHostCrossRef.class, User.class, SessionData.class}, version = 11, exportSchema = false)
 abstract public class Database extends RoomDatabase {
 
     private static Database mInstance;

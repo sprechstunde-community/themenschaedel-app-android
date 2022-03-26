@@ -6,16 +6,15 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.Objects;
 
-import sprechstunde.community.themenschaedel.view.profile.ProfileFavoritesFragment;
+import sprechstunde.community.themenschaedel.view.profile.ProfileListsFragment;
 import sprechstunde.community.themenschaedel.view.profile.ProfileRandomFragment;
 import sprechstunde.community.themenschaedel.view.profile.ProfileSettingsFragment;
-import sprechstunde.community.themenschaedel.view.topic.DrawFragment;
 
 public class ProfileTabAdapter extends FragmentStateAdapter {
 
   private final ProfileSettingsFragment mSettingsFragment = new ProfileSettingsFragment();
   private final ProfileRandomFragment mRandomFragment = new ProfileRandomFragment();
-  private final ProfileFavoritesFragment mFavoritesFragment = new ProfileFavoritesFragment();
+  private final ProfileListsFragment mFavoritesFragment = new ProfileListsFragment();
 
   public ProfileTabAdapter(@NonNull Fragment fragment) {
     super(fragment);
@@ -29,7 +28,7 @@ public class ProfileTabAdapter extends FragmentStateAdapter {
     return mRandomFragment;
   }
 
-  public ProfileFavoritesFragment getProfileFavoritesFragment() {
+  public ProfileListsFragment getProfileFavoritesFragment() {
     return mFavoritesFragment;
   }
 

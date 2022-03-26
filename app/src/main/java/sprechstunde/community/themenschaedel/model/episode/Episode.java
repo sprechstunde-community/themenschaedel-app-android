@@ -56,6 +56,9 @@ public class Episode {
     @SerializedName("downvotes")
     private int mDownvotes;
 
+    @SerializedName("isFavorite")
+    private boolean mIsFavorite;
+
     @Ignore
     @SerializedName("topic")
     private ArrayList<Topic> mTopics;
@@ -68,7 +71,7 @@ public class Episode {
 
     }
 
-    public Episode(String title, String subtitle, String date, int number, String image, String duration, boolean claimed, boolean verified, int upvotes, int downvotes) {
+    public Episode(String title, String subtitle, String date, int number, String image, String duration, boolean claimed, boolean verified, int upvotes, int downvotes, boolean isFavorite) {
         mTitle = title;
         mSubtitle = subtitle;
         mDate = date;
@@ -79,6 +82,7 @@ public class Episode {
         mClaimed = claimed;
         mUpvotes = upvotes;
         mDownvotes = downvotes;
+        mIsFavorite = isFavorite;
     }
 
     @Ignore
@@ -159,6 +163,14 @@ public class Episode {
 
     public void setDownvotes(int downvotes) {
         mDownvotes = downvotes;
+    }
+
+    public boolean isIsFavorite() {
+        return mIsFavorite;
+    }
+
+    public void setIsFavorite(boolean isFavorite) {
+        mIsFavorite = isFavorite;
     }
 
     public ArrayList<Topic> getTopics() {
